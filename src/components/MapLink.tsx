@@ -1,0 +1,19 @@
+import { PLACES, mapsUrl, type PlaceKey } from '../data/places';
+
+type MapLinkProps = { place: PlaceKey; label?: string };
+
+export const PinIcon = () => (
+  <svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true">
+    <path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z" />
+  </svg>
+);
+
+export const MapLink = ({ place, label = 'Map' }: MapLinkProps) => {
+  const target = PLACES[place];
+  return (
+    <a className="map" href={mapsUrl(target)} target="_blank" rel="noopener" aria-label={`Open ${target.query} in Google Maps`}>
+      <PinIcon />
+      {label}
+    </a>
+  );
+};
