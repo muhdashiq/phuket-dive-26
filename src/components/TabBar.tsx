@@ -1,64 +1,34 @@
-import { useEffect, useRef } from 'react';
-import { DAYS } from '../data/days';
-import { COMMON_TABS } from '../data/reference';
-import type { TabId } from '../data/types';
-import { rainTone, type DailyWeather } from '../lib/weather';
+import type { Screen } from '../lib/routes';
+import { DiveFlag, Icon, type IconName } from './Icon';
 
-type TabBarProps = {
-  active: TabId;
-  today: string;
-  daily: Record<string, DailyWeather>;
-};
+const TABS: { screen: Screen; label: string; icon: IconName }[] = [
+  { screen: 'today', label: 'Today', icon: 'today' },
+  { screen: 'trip', label: 'Trip', icon: 'trip' },
+  { screen: 'explore', label: 'Explore', icon: 'explore' },
+  { screen: 'contacts', label: 'Contacts', icon: 'contacts' },
+  { screen: 'you', label: 'You', icon: 'you' },
+];
 
-export const TabBar = ({ active, today, daily }: TabBarProps) => {
-  const stripRef = useRef<HTMLDivElement>(null);
-  const firstUpcoming = today < (DAYS[0]?.date ?? '') ? DAYS[0]?.id : null;
+type TabBarProps = { active: Screen; hrefFor: (screen: Screen) => string; onSelect: (screen: Screen) => void };
 
-  // Keep the active chip visible in the horizontally scrolling strip.
-  useEffect(() => {
-    const strip = stripRef.current;
-    const chip = strip?.querySelector<HTMLElement>('[aria-current="page"]');
-    if (!strip || !chip) return;
-    const chipBox = chip.getBoundingClientRect();
-    const stripBox = strip.getBoundingClientRect();
-    if (chipBox.left < stripBox.left || chipBox.right > stripBox.right) {
-      strip.scrollLeft += chipBox.left - stripBox.left - 2;
-    }
-  }, [active]);
-
-  return (
-    <nav className="daybar" aria-label="Trip days and info">
-      <div className="wrap">
-        <div className="chips" ref={stripRef}>
-          {DAYS.map((day) => {
-            const live = daily[day.date]?.rainPct ?? null;
-            const pct = day.sea ? (live ?? day.weather.rainPct ?? null) : null;
-            const tone = pct !== null ? rainTone(pct) : day.tone;
-            const isToday = day.date === today;
-            const label = isToday ? 'Today' : day.id === firstUpcoming ? 'Next' : null;
-            const status = day.chipNote ?? (pct !== null ? `${pct}%` : '');
-            const classes = ['chip', isToday && 'today', day.date < today && 'past'].filter(Boolean).join(' ');
-            return (
-              <a key={day.id} className={classes} href={`#${day.id}`} aria-current={active === day.id ? 'page' : undefined}>
-                {label && <span className="when">{label}</span>}
-                <span className="d">{day.dow}</span>
-                <span className="s">
-                  <i className={`dot t-${tone}`} />
-                  {day.dom}
-                  {status && ` · ${status}`}
-                </span>
-              </a>
-            );
-          })}
-          <span className="chip-sep" aria-hidden="true" />
-          {COMMON_TABS.map((tab) => (
-            <a key={tab.id} className="chip chip-ref" href={`#${tab.id}`} aria-current={active === tab.id ? 'page' : undefined}>
-              <span className="d">{tab.label}</span>
-              <span className="s">{tab.note}</span>
-            </a>
-          ))}
-        </div>
-      </div>
-    </nav>
-  );
-};
+export const TabBar = ({ active, hrefFor, onSelect }: TabBarProps) => (
+  <nav className="tabbar" aria-label="Main">
+    <div className="tab-brand"><DiveFlag size={28} />Phuket Dive Week</div>
+    {TABS.map((tab) => (
+      <a
+        key={tab.screen}
+        className="tab"
+        href={hrefFor(tab.screen)}
+        aria-current={active === tab.screen ? 'page' : undefined}
+        onClick={(event) => {
+          if (event.metaKey || event.ctrlKey || event.shiftKey) return;
+          event.preventDefault();
+          onSelect(tab.screen);
+        }}
+      >
+        <Icon name={tab.icon} filled={active === tab.screen} />
+        <span>{tab.label}</span>
+      </a>
+    ))}
+  </nav>
+);

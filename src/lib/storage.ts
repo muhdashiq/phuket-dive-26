@@ -6,6 +6,7 @@ export const STORAGE_KEYS = {
   todos: 'pdw:todos',
   notes: 'pdw:notes',
   bookingSteps: 'pdw:booking-steps',
+  favorites: 'pdw:favorites',
   weatherPrefix: 'pdw:wx:',
 } as const;
 

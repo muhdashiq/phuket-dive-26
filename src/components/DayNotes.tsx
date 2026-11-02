@@ -2,6 +2,8 @@ import { useEffect, useId, useRef, useState } from 'react';
 import type { DayPlan } from '../data/types';
 import { formatDateTime, TRIP_TZ } from '../lib/dates';
 import { MAX_NOTE_LENGTH, setNote, type NoteStore } from '../lib/notes';
+import { Icon } from './Icon';
+import { Section } from './ui';
 
 type DayNotesProps = {
   day: DayPlan;
@@ -11,7 +13,7 @@ type DayNotesProps = {
 
 const SAVE_DELAY_MS = 400;
 
-// Notes save automatically a moment after typing stops, and on leaving the tab.
+// Notes save a moment after typing stops, and when leaving the day.
 export const DayNotes = ({ day, store, onChange }: DayNotesProps) => {
   const id = useId();
   const saved = store[day.id];
@@ -37,7 +39,7 @@ export const DayNotes = ({ day, store, onChange }: DayNotesProps) => {
     // flush and store are read at switch time on purpose.
   }, [day.id]);
 
-  // Pick up edits made in another browser tab.
+  // Pick up edits made in another browser tab, or a reset from Settings.
   useEffect(() => {
     if (pending.current === null) setText(saved?.text ?? '');
   }, [saved?.text]);
@@ -50,24 +52,32 @@ export const DayNotes = ({ day, store, onChange }: DayNotesProps) => {
     timer.current = window.setTimeout(flush, SAVE_DELAY_MS);
   };
 
-  const status = dirty ? 'Saving…' : saved ? `Saved on this device · ${formatDateTime(saved.updatedAt, TRIP_TZ)}` : 'Saved on this device as you type';
-
   return (
-    <section className="panel notes" aria-labelledby={`${id}-h`}>
-      <div className="panel-head">
-        <h3 id={`${id}-h`}>Notes for {day.dow} {day.dom}</h3>
-        <span className="notes-status" aria-live="polite">{status}</span>
+    <Section id={`${id}-h`} title="Notes">
+      <div className="notes">
+        <label className="sr-only" htmlFor={id}>Notes for {day.dow} {day.dom}</label>
+        <textarea
+          id={id}
+          value={text}
+          maxLength={MAX_NOTE_LENGTH}
+          rows={5}
+          placeholder={`What happened on ${day.dow} ${day.dom}? Dive log, what you saw, people you met, what to change tomorrow…`}
+          onChange={(e) => update(e.target.value)}
+          onBlur={flush}
+        />
+        <p className="notes-foot t-cap" aria-live="polite">
+          {dirty ? (
+            'Saving…'
+          ) : saved ? (
+            <>
+              <Icon name="check" />
+              Saved on this device · {formatDateTime(saved.updatedAt, TRIP_TZ)}
+            </>
+          ) : (
+            'Private to this device. Saves as you type.'
+          )}
+        </p>
       </div>
-      <label className="sr-only" htmlFor={id}>Notes for {day.dow} {day.dom}</label>
-      <textarea
-        id={id}
-        value={text}
-        maxLength={MAX_NOTE_LENGTH}
-        rows={6}
-        placeholder="Dive log, what you saw, people met, what to change tomorrow…"
-        onChange={(e) => update(e.target.value)}
-        onBlur={flush}
-      />
-    </section>
+    </Section>
   );
 };

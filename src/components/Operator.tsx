@@ -13,7 +13,7 @@ export const Operator = ({ name, tag, price, pick = false, children }: OperatorP
     <div className="op-top">
       <span className="op-name">
         {name}
-        {tag && <span className="tag">{tag}</span>}
+        {tag && <span className={`pill ${pick ? 'tint' : 'rest'}`}>{tag}</span>}
       </span>
       <span className="price">{price}</span>
     </div>

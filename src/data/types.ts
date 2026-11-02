@@ -3,11 +3,6 @@ import type { ReactNode } from 'react';
 export const DAY_IDS = ['tue3', 'wed', 'thu', 'fri', 'sat', 'sun', 'mon', 'tue'] as const;
 export type DayId = (typeof DAY_IDS)[number];
 
-export const COMMON_TAB_IDS = ['contacts', 'places', 'costs', 'planb'] as const;
-export type CommonTabId = (typeof COMMON_TAB_IDS)[number];
-
-export type TabId = DayId | CommonTabId;
-
 export type Tone = 'good' | 'watch' | 'poor' | 'rest';
 
 export type SeaArea = 'racha' | 'similan' | 'south' | 'phiphi' | 'west';

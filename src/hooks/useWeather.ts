@@ -26,7 +26,7 @@ const REFRESH_INTERVAL_MS = 60_000;
 
 // Calls load() on mount, every minute, and when the tab becomes visible.
 // The 10-minute cache keeps real network requests rare.
-const usePolling = (load: (maxAge?: number) => void) => {
+const usePolling = (load: (maxAge?: number) => Promise<boolean>) => {
   useEffect(() => {
     load();
     const id = window.setInterval(() => load(), REFRESH_INTERVAL_MS);
@@ -51,15 +51,21 @@ const SEA_AREAS = [...new Set(DAYS.map((day) => day.sea).filter((sea): sea is Se
 export const useTripWeather = () => {
   const [state, setState] = useState<TripWeather>({ daily: {}, waves: {}, fetchedAt: null, stale: false });
 
-  const load = useCallback((maxAge: number = CACHE_TTL_MS) => {
-    fetchCached(tripForecastUrl(TRIP_START, TRIP_END), maxAge)
-      .then((res) => setState((s) => ({ ...s, daily: parseDaily(res.data, TRIP_OFFSET_S), fetchedAt: res.fetchedAt, stale: res.stale })))
-      .catch(() => undefined);
-    SEA_AREAS.forEach((area) => {
+  // Resolves true when the forecast is live (not a saved offline copy).
+  const load = useCallback(async (maxAge: number = CACHE_TTL_MS): Promise<boolean> => {
+    const marine = SEA_AREAS.map((area) =>
       fetchCached(tripMarineUrl(area, TRIP_START, TRIP_END), maxAge)
         .then((res) => setState((s) => ({ ...s, waves: { ...s.waves, [area]: parseWaves(res.data) } })))
-        .catch(() => undefined);
-    });
+        .catch(() => undefined),
+    );
+    const forecast = fetchCached(tripForecastUrl(TRIP_START, TRIP_END), maxAge)
+      .then((res) => {
+        setState((s) => ({ ...s, daily: parseDaily(res.data, TRIP_OFFSET_S), fetchedAt: res.fetchedAt, stale: res.stale }));
+        return !res.stale;
+      })
+      .catch(() => false);
+    const [ok] = await Promise.all([forecast, ...marine]);
+    return ok;
   }, []);
 
   usePolling(load);
@@ -108,8 +114,11 @@ export const useNowWeather = (location: LatLon | null) => {
   }, [lat, lon]);
 
   const load = useCallback(
-    (maxAge: number = CACHE_TTL_MS) => {
-      fetchCached(nowUrl(lat, lon), maxAge)
+    async (maxAge: number = CACHE_TTL_MS): Promise<boolean> => {
+      const seaRequest = fetchCached(nowSeaUrl(sea[0], sea[1]), maxAge)
+        .then((res) => setState((s) => ({ ...s, sea: parseCurrentSea(res.data) })))
+        .catch(() => setState((s) => ({ ...s, sea: null })));
+      const current = fetchCached(nowUrl(lat, lon), maxAge)
         .then((res) => {
           const json = res.data as { timezone?: unknown };
           setState((s) => ({
@@ -122,11 +131,14 @@ export const useNowWeather = (location: LatLon | null) => {
             stale: res.stale,
             error: false,
           }));
+          return !res.stale;
         })
-        .catch(() => setState((s) => ({ ...s, error: true })));
-      fetchCached(nowSeaUrl(sea[0], sea[1]), maxAge)
-        .then((res) => setState((s) => ({ ...s, sea: parseCurrentSea(res.data) })))
-        .catch(() => setState((s) => ({ ...s, sea: null })));
+        .catch(() => {
+          setState((s) => ({ ...s, error: true }));
+          return false;
+        });
+      const [ok] = await Promise.all([current, seaRequest]);
+      return ok;
     },
     [lat, lon, sea[0], sea[1]],
   );

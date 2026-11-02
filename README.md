@@ -4,19 +4,24 @@ A day-by-day planner for a Phuket trip, 3–10 November 2026: a Phi Phi snorkel 
 
 ## What it does
 
-- **One tab per day**, plus shared tabs for **Contacts** (emergency numbers and operators), **Places** (Google Maps links), **Costs** and **Plan B**. The tab is in the URL (`#tue3`, `#contacts`), so links can be shared and the back button works. On a phone, swipe a day sideways to move to the previous or next day.
-- **Checklist per day**: starter items for each day's activities, plus your own. Tick them off, hide finished ones, delete the ones you added.
-- **Notes per day** at the bottom of each day tab. They save as you type, and can be downloaded as a text file from Settings.
-- **Live weather** from Open-Meteo: a Right now panel and per-day forecasts, cached for 10 minutes. Offline, it falls back to the values checked on 2 Nov.
-- **Settings** (theme, which tab opens first, hide finished items, collapse the weather panel, weather location).
+A mobile-first app in the style of iOS consumer apps: large titles, a bottom tab bar (a sidebar on wide screens), inset grouped lists, bottom sheets, toasts and light and dark themes.
+
+- **Today**: the selected day's plan. An Apple Fitness-style week strip switches days (or swipe sideways). It shows live weather when it is that day, the forecast, timeline, what to bring, operators, a fallback plan, a checklist and notes. Pull down to refresh the weather.
+- **Trip**: every day at a glance with checklist progress, the "Book in this order" steps and costs per diver.
+- **Explore**: search across places, days and rainy-day ideas; star places to pin them to Favorites; open any place in Google Maps.
+- **Contacts**: one-tap calls to emergency numbers, plus call, WhatsApp, email and copy for each operator.
+- **You**: name and avatar, notes history, settings (appearance, start screen, weather location, hide finished items) and data controls.
+
+First launch shows a short welcome that asks for an optional name and explains the location request before the browser asks. Links from earlier versions (`#wed`, `#contacts`, `#costs`, `#planb`) still work.
 
 Everything you enter is kept in this browser's `localStorage` under `pdw:` keys. Nothing is sent to a server, and nothing syncs between devices.
 
 | Key | Holds |
 | --- | --- |
-| `pdw:prefs` | theme, start tab, last tab, weather location, display toggles |
+| `pdw:prefs` | name, theme, start screen, last screen and day, weather location, hide-finished, onboarding and tips seen |
 | `pdw:todos` | per-day ticks and your own checklist items |
 | `pdw:notes` | per-day notes |
+| `pdw:favorites` | starred places |
 | `pdw:booking-steps` | the "Book in this order" ticks |
 | `pdw:wx:*` | cached weather responses |
 
@@ -35,7 +40,7 @@ npm test
 npm run build
 ```
 
-The trip content lives in `src/data/`: `days.tsx` for each day (including the starter checklist), `reference.tsx` for costs, rainy-day options, places and sources, and `places.ts` for map locations.
+The trip content lives in `src/data/`: `days.tsx` for each day (including the starter checklist), `reference.tsx` for contacts, costs, rainy-day options, places and sources, and `places.ts` for map locations. Screens are in `src/screens/`, shared UI in `src/components/`, and the design tokens at the top of `src/styles.css`.
 
 ## Deploy
 
