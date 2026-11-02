@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Diver-down flag: red field, white diagonal stripe -->
+  <defs><clipPath id="r"><rect width="64" height="64" rx="14"/></clipPath></defs>
+  <g clip-path="url(#r)">
+    <rect width="64" height="64" fill="#d22630"/>
+    <path d="M0 0h14l50 50v14H50L0 14z" fill="#fff"/>
+  </g>
+</svg>
