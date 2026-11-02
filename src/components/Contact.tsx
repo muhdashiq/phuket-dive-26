@@ -1,29 +1,16 @@
-import { useState } from 'react';
+import { Icon } from './Icon';
+import { useToast } from './Toast';
 
-type CopyButtonProps = { text: string };
-
-const CopyButton = ({ text }: CopyButtonProps) => {
-  const [label, setLabel] = useState('Copy');
-
-  const flash = (next: string) => {
-    setLabel(next);
-    window.setTimeout(() => setLabel('Copy'), 1400);
-  };
-
-  const copy = async () => {
+export const useCopy = () => {
+  const toast = useToast();
+  return async (text: string, what = 'Number') => {
     try {
       await navigator.clipboard.writeText(text);
-      flash('Copied');
+      toast({ message: `${what} copied`, tone: 'success' });
     } catch {
-      flash('Copy failed');
+      toast({ message: "Couldn't copy. Press and hold to select it instead.", tone: 'error' });
     }
   };
-
-  return (
-    <button className="copy" type="button" onClick={copy}>
-      {label}
-    </button>
-  );
 };
 
 type ContactProps = {
@@ -33,16 +20,28 @@ type ContactProps = {
   note?: string;
 };
 
-// One phone number or email with a copy button and optional WhatsApp link.
-export const Contact = ({ display, copy, whatsapp, note }: ContactProps) => (
-  <div className="contact">
-    <span className="num">{display}</span>
-    <CopyButton text={copy ?? display} />
-    {whatsapp && (
-      <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener">
-        WhatsApp
+// One phone number or email with call, WhatsApp and copy actions.
+export const Contact = ({ display, copy, whatsapp, note }: ContactProps) => {
+  const copyText = useCopy();
+  const isEmail = display.includes('@');
+  const dial = copy ?? display;
+  return (
+    <div className="contact">
+      <span className="num">
+        {display}
+        {note && <small>{note}</small>}
+      </span>
+      <a className="icon-btn" href={isEmail ? `mailto:${display}` : `tel:${dial}`} aria-label={`${isEmail ? 'Email' : 'Call'} ${display}`}>
+        <Icon name={isEmail ? 'mail' : 'phone'} />
       </a>
-    )}
-    {note && <span className="op-meta">{note}</span>}
-  </div>
-);
+      {whatsapp && (
+        <a className="icon-btn" href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener" aria-label={`WhatsApp ${display}`}>
+          <Icon name="message" />
+        </a>
+      )}
+      <button className="icon-btn" type="button" aria-label={`Copy ${display}`} onClick={() => copyText(dial, isEmail ? 'Email' : 'Number')}>
+        <Icon name="copy" />
+      </button>
+    </div>
+  );
+};

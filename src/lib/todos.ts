@@ -64,3 +64,12 @@ export const sanitizeTodoStore = (raw: unknown): TodoStore => {
   });
   return store;
 };
+
+// Puts a deleted custom item back where it was (used by Undo).
+export const restoreTodo = (store: TodoStore, day: DayId, todo: CustomTodo, done: boolean, index: number): TodoStore => {
+  const state = dayState(store, day);
+  if (state.custom.some((t) => t.id === todo.id)) return store;
+  const custom = [...state.custom];
+  custom.splice(Math.min(Math.max(index, 0), custom.length), 0, todo);
+  return { ...store, [day]: { custom, done: done ? [...state.done, todo.id] : state.done } };
+};

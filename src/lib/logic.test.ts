@@ -2,10 +2,12 @@ import { describe, expect, it } from 'vitest';
 import { DAYS } from '../data/days';
 import { formatTime, sunTimes, TRIP_TZ } from './dates';
 import { notesToText, sanitizeNoteStore, setNote } from './notes';
-import { DEFAULT_PREFS, sanitizePrefs } from './prefs';
+import { DEFAULT_PREFS, initialsOf, sanitizePrefs } from './prefs';
 import { readJSON, writeJSON } from './storage';
-import { adjacentDay, focusDay, resolveInitialTab } from './tabs';
-import { addTodo, removeTodo, sanitizeTodoStore, todoItems, toggleTodo } from './todos';
+import { sanitizeFavorites, toggleFavorite } from './favorites';
+import { adjacentDay, focusDay, parseHash, resolveInitialRoute, toHash } from './routes';
+import { resultCount, searchTrip } from './search';
+import { addTodo, removeTodo, restoreTodo, sanitizeTodoStore, todoItems, toggleTodo } from './todos';
 import { parseDaily } from './weather';
 
 describe('todos', () => {
@@ -32,6 +34,15 @@ describe('todos', () => {
     expect(store.wed).toEqual({ done: [], custom: [] });
   });
 
+  it('restores a deleted item in its old place for Undo', () => {
+    let store = addTodo({}, 'wed', 'A', 'c-a');
+    store = addTodo(store, 'wed', 'B', 'c-b');
+    const removed = removeTodo(store, 'wed', 'c-a');
+    const restored = restoreTodo(removed, 'wed', { id: 'c-a', text: 'A' }, true, 0);
+    expect(restored.wed?.custom.map((t) => t.id)).toEqual(['c-a', 'c-b']);
+    expect(restored.wed?.done).toEqual(['c-a']);
+  });
+
   it('drops malformed stored data', () => {
     const store = sanitizeTodoStore({ wed: { done: ['a', 3], custom: [{ id: 'x', text: 'ok' }, { id: 1 }] }, bogus: {} });
     expect(store).toEqual({ wed: { done: [], custom: [{ id: 'x', text: 'ok' }] } });
@@ -55,12 +66,43 @@ describe('notes', () => {
 describe('prefs', () => {
   it('falls back to defaults for missing or invalid fields', () => {
     expect(sanitizePrefs(null)).toEqual(DEFAULT_PREFS);
-    expect(sanitizePrefs({ theme: 'neon', lastTab: 'nowhere', location: { lat: 200, lon: 0 } })).toEqual(DEFAULT_PREFS);
+    expect(sanitizePrefs({ theme: 'neon', lastHash: 'javascript:alert(1)', location: { lat: 200, lon: 0 }, name: 42 })).toEqual(DEFAULT_PREFS);
   });
 
-  it('keeps valid values', () => {
-    const prefs = sanitizePrefs({ theme: 'dark', startOn: 'last', lastTab: 'contacts', location: { lat: 7.9, lon: 98.4 }, hideDone: true });
-    expect(prefs).toMatchObject({ theme: 'dark', startOn: 'last', lastTab: 'contacts', location: { lat: 7.9, lon: 98.4 }, hideDone: true });
+  it('keeps valid values and trims the name', () => {
+    const prefs = sanitizePrefs({ theme: 'dark', startOn: 'last', lastHash: '#contacts', lastDay: 'wed', location: { lat: 7.9, lon: 98.4 }, hideDone: true, name: '  Ashiq ', onboarded: true });
+    expect(prefs).toMatchObject({ theme: 'dark', startOn: 'last', lastHash: '#contacts', lastDay: 'wed', hideDone: true, name: 'Ashiq', onboarded: true });
+  });
+
+  it('carries over the last tab saved by the previous version', () => {
+    expect(sanitizePrefs({ lastTab: 'places' }).lastHash).toBe('#places');
+  });
+
+  it('builds avatar initials', () => {
+    expect(initialsOf('ashiq')).toBe('A');
+    expect(initialsOf('Sea Bees Diving')).toBe('SB');
+    expect(initialsOf('   ')).toBe('');
+  });
+});
+
+describe('favorites', () => {
+  it('toggles and drops unknown or duplicate places', () => {
+    expect(toggleFavorite(toggleFavorite([], 'mayaBay'), 'mayaBay')).toEqual([]);
+    expect(sanitizeFavorites(['mayaBay', 'mayaBay', 'nowhere', 3])).toEqual(['mayaBay']);
+  });
+});
+
+describe('search', () => {
+  it('finds places, days and rainy-day ideas', () => {
+    expect(searchTrip('pier').places.map((p) => p.place)).toContain('roongSiamPier');
+    expect(searchTrip('similan').days).toContain('thu');
+    expect(searchTrip('aquaria').rainy).toEqual(['Aquaria Phuket']);
+  });
+
+  it('needs every word to match and ignores case and accents', () => {
+    expect(searchTrip('MAYA bay').places.map((p) => p.place)).toEqual(['mayaBay']);
+    expect(resultCount(searchTrip('maya museum'))).toBe(0);
+    expect(resultCount(searchTrip('   '))).toBe(0);
   });
 });
 
@@ -72,19 +114,27 @@ describe('storage', () => {
   });
 });
 
-describe('tabs', () => {
-  it('opens a valid hash first', () => {
-    expect(resolveInitialTab({ hash: '#places', today: '2026-11-05', startOn: 'today', lastTab: 'wed' })).toBe('places');
+describe('routes', () => {
+  it('opens a valid hash first, including links from older versions', () => {
+    expect(resolveInitialRoute({ hash: '#wed', today: '2026-11-05', startOn: 'today', lastHash: null })).toEqual({ screen: 'today', day: 'wed' });
+    expect(parseHash('#costs')).toEqual({ screen: 'trip' });
+    expect(parseHash('#planb')).toEqual({ screen: 'explore', segment: 'rainy' });
+    expect(parseHash('#bogus')).toBeNull();
   });
 
   it("opens today's day during the trip, the first day before it, the last day after it", () => {
-    expect(resolveInitialTab({ hash: '', today: '2026-11-05', startOn: 'today', lastTab: 'costs' })).toBe('thu');
+    expect(resolveInitialRoute({ hash: '', today: '2026-11-05', startOn: 'today', lastHash: '#trip' })).toEqual({ screen: 'today', day: 'thu' });
     expect(focusDay('2026-11-02')).toBe('tue3');
     expect(focusDay('2026-12-01')).toBe('tue');
   });
 
-  it('opens the last tab when that preference is set', () => {
-    expect(resolveInitialTab({ hash: '#bogus', today: '2026-11-05', startOn: 'last', lastTab: 'costs' })).toBe('costs');
+  it('opens the last screen when that preference is set', () => {
+    expect(resolveInitialRoute({ hash: '', today: '2026-11-05', startOn: 'last', lastHash: '#contacts' })).toEqual({ screen: 'contacts' });
+  });
+
+  it('round-trips every route through the hash', () => {
+    const routes = [{ screen: 'today', day: 'sat' }, { screen: 'trip' }, { screen: 'explore', segment: 'rainy' }, { screen: 'explore', segment: 'places' }, { screen: 'contacts' }, { screen: 'you' }] as const;
+    routes.forEach((route) => expect(parseHash(toHash(route))).toEqual(route));
   });
 
   it('walks between days', () => {

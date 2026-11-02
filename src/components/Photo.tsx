@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { PhotoInfo } from '../data/types';
+import { Icon } from './Icon';
 
 const COMMONS = 'https://commons.wikimedia.org/wiki/';
 const fileUrl = (file: string, width: number) => `${COMMONS}Special:FilePath/${encodeURIComponent(file)}?width=${width}`;
@@ -64,9 +65,9 @@ const Lightbox = ({ photo, onClose }: LightboxProps) => {
   }, [onClose]);
 
   return (
-    <div className="lightbox open" role="dialog" aria-modal="true" aria-label="Photo" onClick={(event) => event.target === event.currentTarget && onClose()}>
-      <button ref={closeRef} className="lb-close" type="button" aria-label="Close photo" onClick={onClose}>
-        ×
+    <div className="lightbox" role="dialog" aria-modal="true" aria-label="Photo" onClick={(event) => event.target === event.currentTarget && onClose()}>
+      <button ref={closeRef} className="icon-btn lb-close" type="button" aria-label="Close photo" onClick={onClose}>
+        <Icon name="close" size={18} />
       </button>
       <img src={fileUrl(photo.file, 1600)} alt={photo.alt} />
       <p className="lb-cap">

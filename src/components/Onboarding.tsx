@@ -1,0 +1,87 @@
+import { useState } from 'react';
+import { MAX_NAME_LENGTH, type LatLon } from '../lib/prefs';
+import { requestLocation } from '../lib/geo';
+import { DiveFlag, Icon } from './Icon';
+
+type OnboardingProps = {
+  initialName: string;
+  onFinish: (result: { name: string; location: LatLon | null; locationDenied: boolean }) => void;
+};
+
+const PAGES = 3;
+
+export const Onboarding = ({ initialName, onFinish }: OnboardingProps) => {
+  const [page, setPage] = useState(0);
+  const [name, setName] = useState(initialName);
+  const [locating, setLocating] = useState(false);
+
+  const finish = (location: LatLon | null, locationDenied = false) => onFinish({ name: name.trim().slice(0, MAX_NAME_LENGTH), location, locationDenied });
+
+  const allowLocation = async () => {
+    setLocating(true);
+    try {
+      finish(await requestLocation());
+    } catch {
+      finish(null, true);
+    }
+  };
+
+  return (
+    <div className="onboarding" role="dialog" aria-modal="true" aria-label="Welcome">
+      <div className="onboarding-top">
+        {page < PAGES - 1 && (
+          <button className="btn btn-plain" type="button" onClick={() => setPage(PAGES - 1)}>Skip</button>
+        )}
+      </div>
+
+      {page === 0 && (
+        <div className="onboarding-page" key="p0">
+          <DiveFlag size={96} />
+          <h1 className="t-large" style={{ marginTop: 12 }}>Phuket Dive Week</h1>
+          <p className="t-sub">Eight days in the Andaman Sea, planned one day at a time.</p>
+          <label className="sr-only" htmlFor="onboard-name">Your first name (optional)</label>
+          <input id="onboard-name" value={name} maxLength={MAX_NAME_LENGTH} placeholder="Your first name (optional)" autoComplete="given-name" onChange={(e) => setName(e.target.value)} />
+        </div>
+      )}
+
+      {page === 1 && (
+        <div className="onboarding-page" key="p1">
+          <span className="onboarding-art blue"><Icon name="today" /></span>
+          <h1 className="t-title">Everything for the day, in one place</h1>
+          <div className="feature-list">
+            <div className="feature"><Icon name="clockStart" /><p><b>Plan and timeline.</b> <span className="t-sub">Pickup times, dive sites, what to bring and who to call.</span></p></div>
+            <div className="feature"><Icon name="checklist" /><p><b>Checklists.</b> <span className="t-sub">Tick things off and add your own items.</span></p></div>
+            <div className="feature"><Icon name="note" /><p><b>Notes.</b> <span className="t-sub">Log each day. Notes stay private on this device.</span></p></div>
+          </div>
+        </div>
+      )}
+
+      {page === 2 && (
+        <div className="onboarding-page" key="p2">
+          <span className="onboarding-art teal"><Icon name="sun" /></span>
+          <h1 className="t-title">Live weather where you are</h1>
+          <p className="t-sub">
+            See wind, waves and sunset times for your spot. Your location is only used to fetch the forecast. You can change this any time.
+          </p>
+        </div>
+      )}
+
+      <div className="onboarding-foot">
+        <div className="dots" aria-hidden="true">
+          {Array.from({ length: PAGES }, (_, i) => <span key={i} className={i === page ? 'on' : undefined} />)}
+        </div>
+        {page < PAGES - 1 ? (
+          <button className="btn btn-block" type="button" onClick={() => setPage(page + 1)}>Continue</button>
+        ) : (
+          <>
+            <button className="btn btn-block" type="button" onClick={allowLocation} disabled={locating}>
+              <Icon name="location" size={18} />
+              {locating ? 'Waiting for permission…' : 'Use my location'}
+            </button>
+            <button className="btn btn-plain" type="button" onClick={() => finish(null)}>Not now, show Phuket</button>
+          </>
+        )}
+      </div>
+    </div>
+  );
+};

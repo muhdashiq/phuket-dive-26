@@ -1,6 +1,9 @@
 import { useId, useState, type FormEvent } from 'react';
 import type { DayPlan } from '../data/types';
-import { addTodo, MAX_TODO_LENGTH, newTodoId, removeTodo, todoItems, toggleTodo, type TodoStore } from '../lib/todos';
+import { addTodo, MAX_TODO_LENGTH, newTodoId, removeTodo, restoreTodo, todoItems, toggleTodo, type TodoItem, type TodoStore } from '../lib/todos';
+import { Icon } from './Icon';
+import { useToast } from './Toast';
+import { ProgressRing, Section } from './ui';
 
 type DayChecklistProps = {
   day: DayPlan;
@@ -12,9 +15,11 @@ type DayChecklistProps = {
 
 export const DayChecklist = ({ day, store, onChange, hideDone, onToggleHideDone }: DayChecklistProps) => {
   const [draft, setDraft] = useState('');
-  const inputId = useId();
+  const id = useId();
+  const toast = useToast();
   const items = todoItems(day.todos, store, day.id);
   const doneCount = items.filter((item) => item.done).length;
+  const allDone = items.length > 0 && doneCount === items.length;
   const visible = hideDone ? items.filter((item) => !item.done) : items;
 
   const submit = (event: FormEvent) => {
@@ -24,41 +29,64 @@ export const DayChecklist = ({ day, store, onChange, hideDone, onToggleHideDone 
     setDraft('');
   };
 
+  const remove = (item: TodoItem) => {
+    const index = (store[day.id]?.custom ?? []).findIndex((t) => t.id === item.id);
+    onChange((s) => removeTodo(s, day.id, item.id));
+    const short = item.text.length > 28 ? `${item.text.slice(0, 26)}…` : item.text;
+    toast({
+      message: `Deleted “${short}”`,
+      action: { label: 'Undo', onClick: () => onChange((s) => restoreTodo(s, day.id, { id: item.id, text: item.text }, item.done, index)) },
+    });
+  };
+
   return (
-    <section className="panel" aria-labelledby={`${inputId}-h`}>
-      <div className="panel-head">
-        <h3 id={`${inputId}-h`}>Checklist</h3>
-        <span className={`steps-progress${doneCount === items.length && items.length > 0 ? ' all' : ''}`} aria-live="polite">
-          {doneCount === items.length && items.length > 0 ? 'All done' : `${doneCount} of ${items.length} done`}
+    <Section
+      id={`${id}-h`}
+      title="Checklist"
+      trailing={
+        <span className="row-meta t-foot">
+          <ProgressRing value={doneCount} total={items.length} size={22} />
+          <span className="tnum">{doneCount}/{items.length}</span>
+          <button className="btn btn-plain btn-small" type="button" aria-pressed={hideDone} onClick={onToggleHideDone}>
+            {hideDone ? 'Show all' : 'Hide done'}
+          </button>
         </span>
-        <button className="btn" type="button" aria-pressed={hideDone} onClick={onToggleHideDone}>
-          {hideDone ? 'Show done' : 'Hide done'}
-        </button>
-      </div>
-      <div className="meter" aria-hidden="true">
-        <span style={{ width: items.length ? `${(doneCount / items.length) * 100}%` : '0%' }} />
-      </div>
-      <ul className="todos">
-        {visible.map((item) => (
-          <li key={item.id} className={item.done ? 'done' : undefined}>
-            <label className="todo">
-              <input type="checkbox" className="step-check" checked={item.done} onChange={() => onChange((s) => toggleTodo(s, day.id, item.id))} />
-              <span>{item.text}</span>
-            </label>
-            {item.custom && (
-              <button className="todo-del" type="button" aria-label={`Delete "${item.text}"`} onClick={() => onChange((s) => removeTodo(s, day.id, item.id))}>
-                ×
-              </button>
-            )}
+      }
+    >
+      <ul className="checklist">
+        {allDone && hideDone ? (
+          <li className="done-state">
+            <span className="badge"><Icon name="check" /></span>
+            <span>
+              <span className="t-headline">All set for {day.dow} {day.dom}</span>
+              <span className="t-foot" style={{ display: 'block' }}>Every item is ticked. Tap Show all to review them.</span>
+            </span>
           </li>
-        ))}
-        {visible.length === 0 && <li className="todos-empty">Everything here is done.</li>}
+        ) : (
+          visible.map((item) => (
+            <li key={item.id} className="check-row">
+              <label className="check">
+                <input type="checkbox" checked={item.done} onChange={() => onChange((s) => toggleTodo(s, day.id, item.id))} />
+                <span className="box"><Icon name="check" /></span>
+                <span className="label">{item.text}</span>
+              </label>
+              {item.custom && (
+                <button className="icon-btn plain danger" type="button" aria-label={`Delete “${item.text}”`} onClick={() => remove(item)}>
+                  <Icon name="trash" size={19} />
+                </button>
+              )}
+            </li>
+          ))
+        )}
+        <li className="check-row">
+          <form className="check-add" onSubmit={submit} style={{ flex: 1 }}>
+            <span className="plus" aria-hidden="true"><Icon name="plus" /></span>
+            <label className="sr-only" htmlFor={id}>Add an item for {day.dow} {day.dom}</label>
+            <input id={id} type="text" value={draft} maxLength={MAX_TODO_LENGTH} placeholder="Add item" enterKeyHint="done" onChange={(e) => setDraft(e.target.value)} />
+            {draft.trim() && <button className="btn btn-small" type="submit">Add</button>}
+          </form>
+        </li>
       </ul>
-      <form className="todo-add" onSubmit={submit}>
-        <label className="sr-only" htmlFor={inputId}>Add an item to the {day.dow} {day.dom} checklist</label>
-        <input id={inputId} type="text" value={draft} maxLength={MAX_TODO_LENGTH} placeholder="Add your own item…" onChange={(e) => setDraft(e.target.value)} />
-        <button className="btn" type="submit" disabled={!draft.trim()}>Add</button>
-      </form>
-    </section>
+    </Section>
   );
 };

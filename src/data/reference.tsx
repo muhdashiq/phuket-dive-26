@@ -1,13 +1,68 @@
 import type { ReactNode } from 'react';
 import { MapLink } from '../components/MapLink';
 import type { PlaceKey } from './places';
-import type { CommonTabId, PhotoInfo, Tone } from './types';
+import type { PhotoInfo, Tone } from './types';
 
-export const COMMON_TABS: { id: CommonTabId; label: string; note: string }[] = [
-  { id: 'contacts', label: 'Contacts', note: 'SOS · shops' },
-  { id: 'places', label: 'Places', note: 'Google Maps' },
-  { id: 'costs', label: 'Costs', note: 'per diver' },
-  { id: 'planb', label: 'Plan B', note: 'rain options' },
+export type Phone = { display: string; dial: string; whatsapp?: string; note?: string };
+
+export type ContactEntry = {
+  name: string;
+  role: string;
+  place?: PlaceKey;
+  phones: Phone[];
+  emails?: string[];
+  link?: { label: string; href: string };
+};
+
+export const EMERGENCY: { label: string; detail: string; dial: string; display: string }[] = [
+  { label: 'Hyperbaric Services Thailand', detail: 'Diving emergencies, 24 h', dial: '+66810819000', display: '+66 81 081 9000' },
+  { label: 'Bangkok Hospital Siriroj', detail: 'Hyperbaric chamber · hotline 1719', dial: '+6676361888', display: '+66 76 361 888' },
+  { label: 'Ambulance', detail: 'Medical emergency', dial: '1669', display: '1669' },
+  { label: 'Tourist police', detail: 'English-speaking help', dial: '1155', display: '1155' },
+  { label: 'Marine police', detail: 'Incidents at sea', dial: '1196', display: '1196' },
+];
+
+export const OPERATORS: ContactEntry[] = [
+  {
+    name: 'PNT · Phi Phi tour',
+    role: 'Klook operator for Tue 3 Nov',
+    phones: [{ display: '+66 81 538 7695', dial: '+66815387695', note: 'Late pickup, changes' }],
+    emails: ['kunmee16@gmail.com'],
+  },
+  {
+    name: 'Sea Bees Diving',
+    role: '1/3 Moo 9 Viset Road, Chalong',
+    place: 'seaBees',
+    phones: [
+      { display: '+66 76 381 765', dial: '+6676381765', note: 'Shop' },
+      { display: '+66 81 270 8817', dial: '+66812708817', note: 'Mobile' },
+    ],
+    emails: ['info@sea-bees.com'],
+  },
+  {
+    name: 'Sunrise Divers',
+    role: '269/24 Patak Road, Karon Beach',
+    place: 'sunriseDivers',
+    phones: [
+      { display: '+66 84 626 4646', dial: '+66846264646', whatsapp: '66846264646', note: 'Mobile' },
+      { display: '+66 76 398 040', dial: '+6676398040', note: 'Shop' },
+    ],
+  },
+  {
+    name: 'Phuket Dive Tours',
+    role: 'Kata Beach office, 95 Soi Pakbang',
+    place: 'phuketDiveTours',
+    phones: [
+      { display: '+66 87 022 5356', dial: '+66870225356', whatsapp: '66870225356', note: 'English' },
+      { display: '+66 86 690 8157', dial: '+66866908157', note: 'Thai' },
+    ],
+  },
+  {
+    name: 'Thailand Divers',
+    role: 'Similan day trips · books by WhatsApp',
+    phones: [{ display: '+44 7340 764006', dial: '+447340764006', whatsapp: '447340764006', note: 'WhatsApp' }],
+    link: { label: 'Contact form', href: 'https://thailand-divers.com/contact-thailand-divers/' },
+  },
 ];
 
 export const BOOKING_STEPS: { id: string; title: string; detail: string }[] = [

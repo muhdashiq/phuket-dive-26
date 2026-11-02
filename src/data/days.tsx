@@ -159,7 +159,7 @@ export const DAYS: DayPlan[] = [
       </>
     ),
     planB: {
-      title: 'Plan B · if the boat is cancelled',
+      title: 'If the boat is cancelled',
       items: [
         <>Afternoon at Big Buddha<MapLink place="bigBuddha" /> and Wat Chalong<MapLink place="watChalong" /> (free, cover shoulders and knees), then sunset at Promthep Cape<MapLink place="promthep" /> (18:05).</>,
         "Move the Racha trip to Sunday and keep Sunday's slot for Racha Yai.",
@@ -224,7 +224,7 @@ export const DAYS: DayPlan[] = [
       </>
     ),
     planB: {
-      title: 'Plan B · if the crossing is cancelled',
+      title: 'If the crossing is cancelled',
       items: [
         <>Move the day: Thailand Divers also runs Friday (Three Trees &amp; North Point) and Sunday (Richelieu Rock, from Namkhem Pier<MapLink place="namKhemPier" />). Sunday is the drier pick.</>,
         <>Stay local: King Cruiser, Shark Point and Koh Doc Mai with Sunrise Divers (3,900 THB), a shorter run from Chalong Pier<MapLink place="chalongPier" />.</>,
@@ -280,7 +280,7 @@ export const DAYS: DayPlan[] = [
       </>
     ),
     planB: {
-      title: 'Plan B · the likely plan',
+      title: 'Likely plan: a dry day on land',
       items: [
         <>Indoor day in Phuket Town: Aquaria Phuket<MapLink place="aquaria" />.</>,
         'From Patong it is 20–30 min by Grab or Bolt. A taxi is about 400–500 THB.',
@@ -336,7 +336,7 @@ export const DAYS: DayPlan[] = [
       </>
     ),
     planB: {
-      title: 'Plan B · if the boat is cancelled',
+      title: 'If the boat is cancelled',
       items: [
         <>Phang Nga Bay and James Bond Island<MapLink place="jamesBond" /> by big boat with canoeing: about 1,500 THB, about 8 hours, hotel pickup included. Park fee 300 THB if not included.</>,
         <>Phuket Elephant Sanctuary<MapLink place="elephantSanctuary" />, half day with vegetarian lunch: 3,000 THB. Observation only, no riding.</>,
@@ -394,7 +394,7 @@ export const DAYS: DayPlan[] = [
       </>
     ),
     planB: {
-      title: 'Plan B · if the boat is cancelled',
+      title: 'If the boat is cancelled',
       items: [
         <>Big Buddha<MapLink place="bigBuddha" /> (09:00–18:00, last entry 17:30, free) and Wat Chalong<MapLink place="watChalong" />, 10 minutes apart.</>,
         <>Sunset at Promthep Cape<MapLink place="promthep" /> (18:04), then the walking street in Old Town.</>,
@@ -464,20 +464,13 @@ export const DAYS: DayPlan[] = [
     left: (
       <>
         <h3>Getting to the airport</h3>
-        <div className="tablebox">
-          <table>
-            <thead>
-              <tr><th>Option</th><th className="n">Patong → airport</th><th>Note</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>Smart Bus Route 1</td><td className="n">100 THB / person</td><td>Hourly, 08:15–23:30</td></tr>
-              <tr><td>InDrive</td><td className="n">500–650 THB</td><td>You propose the fare</td></tr>
-              <tr><td>Bolt</td><td className="n">550–700 THB</td><td>Usually 15–30% below Grab</td></tr>
-              <tr><td>Grab</td><td className="n">650–900 THB</td><td></td></tr>
-              <tr><td>Hotel taxi</td><td className="n">700–1,200 THB</td><td></td></tr>
-            </tbody>
-          </table>
-        </div>
+        <ul className="rows">
+          <li><span><b>Smart Bus Route 1</b><small>Hourly, 08:15–23:30</small></span><span className="val">100 THB / person</span></li>
+          <li><span><b>InDrive</b><small>You propose the fare</small></span><span className="val">500–650 THB</span></li>
+          <li><span><b>Bolt</b><small>Usually 15–30% below Grab</small></span><span className="val">550–700 THB</span></li>
+          <li><span><b>Grab</b></span><span className="val">650–900 THB</span></li>
+          <li><span><b>Hotel taxi</b></span><span className="val">700–1,200 THB</span></li>
+        </ul>
       </>
     ),
     right: (
