@@ -7,6 +7,8 @@ export const STORAGE_KEYS = {
   notes: 'pdw:notes',
   bookingSteps: 'pdw:booking-steps',
   favorites: 'pdw:favorites',
+  photo: 'pdw:photo',
+  notify: 'pdw:notify',
   weatherPrefix: 'pdw:wx:',
 } as const;
 
@@ -28,6 +30,18 @@ export const writeRaw = (key: string, value: string): void => {
     window.localStorage.setItem(key, value);
   } catch {
     /* quota or blocked: memory copy still serves this session */
+  }
+};
+
+// Like writeRaw, but reports whether the value really reached localStorage
+// (it can fail when storage is full or blocked).
+export const tryWriteRaw = (key: string, value: string): boolean => {
+  memory.set(key, value);
+  try {
+    window.localStorage.setItem(key, value);
+    return true;
+  } catch {
+    return false;
   }
 };
 

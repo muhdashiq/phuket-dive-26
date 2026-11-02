@@ -94,6 +94,12 @@ export const DAYS: DayPlan[] = [
         'Diving starts early on Wednesday, so lay out dive gear and charge everything tonight after you get back.',
       ],
     },
+    reminders: [
+      { id: 'eve', at: '2026-11-02T20:00', title: 'Tomorrow: Phi Phi speedboat tour', body: 'Pickup 07:30–07:45 in the hotel lobby. Bring 2,500–3,000 THB in small notes, a towel and your passport.' },
+      { id: 'pickup', at: '2026-11-03T07:10', title: 'Pickup in 20 minutes', body: 'Be in the lobby by 07:30. If the driver is late, call the operator on +66 81 538 7695.' },
+      { id: 'tablet', at: '2026-11-03T08:50', title: 'Seasickness tablet', body: 'Take it at Roong Siam Pier, before the 09:30 departure. Pay the 400 THB park fee each in cash.' },
+      { id: 'gear', at: '2026-11-03T19:30', title: 'Get ready for Wednesday', body: 'Lay out your dive gear and charge your computer, phone and power bank.' },
+    ],
     todos: [
       { id: 'cash', text: 'Get 2,500–3,000 THB in small notes (800 THB park fee)' },
       { id: 'voucher', text: 'Klook voucher ready in the app, both QR codes' },
@@ -165,6 +171,9 @@ export const DAYS: DayPlan[] = [
         "Move the Racha trip to Sunday and keep Sunday's slot for Racha Yai.",
       ],
     },
+    reminders: [
+      { id: 'eve', at: '2026-11-03T20:00', title: 'Tomorrow: Racha Noi & Racha Yai', body: 'Confirm the pickup time with the dive shop. Pack cert card, nitrox card and dive computer.' },
+    ],
     todos: [
       { id: 'confirm', text: 'Confirm pickup time with the dive shop' },
       { id: 'cards', text: 'Cert card, nitrox card, dive computer' },
@@ -231,6 +240,10 @@ export const DAYS: DayPlan[] = [
         'No diving: Phang Nga Bay by big boat. The bay is sheltered and tours run in most weather.',
       ],
     },
+    reminders: [
+      { id: 'eve', at: '2026-11-04T20:00', title: 'Tomorrow: Similan, 06:00 pickup', body: 'Set an alarm. Take the seasickness tablet at the hotel. Cash for the 700 THB park fee.' },
+      { id: 'friday', at: '2026-11-05T18:00', title: 'Decide Friday with the shop', body: 'Friday is the wettest day in the forecast. Confirm or cancel the King Cruiser trip tonight.' },
+    ],
     todos: [
       { id: 'alarm', text: 'Alarm for the 06:00 pickup' },
       { id: 'tablet', text: 'Seasickness tablet at the hotel' },
@@ -342,6 +355,9 @@ export const DAYS: DayPlan[] = [
         <>Phuket Elephant Sanctuary<MapLink place="elephantSanctuary" />, half day with vegetarian lunch: 3,000 THB. Observation only, no riding.</>,
       ],
     },
+    reminders: [
+      { id: 'eve', at: '2026-11-06T20:00', title: 'Tomorrow: Phi Phi dives', body: 'Confirm the boat is going. Bring 600 THB in cash for the park and diving fee.' },
+    ],
     todos: [
       { id: 'confirm', text: 'Friday night: confirm the boat is going' },
       { id: 'cash', text: 'Cash: 600 THB park fee (400 entry + 200 diving)' },
@@ -400,6 +416,9 @@ export const DAYS: DayPlan[] = [
         <>Sunset at Promthep Cape<MapLink place="promthep" /> (18:04), then the walking street in Old Town.</>,
       ],
     },
+    reminders: [
+      { id: 'forecast', at: '2026-11-07T19:00', title: 'Check Sunday’s forecast', body: 'Sunday is the last dive day. Check the Thai Met Dept outlook before you sleep.' },
+    ],
     todos: [
       { id: 'forecast', text: "Saturday evening: check the Thai Met Dept forecast" },
       { id: 'surface', text: 'Note the time of the last surfacing (flight is ≈40 h later)' },
@@ -437,6 +456,9 @@ export const DAYS: DayPlan[] = [
         <p className="note">Book Tuesday&apos;s airport ride today so you are not hunting for a car in the morning.</p>
       </>
     ),
+    reminders: [
+      { id: 'ride', at: '2026-11-09T10:00', title: 'Book tomorrow’s airport ride', body: 'Leave about 3 hours before departure; traffic can stretch the drive to 1.5 hours.' },
+    ],
     todos: [
       { id: 'rinse', text: 'Rinse and dry all gear' },
       { id: 'ride', text: "Book Tuesday's airport ride" },
@@ -479,6 +501,9 @@ export const DAYS: DayPlan[] = [
         <p className="note">Peak traffic can stretch the Patong–airport drive to 1.5 hours, so leave about 3 hours before an international departure.</p>
       </>
     ),
+    reminders: [
+      { id: 'flight', at: '2026-11-10T07:00', title: 'Flight day', body: 'Pack the dry gear, check in online and leave for the airport about 3 hours before departure.' },
+    ],
     todos: [
       { id: 'pack', text: 'Pack dry dive gear and logbook' },
       { id: 'leave', text: 'Leave for the airport 3 h before departure' },

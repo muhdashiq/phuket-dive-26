@@ -1,18 +1,23 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { DAY_BY_ID } from './data/days';
 import type { PlaceKey } from './data/places';
 import type { DayId } from './data/types';
 import { LocationSheet } from './components/LocationSheet';
+import { NotificationCenter, NotificationSettings } from './components/Notifications';
+import { PhotoSheet } from './components/PhotoSheet';
 import { Onboarding } from './components/Onboarding';
 import { TabBar } from './components/TabBar';
 import { useToast } from './components/Toast';
 import { useClock } from './hooks/useClock';
 import { useLocalStorage } from './hooks/useLocalStorage';
+import { usePhoto } from './hooks/usePhoto';
 import { useRoute } from './hooks/useRoute';
 import { useNowWeather, useTripWeather } from './hooks/useWeather';
 import { TRIP_TZ, ymdIn } from './lib/dates';
 import { sanitizeFavorites, toggleFavorite } from './lib/favorites';
 import { sanitizeNoteStore, type NoteStore } from './lib/notes';
+import { addIds, buildReminders, DEFAULT_NOTIFY, delivered, dueForAlert, sanitizeNotify, unreadCount, type NotifyState } from './lib/reminders';
+import { currentPermission, showAlert } from './lib/systemNotify';
 import { DEFAULT_PREFS, sanitizePrefs, type LatLon, type Prefs } from './lib/prefs';
 import { focusDay, resolveInitialRoute, toHash, type ExploreSegment, type Route, type Screen } from './lib/routes';
 import { STORAGE_KEYS } from './lib/storage';
@@ -34,7 +39,13 @@ export const App = () => {
   const [notes, setNotes] = useLocalStorage<NoteStore>(STORAGE_KEYS.notes, {}, sanitizeNoteStore);
   const [steps, setSteps] = useLocalStorage<string[]>(STORAGE_KEYS.bookingSteps, [], sanitizeSteps);
   const [favorites, setFavorites] = useLocalStorage<PlaceKey[]>(STORAGE_KEYS.favorites, [], sanitizeFavorites);
+  const [notify, setNotify] = useLocalStorage<NotifyState>(STORAGE_KEYS.notify, DEFAULT_NOTIFY, sanitizeNotify);
+  const { photo, save: savePhoto, remove: removePhoto } = usePhoto();
   const [locationOpen, setLocationOpen] = useState(false);
+  const [photoOpen, setPhotoOpen] = useState(false);
+  const [centerOpen, setCenterOpen] = useState(false);
+  const [notifySettingsOpen, setNotifySettingsOpen] = useState(false);
+  const [readBefore, setReadBefore] = useState<string[]>([]);
   const [onboarding, setOnboarding] = useState(!prefs.onboarded);
   const [segment, setSegment] = useState<ExploreSegment>('places');
   const toast = useToast();
@@ -44,6 +55,9 @@ export const App = () => {
   const [route, navigate] = useRoute(resolveInitialRoute({ hash: window.location.hash, today, startOn: prefs.startOn, lastHash: prefs.lastHash }));
   const [tripWeather, reloadTrip] = useTripWeather();
   const [nowWeather, reloadNow] = useNowWeather(prefs.location);
+  const reminders = useMemo(() => buildReminders({ todos, notes, daily: tripWeather.daily }), [todos, notes, tripWeather.daily]);
+  const unread = unreadCount(reminders, notify, now);
+  const alerting = useRef(new Set<string>());
   const scrollMemory = useRef<Partial<Record<Screen, number>>>({});
   const lastScreen = useRef<Screen>(route.screen);
   const lastDay = useRef<DayId | null>(route.screen === 'today' ? route.day : null);
@@ -69,6 +83,15 @@ export const App = () => {
     if (route.screen === 'explore') setSegment(route.segment);
   }, [route, setPrefs]);
 
+  // Sheets belong to the screen they were opened on, so close them when the
+  // route changes (for example with the browser or Android back button).
+  useEffect(() => {
+    setCenterOpen(false);
+    setNotifySettingsOpen(false);
+    setPhotoOpen(false);
+    setLocationOpen(false);
+  }, [route]);
+
   // Each tab keeps its own scroll position; a new day starts at the top.
   useLayoutEffect(() => {
     const dayChanged = route.screen === 'today' && lastDay.current !== null && lastDay.current !== route.day;
@@ -85,6 +108,28 @@ export const App = () => {
     },
     [navigate],
   );
+
+  // Deliver reminders as they come due: a phone alert when allowed,
+  // otherwise an in-app banner while the app is on screen.
+  useEffect(() => {
+    if (!prefs.onboarded) return;
+    const due = dueForAlert(reminders, notify, now).filter((r) => !alerting.current.has(r.id));
+    if (due.length === 0) return;
+    due.forEach((r) => alerting.current.add(r.id));
+    setNotify((s) => ({ ...s, notified: addIds(s.notified, due.map((r) => r.id)) }));
+    if (notify.system && currentPermission() === 'granted') {
+      due.forEach((r) => void showAlert({ id: r.id, title: r.title, body: r.body, hash: `#${r.day}` }));
+    } else if (document.visibilityState === 'visible') {
+      const latest = due[0];
+      if (latest) toast({ message: latest.title, tone: 'info', action: { label: 'View', onClick: () => go({ screen: 'today', day: latest.day }) } });
+    }
+  }, [now, reminders, notify, prefs.onboarded, setNotify, toast, go]);
+
+  const openNotifications = () => {
+    setReadBefore(notify.read);
+    setNotify((s) => ({ ...s, read: addIds(s.read, delivered(reminders, s, now).map((r) => r.id)) }));
+    setCenterOpen(true);
+  };
 
   const routeFor = (screen: Screen): Route => {
     switch (screen) {
@@ -135,6 +180,9 @@ export const App = () => {
             nowWeather={nowWeather}
             location={prefs.location}
             name={prefs.name}
+            photo={photo}
+            unread={unread}
+            onOpenNotifications={openNotifications}
             todos={todos}
             onTodos={setTodos}
             notes={notes}
@@ -190,6 +238,10 @@ export const App = () => {
             }}
             onReplayOnboarding={() => setOnboarding(true)}
             onLocationTap={() => setLocationOpen(true)}
+            photo={photo}
+            onEditPhoto={() => setPhotoOpen(true)}
+            alertsOn={notify.system}
+            onOpenNotificationSettings={() => setNotifySettingsOpen(true)}
           />
         );
     }
@@ -202,7 +254,26 @@ export const App = () => {
         {screen}
       </main>
       <LocationSheet open={locationOpen} onClose={() => setLocationOpen(false)} location={prefs.location} onChange={setLocation} />
-      {onboarding && <Onboarding initialName={prefs.name} onFinish={finishOnboarding} />}
+      <PhotoSheet open={photoOpen} onClose={() => setPhotoOpen(false)} name={prefs.name} photo={photo} onSave={savePhoto} onRemove={removePhoto} />
+      <NotificationCenter
+        open={centerOpen}
+        onClose={() => setCenterOpen(false)}
+        reminders={reminders}
+        state={notify}
+        readBefore={readBefore}
+        now={now}
+        onOpenDay={openDay}
+        onClearAll={(ids) => {
+          setNotify((s) => ({ ...s, dismissed: addIds(s.dismissed, ids) }));
+          toast({ message: 'Notifications cleared', tone: 'success' });
+        }}
+        onOpenSettings={() => {
+          setCenterOpen(false);
+          setNotifySettingsOpen(true);
+        }}
+      />
+      <NotificationSettings open={notifySettingsOpen} onClose={() => setNotifySettingsOpen(false)} state={notify} onChange={setNotify} />
+      {onboarding && <Onboarding initialName={prefs.name} photo={photo} onPhoto={savePhoto} onFinish={finishOnboarding} />}
     </div>
   );
 };

@@ -2,10 +2,14 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { initialsOf } from '../lib/prefs';
 import { Icon, type IconName } from './Icon';
 
-type AvatarProps = { name: string; size?: number; soft?: boolean };
+type AvatarProps = { name: string; size?: number; soft?: boolean; photo?: string | null };
 
-export const Avatar = ({ name, size = 36, soft = false }: AvatarProps) => {
+// Circular avatar: the profile photo when there is one, else initials.
+export const Avatar = ({ name, size = 36, soft = false, photo = null }: AvatarProps) => {
   const initials = initialsOf(name);
+  if (photo) {
+    return <img className="avatar avatar-photo" src={photo} alt="" width={size} height={size} style={{ width: size, height: size }} />;
+  }
   const className = `avatar${initials ? (soft ? ' soft' : '') : ' empty'}`;
   return (
     <span className={className} style={{ width: size, height: size, fontSize: size * 0.4 }} aria-hidden="true">

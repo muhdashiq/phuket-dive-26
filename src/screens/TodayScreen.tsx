@@ -38,6 +38,9 @@ type TodayScreenProps = {
   nowWeather: NowWeather;
   location: LatLon | null;
   name: string;
+  photo: string | null;
+  unread: number;
+  onOpenNotifications: () => void;
   todos: TodoStore;
   onTodos: (update: (store: TodoStore) => TodoStore) => void;
   notes: NoteStore;
@@ -114,11 +117,20 @@ export const TodayScreen = (props: TodayScreenProps) => {
         eyebrow={`${day.dow} ${day.dom} · Day ${index + 1} of ${DAYS.length}`}
         actions={
           <>
+            <button
+              className="icon-btn"
+              type="button"
+              aria-label={props.unread ? `Notifications, ${props.unread} new` : 'Notifications'}
+              onClick={props.onOpenNotifications}
+            >
+              <Icon name="bell" size={20} filled={props.unread > 0} />
+              {props.unread > 0 && <span className="bell-badge" aria-hidden="true">{props.unread > 9 ? '9+' : props.unread}</span>}
+            </button>
             <button className="icon-btn" type="button" aria-label="Share this day" onClick={share}>
               <Icon name="share" size={19} />
             </button>
             <button className="icon-btn plain" type="button" aria-label="Open your profile and settings" onClick={props.onOpenYou} style={{ width: 36, height: 36 }}>
-              <Avatar name={props.name} size={36} />
+              <Avatar name={props.name} photo={props.photo} size={36} />
             </button>
           </>
         }

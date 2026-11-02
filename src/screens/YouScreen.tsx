@@ -25,6 +25,10 @@ type YouScreenProps = {
   onClearPlanner: () => void;
   onReplayOnboarding: () => void;
   onLocationTap: () => void;
+  photo: string | null;
+  onEditPhoto: () => void;
+  alertsOn: boolean;
+  onOpenNotificationSettings: () => void;
 };
 
 const THEME_LABELS: Record<Theme, string> = { system: 'Automatic', light: 'Light', dark: 'Dark' };
@@ -75,7 +79,10 @@ export const YouScreen = (props: YouScreenProps) => {
       <ScreenHeader title="You" />
 
       <div className="profile">
-        <Avatar name={prefs.name} size={84} />
+        <button className="avatar-btn" type="button" aria-label={props.photo ? 'Change profile photo' : 'Add a profile photo'} onClick={props.onEditPhoto}>
+          <Avatar name={prefs.name} photo={props.photo} size={88} />
+          <span className="cam" aria-hidden="true"><Icon name="camera" size={15} /></span>
+        </button>
         <p className="t-title">{prefs.name || 'Add your name'}</p>
         <p className="t-foot">Phuket Dive Week · 3–10 Nov 2026</p>
         <button
@@ -138,6 +145,12 @@ export const YouScreen = (props: YouScreenProps) => {
             <span className="tile-icon"><Icon name="today" size={18} /></span>
             <span className="row-body"><span className="row-title">Open the app on</span></span>
             <span className="row-value">{START_LABELS[prefs.startOn]}</span>
+            <Icon name="chevronRight" className="row-chevron" />
+          </button>
+          <button type="button" className="row row-icon" onClick={props.onOpenNotificationSettings}>
+            <span className="tile-icon red"><Icon name="bell" size={18} /></span>
+            <span className="row-body"><span className="row-title">Notifications</span></span>
+            <span className="row-value">{props.alertsOn ? 'Alerts on' : 'In app'}</span>
             <Icon name="chevronRight" className="row-chevron" />
           </button>
           <button type="button" className="row row-icon" onClick={props.onLocationTap}>

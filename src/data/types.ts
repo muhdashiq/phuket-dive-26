@@ -34,6 +34,14 @@ export type TodoSeed = {
   text: string;
 };
 
+// A plan reminder; `at` is local Phuket time (YYYY-MM-DDTHH:mm).
+export type ReminderSeed = {
+  id: string;
+  at: string;
+  title: string;
+  body: string;
+};
+
 export type DayPlan = {
   id: DayId;
   date: string;
@@ -53,4 +61,5 @@ export type DayPlan = {
   right?: ReactNode;
   planB?: { title: string; items: ReactNode[] };
   todos: TodoSeed[];
+  reminders?: ReminderSeed[];
 };

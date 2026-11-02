@@ -129,6 +129,20 @@ const ICONS = {
   clockStart: <path d="M12 3.5a8.5 8.5 0 1 1 0 17 8.5 8.5 0 0 1 0-17zM12 7.5V12l3 2" />,
   undo: <path d="M8 5L4 9l4 4M4.5 9H14a5.5 5.5 0 0 1 0 11h-3" />,
   code: <path d="M8.5 7L3.5 12l5 5M15.5 7l5 5-5 5" />,
+  bell: <path className="f" d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15zM10 20.5a2.2 2.2 0 0 0 4 0" />,
+  camera: (
+    <>
+      <path className="f" d="M4.5 7.5h3l1.6-2.5h5.8l1.6 2.5h3a1.5 1.5 0 0 1 1.5 1.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 18V9a1.5 1.5 0 0 1 1.5-1.5z" />
+      <circle cx="12" cy="13" r="3.4" />
+    </>
+  ),
+  photo: (
+    <>
+      <rect className="f" x="3.5" y="4.5" width="17" height="15" rx="2.5" />
+      <circle cx="9" cy="9.5" r="1.6" />
+      <path d="M3.8 17l5-4.5 3.5 3 3-2.5 5 4.2" />
+    </>
+  ),
   sparkles: <path d="M10 3.5l1.6 4.4 4.4 1.6-4.4 1.6L10 15.5l-1.6-4.4L4 9.5l4.4-1.6zM17.5 14l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z" />,
 } satisfies Record<string, ReactNode>;
 

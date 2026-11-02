@@ -1,16 +1,35 @@
-import { useState } from 'react';
+import { useRef, useState, type ChangeEvent } from 'react';
+import { PhotoError, toProfilePhoto } from '../lib/photo';
+import { Avatar } from './ui';
+import { useToast } from './Toast';
 import { MAX_NAME_LENGTH, type LatLon } from '../lib/prefs';
 import { requestLocation } from '../lib/geo';
 import { DiveFlag, Icon } from './Icon';
 
 type OnboardingProps = {
   initialName: string;
+  photo: string | null;
+  onPhoto: (dataUrl: string) => boolean;
   onFinish: (result: { name: string; location: LatLon | null; locationDenied: boolean }) => void;
 };
 
 const PAGES = 3;
 
-export const Onboarding = ({ initialName, onFinish }: OnboardingProps) => {
+export const Onboarding = ({ initialName, photo, onPhoto, onFinish }: OnboardingProps) => {
+  const toast = useToast();
+  const fileInput = useRef<HTMLInputElement>(null);
+
+  const pickPhoto = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    event.target.value = '';
+    if (!file) return;
+    try {
+      if (!onPhoto(await toProfilePhoto(file))) toast({ message: 'This browser has no room to save the photo', tone: 'error' });
+    } catch (error) {
+      toast({ message: error instanceof PhotoError ? error.message : 'Couldn’t use that photo', tone: 'error' });
+    }
+  };
+
   const [page, setPage] = useState(0);
   const [name, setName] = useState(initialName);
   const [locating, setLocating] = useState(false);
@@ -41,6 +60,11 @@ export const Onboarding = ({ initialName, onFinish }: OnboardingProps) => {
           <p className="t-sub">Eight days in the Andaman Sea, planned one day at a time.</p>
           <label className="sr-only" htmlFor="onboard-name">Your first name (optional)</label>
           <input id="onboard-name" value={name} maxLength={MAX_NAME_LENGTH} placeholder="Your first name (optional)" autoComplete="given-name" onChange={(e) => setName(e.target.value)} />
+          <input ref={fileInput} type="file" accept="image/*" hidden onChange={pickPhoto} />
+          <button className="btn btn-plain onboard-photo-btn" type="button" onClick={() => fileInput.current?.click()}>
+            <Avatar name={name} photo={photo} size={32} />
+            {photo ? 'Change photo' : 'Add a photo (optional)'}
+          </button>
         </div>
       )}
 

@@ -10,7 +10,10 @@ A mobile-first app in the style of iOS consumer apps: large titles, a bottom tab
 - **Trip**: every day at a glance with checklist progress, the "Book in this order" steps and costs per diver.
 - **Explore**: search across places, days and rainy-day ideas; star places to pin them to Favorites; open any place in Google Maps.
 - **Contacts**: one-tap calls to emergency numbers, plus call, WhatsApp, email and copy for each operator.
-- **You**: name and avatar, notes history, settings (appearance, start screen, weather location, hide finished items) and data controls.
+- **You**: name and profile photo (chosen or taken on the device, cropped to a small square), notes history, settings (appearance, start screen, notifications, weather location, hide finished items) and data controls.
+- **Notifications**: the bell on Today lists reminders as they come due: plan reminders written for each day (pickups, cash, decisions), weather alerts when the live forecast shows heavy rain or strong gusts on a boat day, unticked checklist items the evening before, and a prompt to write the day's note. Each kind can be switched off. With permission, they also arrive as system notifications through a small service worker (`public/sw.js`).
+
+  Without a push server, system notifications only fire while the app is open or running in the background. A fully closed app can't wake the phone. On iPhone and iPad, web notifications need the app added to the Home Screen first (`public/manifest.webmanifest` makes it installable).
 
 First launch shows a short welcome that asks for an optional name and explains the location request before the browser asks. Links from earlier versions (`#wed`, `#contacts`, `#costs`, `#planb`) still work.
 
@@ -22,6 +25,8 @@ Everything you enter is kept in this browser's `localStorage` under `pdw:` keys.
 | `pdw:todos` | per-day ticks and your own checklist items |
 | `pdw:notes` | per-day notes |
 | `pdw:favorites` | starred places |
+| `pdw:photo` | profile photo, a small JPEG data URL |
+| `pdw:notify` | notification settings, and which reminders were read, cleared or alerted |
 | `pdw:booking-steps` | the "Book in this order" ticks |
 | `pdw:wx:*` | cached weather responses |
 
@@ -40,7 +45,7 @@ npm test
 npm run build
 ```
 
-The trip content lives in `src/data/`: `days.tsx` for each day (including the starter checklist), `reference.tsx` for contacts, costs, rainy-day options, places and sources, and `places.ts` for map locations. Screens are in `src/screens/`, shared UI in `src/components/`, and the design tokens at the top of `src/styles.css`.
+The trip content lives in `src/data/`: `days.tsx` for each day (including the starter checklist and plan reminders), `reference.tsx` for contacts, costs, rainy-day options, places and sources, and `places.ts` for map locations. Screens are in `src/screens/`, shared UI in `src/components/`, and the design tokens at the top of `src/styles.css`.
 
 ## Deploy
 
