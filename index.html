@@ -1,0 +1,902 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Day-by-day Phuket dive plan for 4–10 Nov 2026: weather, sites, operators, prices, sunrise and sunset, rainy-day options and Google Maps links.">
+<title>Phuket Dive Week</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: deep-sea masthead with a nitrox cylinder band, a sticky day strip, one "dive slate" per day, then reference sections (costs, plan B pool, contacts, sources). */
+:root {
+  --bg: #eef3f3;
+  --surface: #ffffff;
+  --surface-2: #f5f8f8;
+  --ink: #0d2230;
+  --muted: #4f6570;
+  --line: #d3dfe1;
+  --accent: #0a6683;
+  --mast: #0c2e40;
+  --mast-ink: #eaf3f5;
+  --mast-muted: #a8c2cb;
+  --nitrox-y: #e6c23a;
+  --nitrox-g: #22764a;
+  --good: #1f7246; --good-bg: #e1f0e7;
+  --watch: #8f5d0e; --watch-bg: #f6ead2;
+  --poor: #a23a2a; --poor-bg: #f5e0db;
+  --rest: #3f5c77; --rest-bg: #e2e9f0;
+  --f-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --f-data: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --r: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a151b; --surface: #101f27; --surface-2: #0d1a21; --ink: #e2edf0; --muted: #96adb6; --line: #213640;
+    --accent: #6cc6e0; --mast: #061f2c; --mast-ink: #eaf3f5; --mast-muted: #9bb7c1;
+    --nitrox-y: #e6c23a; --nitrox-g: #2f8a58;
+    --good: #72d09a; --good-bg: #12301f; --watch: #e8b05a; --watch-bg: #33260f;
+    --poor: #f28c77; --poor-bg: #3a1a15; --rest: #a3bdd6; --rest-bg: #182633;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0a151b; --surface: #101f27; --surface-2: #0d1a21; --ink: #e2edf0; --muted: #96adb6; --line: #213640;
+  --accent: #6cc6e0; --mast: #061f2c; --mast-ink: #eaf3f5; --mast-muted: #9bb7c1;
+  --nitrox-y: #e6c23a; --nitrox-g: #2f8a58;
+  --good: #72d09a; --good-bg: #12301f; --watch: #e8b05a; --watch-bg: #33260f;
+  --poor: #f28c77; --poor-bg: #3a1a15; --rest: #a3bdd6; --rest-bg: #182633;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; }
+img { max-width: 100%; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.55; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+a { color: var(--accent); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+p { margin: 0; }
+.num, .v, .price, td.n { font-variant-numeric: tabular-nums; }
+
+.wrap { max-width: 1000px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* Masthead */
+.masthead { background: var(--mast); color: var(--mast-ink); }
+.masthead .wrap { padding-block: 28px 22px; display: grid; gap: 12px; }
+.eyebrow { font-family: var(--f-display); font-weight: 600; text-transform: uppercase; letter-spacing: .12em; font-size: .9rem; color: var(--mast-muted); }
+h1 { font-family: var(--f-display); font-weight: 700; font-size: clamp(2.6rem, 9vw, 4rem); line-height: .92; letter-spacing: .005em; text-transform: uppercase; }
+.lede { max-width: 62ch; color: var(--mast-ink); opacity: .92; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 4px; }
+.facts div { display: grid; }
+.facts dt { font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; color: var(--mast-muted); }
+.facts dd { margin: 0; font-family: var(--f-data); font-size: 1rem; }
+.tankband { background: var(--nitrox-g); border-block: 6px solid var(--nitrox-y); }
+.tankband .wrap { padding-block: 4px; font-family: var(--f-display); font-weight: 700; letter-spacing: .32em; font-size: .78rem; color: var(--nitrox-y); text-transform: uppercase; white-space: nowrap; overflow: hidden; }
+
+/* Sticky day strip */
+.daybar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
+.daybar .wrap { padding-block: 10px; }
+.chips { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.chips::-webkit-scrollbar { display: none; }
+.chip { flex: 0 0 auto; min-width: 86px; display: grid; gap: 1px; padding: 7px 10px 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); text-decoration: none; transition: border-color .15s ease, background-color .15s ease; }
+.chip:hover { border-color: var(--accent); }
+.chip.active { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.chip .d { font-family: var(--f-display); font-weight: 700; font-size: 1.05rem; letter-spacing: .04em; text-transform: uppercase; line-height: 1.1; }
+.chip .s { font-size: .74rem; color: var(--muted); display: flex; align-items: center; gap: 5px; white-space: nowrap; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex: 0 0 auto; }
+.t-good { color: var(--good); } .t-watch { color: var(--watch); } .t-poor { color: var(--poor); } .t-rest { color: var(--rest); }
+
+main.wrap { padding-block: 22px 40px; display: grid; gap: 26px; }
+
+/* Intro panel */
+.intro { display: grid; gap: 14px; }
+.intro h2, .ref h2 { font-family: var(--f-display); font-weight: 700; text-transform: uppercase; letter-spacing: .03em; font-size: 1.55rem; line-height: 1.05; }
+.steps { margin: 0; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.steps li { counter-increment: s; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; display: grid; gap: 4px; min-width: 0; }
+.steps li::before { content: "Step " counter(s); font-family: var(--f-display); font-weight: 600; text-transform: uppercase; letter-spacing: .1em; font-size: .78rem; color: var(--accent); }
+.steps b { font-weight: 600; }
+
+/* Day slate */
+.day { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 84px); }
+.day-head { display: grid; grid-template-columns: auto 1fr; gap: 14px; padding: 16px; align-items: center; }
+.slate { width: 76px; border-radius: 10px; padding: 8px 6px 9px; text-align: center; display: grid; gap: 0; }
+.slate .dow { font-family: var(--f-display); font-weight: 700; font-size: 1.7rem; line-height: 1; text-transform: uppercase; letter-spacing: .03em; }
+.slate .dom { font-family: var(--f-data); font-size: .8rem; }
+.s-good { background: var(--good-bg); color: var(--good); }
+.s-watch { background: var(--watch-bg); color: var(--watch); }
+.s-poor { background: var(--poor-bg); color: var(--poor); }
+.s-rest { background: var(--rest-bg); color: var(--rest); }
+.day-title { display: grid; gap: 4px; min-width: 0; }
+.day-title h2 { font-family: var(--f-display); font-weight: 700; font-size: clamp(1.45rem, 4.6vw, 1.9rem); line-height: 1.02; letter-spacing: .01em; }
+.day-sub { color: var(--muted); font-size: .9rem; }
+.pill { justify-self: start; display: inline-flex; align-items: center; gap: 6px; font-size: .74rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; padding: 3px 9px; border-radius: 999px; }
+
+.wx { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line); border-block: 1px solid var(--line); }
+@media (min-width: 760px) { .wx { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+.cell { background: var(--surface-2); padding: 10px 12px; display: grid; gap: 2px; min-width: 0; }
+.k { font-size: .68rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+.v { font-family: var(--f-data); font-size: .92rem; line-height: 1.3; overflow-wrap: anywhere; }
+.v small { font-family: var(--f-body); font-size: .74rem; color: var(--muted); display: block; }
+.wx-note { padding: 10px 16px; font-size: .84rem; color: var(--muted); border-bottom: 1px solid var(--line); }
+
+.body { display: grid; gap: 0; }
+@media (min-width: 820px) { .body { grid-template-columns: 1fr 1fr; } .body > .block:first-child { border-right: 1px solid var(--line); } }
+.block { padding: 16px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.block + .block { border-top: 1px solid var(--line); }
+@media (min-width: 820px) { .body > .block + .block { border-top: 0; } }
+.block h3, .planb h3 { font-family: var(--f-display); font-weight: 600; text-transform: uppercase; letter-spacing: .1em; font-size: .95rem; color: var(--muted); }
+
+.dives { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; counter-reset: dv; }
+.dives li { counter-increment: dv; display: grid; grid-template-columns: 34px 1fr; gap: 10px; align-items: baseline; }
+.dives li::before { content: "D" counter(dv); font-family: var(--f-data); font-size: .8rem; color: var(--accent); border: 1px solid var(--line); border-radius: 6px; text-align: center; padding: 1px 0; }
+.dives b { font-weight: 600; }
+.timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: .9rem; }
+.timeline li { display: grid; grid-template-columns: 56px 1fr; gap: 8px; }
+.timeline .tm { font-family: var(--f-data); font-size: .84rem; color: var(--muted); }
+.note { font-size: .88rem; color: var(--muted); }
+.note b { color: var(--ink); font-weight: 600; }
+
+.ops { display: grid; gap: 10px; }
+.op { border: 1px solid var(--line); border-radius: 10px; padding: 11px 12px; display: grid; gap: 5px; background: var(--surface); min-width: 0; }
+.op.pick { border-color: var(--accent); }
+.op-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.op-name { font-weight: 600; }
+.tag { font-size: .66rem; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); font-weight: 600; margin-left: 6px; }
+.price { font-family: var(--f-data); font-size: .95rem; white-space: nowrap; }
+.op-meta { font-size: .86rem; color: var(--muted); }
+.contact { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: .88rem; }
+.contact .num { font-family: var(--f-data); font-size: .86rem; user-select: all; }
+.copy { font: inherit; font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); background: transparent; border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; cursor: pointer; }
+.copy:hover { border-color: var(--accent); }
+.copy:active { transform: scale(.96); }
+
+.map { display: inline-flex; align-items: center; gap: 3px; margin-left: 6px; padding: 1px 8px 1px 6px; border: 1px solid var(--line); border-radius: 999px; font-family: var(--f-body); font-size: .7rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--accent); text-decoration: none; white-space: nowrap; vertical-align: 1px; line-height: 1.5; }
+.map:hover { border-color: var(--accent); }
+.map + .map { margin-left: 4px; }
+.placelist, .card .placelist { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.placelist li { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; font-size: .88rem; border-bottom: 1px dotted var(--line); padding-bottom: 6px; }
+.placelist li:last-child { border-bottom: 0; padding-bottom: 0; }
+.placelist .pl { display: grid; min-width: 0; }
+.placelist .pl small { color: var(--muted); font-size: .76rem; }
+.placelist .map { flex: 0 0 auto; }
+.planb { background: var(--surface-2); border-top: 1px dashed var(--line); padding: 14px 16px 16px; display: grid; gap: 8px; }
+.planb ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: .9rem; }
+.planb li::marker { color: var(--muted); }
+
+/* Reference sections */
+.ref { display: grid; gap: 12px; scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 84px); }
+.ref > p { max-width: 70ch; color: var(--muted); }
+.tablebox { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: .9rem; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); font-weight: 600; background: var(--surface-2); }
+td.n { font-family: var(--f-data); text-align: right; white-space: nowrap; }
+th.n { text-align: right; }
+tfoot td { font-weight: 600; border-bottom: 0; }
+tbody tr:last-child td { border-bottom: 1px solid var(--line); }
+
+.alts { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.alt { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 13px 14px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.alt h3 { font-size: 1rem; font-weight: 600; }
+.alt dl { margin: 0; display: grid; grid-template-columns: 82px 1fr; gap: 4px 10px; font-size: .86rem; }
+.alt dt { color: var(--muted); font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; padding-top: 2px; }
+.alt dd { margin: 0; min-width: 0; }
+.badge { justify-self: start; font-size: .68rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; padding: 2px 8px; border-radius: 999px; }
+
+.cards2 { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 13px 14px; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.card h3 { font-size: 1rem; font-weight: 600; }
+.card p, .card li { font-size: .88rem; }
+.card ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+.card.sos { border-color: var(--poor); }
+.card.sos h3 { color: var(--poor); }
+
+.sources { columns: 2 280px; column-gap: 24px; margin: 0; padding-left: 18px; font-size: .84rem; }
+.sources li { break-inside: avoid; margin-bottom: 4px; }
+footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap">
+    <p class="eyebrow">Andaman Sea · 4 – 10 November 2026 · Nitrox</p>
+    <h1>Phuket Dive Week</h1>
+    <p class="lede">Five boat days from Wednesday to Sunday, Monday off for off-gassing, and the flight home to India on Tuesday. Forecast checked Monday 2 Nov; recheck each evening before you go out.</p>
+    <dl class="facts">
+      <div><dt>Boat days</dt><dd>5 (Fri on standby)</dd></div>
+      <div><dt>Dives</dt><dd>up to 13</dd></div>
+      <div><dt>Water</dt><dd>28–29 °C</dd></div>
+      <div><dt>Est. cost / diver</dt><dd>24,700–25,900 THB</dd></div>
+    </dl>
+  </div>
+  <div class="tankband" aria-hidden="true"><div class="wrap">Enriched air nitrox · Analyse every tank · Enriched air nitrox · Analyse every tank</div></div>
+</header>
+
+<nav class="daybar" aria-label="Days">
+  <div class="wrap">
+    <div class="chips" id="chips">
+      <a class="chip" href="#wed"><span class="d">Wed</span><span class="s"><i class="dot t-good"></i>4 Nov · 15%</span></a>
+      <a class="chip" href="#thu"><span class="d">Thu</span><span class="s"><i class="dot t-good"></i>5 Nov · 20%</span></a>
+      <a class="chip" href="#fri"><span class="d">Fri</span><span class="s"><i class="dot t-poor"></i>6 Nov · 75%</span></a>
+      <a class="chip" href="#sat"><span class="d">Sat</span><span class="s"><i class="dot t-watch"></i>7 Nov · 55%</span></a>
+      <a class="chip" href="#sun"><span class="d">Sun</span><span class="s"><i class="dot t-good"></i>8 Nov · 20%</span></a>
+      <a class="chip" href="#mon"><span class="d">Mon</span><span class="s"><i class="dot t-rest"></i>Rest</span></a>
+      <a class="chip" href="#tue"><span class="d">Tue</span><span class="s"><i class="dot t-rest"></i>Fly home</span></a>
+      <a class="chip" href="#costs"><span class="d">Costs</span><span class="s">per diver</span></a>
+      <a class="chip" href="#planb"><span class="d">Plan B</span><span class="s">rain options</span></a>
+      <a class="chip" href="#places"><span class="d">Places</span><span class="s">Google Maps</span></a>
+      <a class="chip" href="#contacts"><span class="d">Contacts</span><span class="s">shops · SOS</span></a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section class="intro" aria-labelledby="book-h">
+    <h2 id="book-h">Book in this order</h2>
+    <ol class="steps">
+      <li><b>Similan for Thursday, today.</b> <span>The park allows 525 divers a day, and the long trip fills first.</span></li>
+      <li><b>Wednesday's Racha trip, today.</b> <span>Pickup is Wednesday morning, so the shop needs your details by tonight.</span></li>
+      <li><b>Saturday Phi Phi and Sunday Racha Yai.</b> <span>Send names, cert level, nitrox card, last dive date and hotel on WhatsApp.</span></li>
+      <li><b>Friday on standby.</b> <span>Ask the shop to hold a place and confirm by Thursday evening. Rain chance is 75%.</span></li>
+    </ol>
+  </section>
+
+  <!-- WEDNESDAY -->
+  <section class="day" id="wed" aria-labelledby="wed-h">
+    <div class="day-head">
+      <div class="slate s-good"><span class="dow">Wed</span><span class="dom">4 Nov</span></div>
+      <div class="day-title">
+        <span class="pill s-good"><i class="dot"></i>Good window</span>
+        <h2 id="wed-h">Racha Noi &amp; Racha Yai</h2>
+        <p class="day-sub">3 dives · from Chalong Pier · no park fee listed</p>
+      </div>
+    </div>
+    <div class="wx">
+      <div class="cell"><span class="k">Air</span><span class="v">31° / 26°C</span></div>
+      <div class="cell"><span class="k">Rain</span><span class="v">15%</span></div>
+      <div class="cell"><span class="k">Wind</span><span class="v">SE 15–30 km/h</span></div>
+      <div class="cell"><span class="k">Sea</span><span class="v">≈1 m<small>&gt;2 m in storms</small></span></div>
+      <div class="cell"><span class="k">Sunrise</span><span class="v">06:15</span></div>
+      <div class="cell"><span class="k">Sunset</span><span class="v">18:05</span></div>
+    </div>
+    <p class="wx-note">Thai Met Dept (4–7 Nov, west coast): scattered to fairly widespread thundershowers, isolated heavy rain. Wednesday has the lowest rain chance of the week.</p>
+    <div class="body">
+      <div class="block">
+        <h3>Dive plan</h3>
+        <ol class="dives">
+          <li><span><b>Racha Noi</b><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Ko+Racha+Noi%2C+Phuket" target="_blank" rel="noopener" aria-label="Open Ko Racha Noi, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a> — deeper, more current. Sea Bees lists 40 m max on this trip.</span></li>
+          <li><span><b>Racha Noi</b> — second site, chosen on the day for current.</span></li>
+          <li><span><b>Racha Yai</b><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Ko+Racha+Yai%2C+Phuket&amp;query_place_id=ChIJ62LAnzvRTzARAxEU5ubxfgQ" target="_blank" rel="noopener" aria-label="Open Ko Racha Yai, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a> — easy, sheltered bays for the last dive.</span></li>
+        </ol>
+        <p class="note"><b>Gas check:</b> on EAN32 your MOD is 33.8 m at ppO₂ 1.4. Racha Noi can go deeper than that, so plan to your gas, not the reef.</p>
+      </div>
+      <div class="block">
+        <h3>Book with</h3>
+        <div class="ops">
+          <div class="op pick">
+            <div class="op-top"><span class="op-name">Sea Bees Diving<span class="tag">Runs Wednesdays</span></span><span class="price">4,700 THB</span></div>
+            <p class="op-meta">Free pickup Patong 08:00, Kata / Karon / Rawai / Nai Harn 08:15. Breakfast, lunch, tanks, weights and guide included.</p>
+            <p class="op-meta">Nitrox 250 THB (12 L) or 350 THB (15 L) per dive. Gear set 750–900 THB.</p>
+            <div class="contact"><span class="num">+66 76 381 765</span><button class="copy" data-copy="+6676381765">Copy</button><span class="num">info@sea-bees.com</span></div>
+          </div>
+          <div class="op">
+            <div class="op-top"><span class="op-name">Sunrise Divers</span><span class="price">from 3,900 THB</span></div>
+            <p class="op-meta">Pickup 07:15–07:45, boat leaves Chalong 08:30. Gear set 500 THB. Ask for nitrox price.</p>
+            <div class="contact"><span class="num">+66 84 626 4646</span><button class="copy" data-copy="+66846264646">Copy</button><a href="https://wa.me/66846264646" target="_blank" rel="noopener">WhatsApp</a></div>
+          </div>
+          <div class="op">
+            <div class="op-top"><span class="op-name">Phuket Dive Tours</span><span class="price">from 3,700 THB</span></div>
+            <p class="op-meta">Racha Noi 3-dive trip. Nitrox 200 THB per 12 L tank. Gear 300 THB.</p>
+            <div class="contact"><span class="num">+66 87 022 5356</span><button class="copy" data-copy="+66870225356">Copy</button><a href="https://wa.me/66870225356" target="_blank" rel="noopener">WhatsApp</a></div>
+          </div>
+        </div>
+        <p class="note"><b>Getting there:</b> the shop's minibus collects you from your hotel and drives to Chalong Pier<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Chalong+Pier%2C+Phuket" target="_blank" rel="noopener" aria-label="Open Chalong Pier, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a>. Pickup is free from Patong, Kata, Karon and Rawai; other areas pay a surcharge.</p>
+      </div>
+    </div>
+    <div class="planb">
+      <h3>Plan B · if the boat is cancelled</h3>
+      <ul>
+        <li>Afternoon at Big Buddha<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket+Big+Buddha&amp;query_place_id=ChIJOSmXz2AvUDARXCxlBBs7y38" target="_blank" rel="noopener" aria-label="Open Phuket Big Buddha in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a> and Wat Chalong<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Wat+Chalong%2C+Phuket&amp;query_place_id=ChIJYSMtg7svUDARhklKwhnTa48" target="_blank" rel="noopener" aria-label="Open Wat Chalong, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a> (free, cover shoulders and knees), then sunset at Promthep Cape<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Promthep+Cape%2C+Phuket&amp;query_place_id=ChIJZ3aEXSYmUDARbSkKdsDzYMo" target="_blank" rel="noopener" aria-label="Open Promthep Cape, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a> (18:05).</li>
+        <li>Move the Racha trip to Sunday and keep Sunday's slot for Racha Yai.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- THURSDAY -->
+  <section class="day" id="thu" aria-labelledby="thu-h">
+    <div class="day-head">
+      <div class="slate s-good"><span class="dow">Thu</span><span class="dom">5 Nov</span></div>
+      <div class="day-title">
+        <span class="pill s-good"><i class="dot"></i>Good window · long crossing</span>
+        <h2 id="thu-h">Similan Islands day trip</h2>
+        <p class="day-sub">2 dives · from Thap Lamu Pier, Khao Lak · park open 15 Oct – 15 May</p>
+      </div>
+    </div>
+    <div class="wx">
+      <div class="cell"><span class="k">Air</span><span class="v">31° / 25°C</span></div>
+      <div class="cell"><span class="k">Rain</span><span class="v">20%</span></div>
+      <div class="cell"><span class="k">Wind</span><span class="v">SE 15–30 km/h</span></div>
+      <div class="cell"><span class="k">Sea</span><span class="v">≈1 m<small>1–2 m offshore</small></span></div>
+      <div class="cell"><span class="k">Sunrise</span><span class="v">06:15</span></div>
+      <div class="cell"><span class="k">Sunset</span><span class="v">18:05</span></div>
+    </div>
+    <p class="wx-note">Second-driest day, so it gets the long offshore run. Take a seasickness tablet at the hotel, not at the pier.</p>
+    <div class="body">
+      <div class="block">
+        <h3>Dive plan</h3>
+        <ol class="dives">
+          <li><span><b>Stonehenge</b> — granite boulders and swim-throughs.</span></li>
+          <li><span><b>West of Eden</b> — reef slope on Island No. 7.</span></li>
+        </ol>
+        <p class="note">These are Thailand Divers' Thursday sites in Mu Ko Similan National Park<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Mu+Ko+Similan+National+Park&amp;query_place_id=ChIJTWOkhaJxWjARBugMilSJtEo" target="_blank" rel="noopener" aria-label="Open Mu Ko Similan National Park in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a>. The captain can change them for current or swell.</p>
+        <h3>Day timeline</h3>
+        <ul class="timeline">
+          <li><span class="tm">06:00</span><span>Hotel pickup in Phuket</span></li>
+          <li><span class="tm">08:30</span><span>Speedboat leaves Thap Lamu Pier</span></li>
+          <li><span class="tm">10:30</span><span>Dive 1</span></li>
+          <li><span class="tm">12:00</span><span>Lunch on board</span></li>
+          <li><span class="tm">14:00</span><span>Dive 2</span></li>
+          <li><span class="tm">15:30</span><span>Boat heads back</span></li>
+          <li><span class="tm">≈19:00</span><span>Back at hotel</span></li>
+        </ul>
+      </div>
+      <div class="block">
+        <h3>Book with</h3>
+        <div class="ops">
+          <div class="op pick">
+            <div class="op-top"><span class="op-name">Thailand Divers<span class="tag">Day trip</span></span><span class="price">6,100 THB</span></div>
+            <p class="op-meta">Includes return hotel transfer from Phuket, 2 dives, breakfast and lunch. Park fee 700 THB paid on board.</p>
+            <p class="op-meta">Nitrox 300 THB per cylinder. Gear set 500 THB. Bookings under 30 days out are paid in full.</p>
+            <div class="contact"><span class="num">+44 7340 764006</span><button class="copy" data-copy="+447340764006">Copy</button><a href="https://wa.me/447340764006" target="_blank" rel="noopener">WhatsApp</a></div>
+          </div>
+          <div class="op">
+            <div class="op-top"><span class="op-name">Phuket Dive Tours</span><span class="price">ask</span></div>
+            <p class="op-meta">Lists a Similan 2-dive day trip; no price published.</p>
+            <div class="contact"><span class="num">+66 87 022 5356</span><button class="copy" data-copy="+66870225356">Copy</button><a href="https://wa.me/66870225356" target="_blank" rel="noopener">WhatsApp</a></div>
+          </div>
+        </div>
+        <p class="note"><b>Getting there:</b> about 2 hours by road from Phuket to Thap Lamu Pier<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Thap+Lamu+Pier%2C+Khao+Lak&amp;query_place_id=ChIJjRSbrf_xUDARTnHX1dSrFe0" target="_blank" rel="noopener" aria-label="Open Thap Lamu Pier, Khao Lak in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a> in Khao Lak, then the speedboat to the islands. The transfer is in the price.</p>
+      </div>
+    </div>
+    <div class="planb">
+      <h3>Plan B · if the crossing is cancelled</h3>
+      <ul>
+        <li>Move the day: Thailand Divers also runs Friday (Three Trees &amp; North Point) and Sunday (Richelieu Rock, from Namkhem Pier<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Nam+Khem+Pier%2C+Takua+Pa%2C+Phang+Nga" target="_blank" rel="noopener" aria-label="Open Nam Khem Pier, Takua Pa, Phang Nga in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a>). Sunday is the drier pick.</li>
+        <li>Stay local: King Cruiser, Shark Point and Koh Doc Mai with Sunrise Divers (3,900 THB), a shorter run from Chalong Pier<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Chalong+Pier%2C+Phuket" target="_blank" rel="noopener" aria-label="Open Chalong Pier, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a>.</li>
+        <li>No diving: Phang Nga Bay by big boat. The bay is sheltered and tours run in most weather.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FRIDAY -->
+  <section class="day" id="fri" aria-labelledby="fri-h">
+    <div class="day-head">
+      <div class="slate s-poor"><span class="dow">Fri</span><span class="dom">6 Nov</span></div>
+      <div class="day-title">
+        <span class="pill s-poor"><i class="dot"></i>Rain likely · standby</span>
+        <h2 id="fri-h">King Cruiser, Shark Point &amp; Koh Doc Mai</h2>
+        <p class="day-sub">3 dives if the shop confirms · from Chalong Pier</p>
+      </div>
+    </div>
+    <div class="wx">
+      <div class="cell"><span class="k">Air</span><span class="v">31° / 25°C</span></div>
+      <div class="cell"><span class="k">Rain</span><span class="v">75%</span></div>
+      <div class="cell"><span class="k">Wind</span><span class="v">SE 15–30 km/h</span></div>
+      <div class="cell"><span class="k">Sea</span><span class="v">≈1 m<small>&gt;2 m in storms</small></span></div>
+      <div class="cell"><span class="k">Sunrise</span><span class="v">06:16</span></div>
+      <div class="cell"><span class="k">Sunset</span><span class="v">18:05</span></div>
+    </div>
+    <p class="wx-note">Wettest day of the week. Rain alone rarely stops a dive; thunderstorms and the waves they bring do. Decide on Thursday evening with the shop.</p>
+    <div class="body">
+      <div class="block">
+        <h3>Dive plan</h3>
+        <ol class="dives">
+          <li><span><b>King Cruiser wreck</b><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=King+Cruiser+Wreck%2C+Phuket" target="_blank" rel="noopener" aria-label="Open King Cruiser Wreck, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a> — sunken car ferry. Swapped for Koh Doc Mai if the current is strong.</span></li>
+          <li><span><b>Shark Point</b><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Shark+Point+Hin+Musang%2C+Phuket" target="_blank" rel="noopener" aria-label="Open Shark Point Hin Musang, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a> — pinnacles with soft coral; leopard sharks possible.</span></li>
+          <li><span><b>Koh Doc Mai</b><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Ko+Doc+Mai%2C+Phuket" target="_blank" rel="noopener" aria-label="Open Ko Doc Mai, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a> — wall dive.</span></li>
+        </ol>
+        <p class="note"><b>Swap option:</b> Sea Bees runs Phi Phi on Fridays. If Friday looks better than Saturday on Thursday night, switch the two days.</p>
+      </div>
+      <div class="block">
+        <h3>Book with</h3>
+        <div class="ops">
+          <div class="op pick">
+            <div class="op-top"><span class="op-name">Sunrise Divers<span class="tag">Near-daily</span></span><span class="price">3,900 THB</span></div>
+            <p class="op-meta">Runs almost daily in high season. Pickup 07:15–07:45, Chalong 08:30, back at the pier about 17:00.</p>
+            <div class="contact"><span class="num">+66 84 626 4646</span><button class="copy" data-copy="+66846264646">Copy</button><a href="https://wa.me/66846264646" target="_blank" rel="noopener">WhatsApp</a></div>
+          </div>
+          <div class="op">
+            <div class="op-top"><span class="op-name">Sea Bees · Phi Phi</span><span class="price">4,700 THB</span></div>
+            <p class="op-meta">Fridays only, 3 dives. Park fee 600 THB for divers.</p>
+            <div class="contact"><span class="num">+66 76 381 765</span><button class="copy" data-copy="+6676381765">Copy</button></div>
+          </div>
+        </div>
+        <p class="note"><b>Getting there:</b> hotel minibus to Chalong Pier<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Chalong+Pier%2C+Phuket" target="_blank" rel="noopener" aria-label="Open Chalong Pier, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a>, included from the west-coast beaches.</p>
+      </div>
+    </div>
+    <div class="planb">
+      <h3>Plan B · the likely plan</h3>
+      <ul>
+        <li>Indoor day in Phuket Town: Aquaria Phuket<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Aquaria+Phuket&amp;query_place_id=ChIJq-hIQyQxUDARCwGLTecNofQ" target="_blank" rel="noopener" aria-label="Open Aquaria Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a> at Central Floresta (10:30–19:00), then Phuket Old Town<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket+Old+Town" target="_blank" rel="noopener" aria-label="Open Phuket Old Town in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a> and the Thai Hua Museum<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket+Thai+Hua+Museum&amp;query_place_id=ChIJW_ZuovoxUDARO9tP_1sCA30" target="_blank" rel="noopener" aria-label="Open Phuket Thai Hua Museum in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a>.</li>
+        <li>From Patong it is 20–30 min by Grab or Bolt. A taxi is about 400–500 THB.</li>
+        <li>Or Phuket Elephant Sanctuary<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket+Elephant+Sanctuary&amp;query_place_id=ChIJe5gBglZIUDARbzpRlCqfeMA" target="_blank" rel="noopener" aria-label="Open Phuket Elephant Sanctuary in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a> (half day, 3,000 THB with lunch). Raincoats and boots are provided.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SATURDAY -->
+  <section class="day" id="sat" aria-labelledby="sat-h">
+    <div class="day-head">
+      <div class="slate s-watch"><span class="dow">Sat</span><span class="dom">7 Nov</span></div>
+      <div class="day-title">
+        <span class="pill s-watch"><i class="dot"></i>Mixed · confirm the night before</span>
+        <h2 id="sat-h">Phi Phi: Bida Nok &amp; Bida Nai</h2>
+        <p class="day-sub">3 dives · from Chalong Pier · Phi Phi park fee 600 THB</p>
+      </div>
+    </div>
+    <div class="wx">
+      <div class="cell"><span class="k">Air</span><span class="v">31° / 26°C</span></div>
+      <div class="cell"><span class="k">Rain</span><span class="v">55%</span></div>
+      <div class="cell"><span class="k">Wind</span><span class="v">SE 15–30 km/h</span></div>
+      <div class="cell"><span class="k">Sea</span><span class="v">≈1 m<small>&gt;2 m in storms</small></span></div>
+      <div class="cell"><span class="k">Sunrise</span><span class="v">06:16</span></div>
+      <div class="cell"><span class="k">Sunset</span><span class="v">18:04</span></div>
+    </div>
+    <p class="wx-note">Showers likely but not certain. Last day inside the Thai Met Dept's 1–7 Nov outlook.</p>
+    <div class="body">
+      <div class="block">
+        <h3>Dive plan</h3>
+        <ol class="dives">
+          <li><span><b>Koh Bida Nok</b><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Ko+Bida+Nok%2C+Krabi&amp;query_place_id=ChIJba5jJ98gTjARFafm_cRaUgk" target="_blank" rel="noopener" aria-label="Open Ko Bida Nok, Krabi in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a> — walls and leopard sharks.</span></li>
+          <li><span><b>Koh Bida Nai</b><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Ko+Bida+Nai%2C+Krabi" target="_blank" rel="noopener" aria-label="Open Ko Bida Nai, Krabi in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a> — turtles and reef life in the shallows.</span></li>
+          <li><span><b>Shark Point, Anemone Reef or Koh Doc Mai</b> — picked on the day for weather and boat traffic.</span></li>
+        </ol>
+        <p class="note"><b>Park fee:</b> 400 THB entry plus 200 THB diving fee, cash on site. Not included in trip prices.</p>
+      </div>
+      <div class="block">
+        <h3>Book with</h3>
+        <div class="ops">
+          <div class="op pick">
+            <div class="op-top"><span class="op-name">Phuket Dive Tours</span><span class="price">from 3,700 THB</span></div>
+            <p class="op-meta">Pickup 07:00–08:00, boat 08:30, back about 18:15. Nitrox 200 THB per 12 L tank. Gear 300 THB.</p>
+            <p class="op-meta">Free pickup from Kata, Karon, Rawai, Nai Harn, Chalong, Patong and Kalim.</p>
+            <div class="contact"><span class="num">+66 87 022 5356</span><button class="copy" data-copy="+66870225356">Copy</button><a href="https://wa.me/66870225356" target="_blank" rel="noopener">WhatsApp</a></div>
+            <div class="contact"><span class="num">+66 86 690 8157</span><button class="copy" data-copy="+66866908157">Copy</button><span class="op-meta">Thai line</span></div>
+          </div>
+          <div class="op">
+            <div class="op-top"><span class="op-name">Sunrise Divers</span><span class="price">from 3,900 THB</span></div>
+            <p class="op-meta">Phi Phi with Shark Point or Anemone Reef.</p>
+            <div class="contact"><span class="num">+66 84 626 4646</span><button class="copy" data-copy="+66846264646">Copy</button><a href="https://wa.me/66846264646" target="_blank" rel="noopener">WhatsApp</a></div>
+          </div>
+        </div>
+        <p class="note"><b>Evening:</b> Naka Weekend Market<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Naka+Weekend+Market%2C+Phuket&amp;query_place_id=ChIJ02EC1NsxUDAR9ou27HphtVM" target="_blank" rel="noopener" aria-label="Open Naka Weekend Market, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a>, near Central Festival, runs Saturday and Sunday, 16:00–22:00.</p>
+      </div>
+    </div>
+    <div class="planb">
+      <h3>Plan B · if the boat is cancelled</h3>
+      <ul>
+        <li>Phang Nga Bay and James Bond Island<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=James+Bond+Island%2C+Phang+Nga" target="_blank" rel="noopener" aria-label="Open James Bond Island, Phang Nga in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a> by big boat with canoeing: about 1,500 THB, about 8 hours, hotel pickup included. Park fee 300 THB if not included.</li>
+        <li>Phuket Elephant Sanctuary<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket+Elephant+Sanctuary&amp;query_place_id=ChIJe5gBglZIUDARbzpRlCqfeMA" target="_blank" rel="noopener" aria-label="Open Phuket Elephant Sanctuary in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a>, half day with vegetarian lunch: 3,000 THB. Observation only, no riding.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SUNDAY -->
+  <section class="day" id="sun" aria-labelledby="sun-h">
+    <div class="day-head">
+      <div class="slate s-good"><span class="dow">Sun</span><span class="dom">8 Nov</span></div>
+      <div class="day-title">
+        <span class="pill s-good"><i class="dot"></i>Good window · last dive day</span>
+        <h2 id="sun-h">Racha Yai, easy finish</h2>
+        <p class="day-sub">2 relaxed dives · from Chalong Pier · Old Town walking street after</p>
+      </div>
+    </div>
+    <div class="wx">
+      <div class="cell"><span class="k">Air</span><span class="v">31° / 27°C</span></div>
+      <div class="cell"><span class="k">Rain</span><span class="v">20%</span></div>
+      <div class="cell"><span class="k">Wind</span><span class="v">not issued yet</span></div>
+      <div class="cell"><span class="k">Sea</span><span class="v">not issued yet</span></div>
+      <div class="cell"><span class="k">Sunrise</span><span class="v">06:16</span></div>
+      <div class="cell"><span class="k">Sunset</span><span class="v">18:04</span></div>
+    </div>
+    <p class="wx-note">Beyond the current official 7-day marine outlook. Check the Thai Met Dept's new forecast on Saturday evening.</p>
+    <div class="body">
+      <div class="block">
+        <h3>Dive plan</h3>
+        <ol class="dives">
+          <li><span><b>Racha Yai</b><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Ko+Racha+Yai%2C+Phuket&amp;query_place_id=ChIJ62LAnzvRTzARAxEU5ubxfgQ" target="_blank" rel="noopener" aria-label="Open Ko Racha Yai, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a> — sheltered bay, easy profile.</span></li>
+          <li><span><b>Racha Yai</b> — second bay, shallow and slow.</span></li>
+        </ol>
+        <p class="note"><b>Before the flight:</b> back at the pier on Sunday afternoon leaves about 40 hours before Tuesday's flight. That is well past the usual 18-hour minimum after several days of diving, and Monday stays dry.</p>
+      </div>
+      <div class="block">
+        <h3>Book with</h3>
+        <div class="ops">
+          <div class="op pick">
+            <div class="op-top"><span class="op-name">Sunrise Divers</span><span class="price">from 3,000 THB</span></div>
+            <p class="op-meta">Racha Yai 2-dive day trip. Confirm Sunday departure when you book.</p>
+            <div class="contact"><span class="num">+66 84 626 4646</span><button class="copy" data-copy="+66846264646">Copy</button><a href="https://wa.me/66846264646" target="_blank" rel="noopener">WhatsApp</a></div>
+          </div>
+          <div class="op">
+            <div class="op-top"><span class="op-name">Phuket Dive Tours</span><span class="price">ask</span></div>
+            <p class="op-meta">Several Racha Yai 2-dive options, including a big-boat trip.</p>
+            <div class="contact"><span class="num">+66 87 022 5356</span><button class="copy" data-copy="+66870225356">Copy</button><a href="https://wa.me/66870225356" target="_blank" rel="noopener">WhatsApp</a></div>
+          </div>
+        </div>
+        <p class="note">Sea Bees runs Racha Yai on Monday, Thursday and Saturday, so not on Sunday.</p>
+        <p class="note"><b>Evening:</b> Lard Yai Sunday Walking Street<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Lard+Yai+Sunday+Night+Market%2C+Phuket&amp;query_place_id=ChIJQwdCFvoxUDAR4XNViLYibc4" target="_blank" rel="noopener" aria-label="Open Lard Yai Sunday Night Market, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a> on Thalang Road, Phuket Old Town, 16:00–22:00. Grab from Patong is 25–30 min, about 300–500 THB.</p>
+      </div>
+    </div>
+    <div class="planb">
+      <h3>Plan B · if the boat is cancelled</h3>
+      <ul>
+        <li>Big Buddha<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket+Big+Buddha&amp;query_place_id=ChIJOSmXz2AvUDARXCxlBBs7y38" target="_blank" rel="noopener" aria-label="Open Phuket Big Buddha in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a> (09:00–18:00, last entry 17:30, free) and Wat Chalong<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Wat+Chalong%2C+Phuket&amp;query_place_id=ChIJYSMtg7svUDARhklKwhnTa48" target="_blank" rel="noopener" aria-label="Open Wat Chalong, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a>, 10 minutes apart.</li>
+        <li>Sunset at Promthep Cape<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Promthep+Cape%2C+Phuket&amp;query_place_id=ChIJZ3aEXSYmUDARbSkKdsDzYMo" target="_blank" rel="noopener" aria-label="Open Promthep Cape, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a> (18:04), then the walking street in Old Town.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- MONDAY -->
+  <section class="day" id="mon" aria-labelledby="mon-h">
+    <div class="day-head">
+      <div class="slate s-rest"><span class="dow">Mon</span><span class="dom">9 Nov</span></div>
+      <div class="day-title">
+        <span class="pill s-rest"><i class="dot"></i>No diving</span>
+        <h2 id="mon-h">Rest and off-gas</h2>
+        <p class="day-sub">Dry day before the flight · pack gear dry</p>
+      </div>
+    </div>
+    <div class="wx">
+      <div class="cell"><span class="k">Air</span><span class="v">31° / 26°C</span></div>
+      <div class="cell"><span class="k">Rain</span><span class="v">40%</span></div>
+      <div class="cell"><span class="k">Wind</span><span class="v">not issued yet</span></div>
+      <div class="cell"><span class="k">Sea</span><span class="v">—</span></div>
+      <div class="cell"><span class="k">Sunrise</span><span class="v">06:16</span></div>
+      <div class="cell"><span class="k">Sunset</span><span class="v">18:04</span></div>
+    </div>
+    <div class="body">
+      <div class="block">
+        <h3>Easy ideas</h3>
+        <ol class="dives">
+          <li><span><b>Morning:</b> rinse and hang any gear you brought so it is dry before packing.</span></li>
+          <li><span><b>Midday:</b> Phuket Old Town<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket+Old+Town" target="_blank" rel="noopener" aria-label="Open Phuket Old Town in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a> by the free Dragon Line bus (11:00–22:00, every 15 min).</span></li>
+          <li><span><b>Afternoon:</b> Aquaria Phuket<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Aquaria+Phuket&amp;query_place_id=ChIJq-hIQyQxUDARCwGLTecNofQ" target="_blank" rel="noopener" aria-label="Open Aquaria Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a> if it rains. Mermaid shows do not run on Mondays.</span></li>
+        </ol>
+      </div>
+      <div class="block">
+        <h3>Keep it light</h3>
+        <p class="note">No scuba and no freediving today. A slow day on land is the point.</p>
+        <p class="note">Book Tuesday's airport ride today so you are not hunting for a car in the morning.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TUESDAY -->
+  <section class="day" id="tue" aria-labelledby="tue-h">
+    <div class="day-head">
+      <div class="slate s-rest"><span class="dow">Tue</span><span class="dom">10 Nov</span></div>
+      <div class="day-title">
+        <span class="pill s-rest"><i class="dot"></i>Travel</span>
+        <h2 id="tue-h">Fly home to India</h2>
+        <p class="day-sub">Phuket International Airport (HKT)<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket+International+Airport&amp;query_place_id=ChIJCQ93jJhIUDAR0DDUaWtBtOU" target="_blank" rel="noopener" aria-label="Open Phuket International Airport in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></p>
+      </div>
+    </div>
+    <div class="wx">
+      <div class="cell"><span class="k">Sunrise</span><span class="v">06:16</span></div>
+      <div class="cell"><span class="k">Sunset</span><span class="v">18:04</span></div>
+      <div class="cell"><span class="k">Leave</span><span class="v">3 h before<small>from Patong</small></span></div>
+    </div>
+    <div class="body">
+      <div class="block">
+        <h3>Getting to the airport</h3>
+        <div class="tablebox">
+          <table>
+            <thead><tr><th>Option</th><th class="n">Patong → airport</th><th>Note</th></tr></thead>
+            <tbody>
+              <tr><td>Smart Bus Route 1</td><td class="n">100 THB / person</td><td>Hourly, 08:15–23:30</td></tr>
+              <tr><td>InDrive</td><td class="n">500–650 THB</td><td>You propose the fare</td></tr>
+              <tr><td>Bolt</td><td class="n">550–700 THB</td><td>Usually 15–30% below Grab</td></tr>
+              <tr><td>Grab</td><td class="n">650–900 THB</td><td></td></tr>
+              <tr><td>Hotel taxi</td><td class="n">700–1,200 THB</td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="block">
+        <h3>Timing</h3>
+        <p class="note">Peak traffic can stretch the Patong–airport drive to 1.5 hours, so leave about 3 hours before an international departure.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COSTS -->
+  <section class="ref" id="costs" aria-labelledby="costs-h">
+    <h2 id="costs-h">Costs per diver</h2>
+    <p>Using the cheapest listed operator for each day. Nitrox is estimated at 200–350 THB a tank where the shop does not publish a price. Gear rental and tips are extra.</p>
+    <div class="tablebox">
+      <table>
+        <thead><tr><th>Day</th><th>Trip</th><th>Operator</th><th class="n">Trip</th><th class="n">Park fee</th><th class="n">Nitrox</th></tr></thead>
+        <tbody>
+          <tr><td>Wed 4</td><td>Racha Noi &amp; Yai, 3 dives</td><td>Sunrise Divers</td><td class="n">3,900</td><td class="n">—</td><td class="n">600–1,050</td></tr>
+          <tr><td>Thu 5</td><td>Similan, 2 dives</td><td>Thailand Divers</td><td class="n">6,100</td><td class="n">700</td><td class="n">600</td></tr>
+          <tr><td>Fri 6</td><td>King Cruiser, 3 dives</td><td>Sunrise Divers</td><td class="n">3,900</td><td class="n">—</td><td class="n">600–1,050</td></tr>
+          <tr><td>Sat 7</td><td>Phi Phi, 3 dives</td><td>Phuket Dive Tours</td><td class="n">3,700</td><td class="n">600</td><td class="n">600</td></tr>
+          <tr><td>Sun 8</td><td>Racha Yai, 2 dives</td><td>Sunrise Divers</td><td class="n">3,000</td><td class="n">—</td><td class="n">400–700</td></tr>
+        </tbody>
+        <tfoot>
+          <tr><td colspan="3">Total, 13 dives (all in THB)</td><td class="n">20,600</td><td class="n">1,300</td><td class="n">2,800–4,000</td></tr>
+          <tr><td colspan="3">Grand total</td><td class="n" colspan="3">24,700–25,900 THB</td></tr>
+          <tr><td colspan="3">If Friday is cancelled</td><td class="n" colspan="3">20,200–20,950 THB</td></tr>
+        </tfoot>
+      </table>
+    </div>
+  </section>
+
+  <!-- PLAN B POOL -->
+  <section class="ref" id="planb" aria-labelledby="planb-h">
+    <h2 id="planb-h">Rainy-day options</h2>
+    <p>Drive times are from Patong and approximate where marked ≈. Grab and Bolt work across the island; agree tuk-tuk fares before you get in, and check the app price first.</p>
+    <div class="alts">
+      <article class="alt">
+        <span class="badge s-good">Indoor</span>
+        <h3>Aquaria Phuket</h3>
+        <dl>
+          <dt>Where</dt><dd>Central Phuket Floresta, B1, Phuket Town<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Aquaria+Phuket&amp;query_place_id=ChIJq-hIQyQxUDARCwGLTecNofQ" target="_blank" rel="noopener" aria-label="Open Aquaria Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></dd>
+          <dt>Time</dt><dd>20–30 min by car</dd>
+          <dt>Get there</dt><dd>Grab or Bolt; taxi about 400–500 THB</dd>
+          <dt>Cost</dt><dd>About US$34 adult, cheaper online than at the gate</dd>
+          <dt>Hours</dt><dd>10:30–19:00, last entry 18:00. Mermaid show 11:00 &amp; 15:00, not Mondays</dd>
+        </dl>
+      </article>
+      <article class="alt">
+        <span class="badge s-watch">Partly covered</span>
+        <h3>Phuket Old Town &amp; Thai Hua Museum</h3>
+        <dl>
+          <dt>Where</dt><dd>Thalang Road, Soi Romanee, Krabi Road<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket+Old+Town" target="_blank" rel="noopener" aria-label="Open Phuket Old Town in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Old Town</a><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket+Thai+Hua+Museum&amp;query_place_id=ChIJW_ZuovoxUDARO9tP_1sCA30" target="_blank" rel="noopener" aria-label="Open Phuket Thai Hua Museum in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Museum</a></dd>
+          <dt>Time</dt><dd>25–30 min by car</dd>
+          <dt>Get there</dt><dd>Grab 300–500 THB, or Smart Bus Route 2 (Patong ↔ Bus Terminal 1<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket+Bus+Terminal+1&amp;query_place_id=ChIJjZxhbvgxUDARmf8YQwFKvAg" target="_blank" rel="noopener" aria-label="Open Phuket Bus Terminal 1 in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a>, 50 THB, hourly 06:00–20:00). Free Dragon Line loop inside Old Town</dd>
+          <dt>Cost</dt><dd>Free to walk; museum ticket at the door</dd>
+          <dt>Sunday</dt><dd>Lard Yai walking street 16:00–22:00</dd>
+        </dl>
+      </article>
+      <article class="alt">
+        <span class="badge s-good">Runs in most weather</span>
+        <h3>Phang Nga Bay &amp; James Bond Island</h3>
+        <dl>
+          <dt>Where</dt><dd>Boats from Ao Po, Royal Phuket Marina or Boat Lagoon (east coast)<br><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Ao+Po+Pier%2C+Phuket" target="_blank" rel="noopener" aria-label="Open Ao Po Pier, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Ao Po</a><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Royal+Phuket+Marina&amp;query_place_id=ChIJa7CAfAY3UDARAPs_b9cKUJQ" target="_blank" rel="noopener" aria-label="Open Royal Phuket Marina in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Royal Marina</a><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket+Boat+Lagoon&amp;query_place_id=ChIJG3NPN9U3UDARBRqquV_kZ4g" target="_blank" rel="noopener" aria-label="Open Phuket Boat Lagoon in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Boat Lagoon</a></dd>
+          <dt>Time</dt><dd>About 45 min to the pier; tour about 8 h</dd>
+          <dt>Get there</dt><dd>Hotel pickup included</dd>
+          <dt>Cost</dt><dd>Big boat + canoe about 1,500 THB; speedboat about 1,700 THB. Park fee 300 THB if not included</dd>
+        </dl>
+      </article>
+      <article class="alt">
+        <span class="badge s-good">Rain gear provided</span>
+        <h3>Phuket Elephant Sanctuary</h3>
+        <dl>
+          <dt>Where</dt><dd>Pa Klok, beside Khao Phra Thaeo forest, north-east Phuket<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket+Elephant+Sanctuary&amp;query_place_id=ChIJe5gBglZIUDARbzpRlCqfeMA" target="_blank" rel="noopener" aria-label="Open Phuket Elephant Sanctuary in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></dd>
+          <dt>Time</dt><dd>≈ 1 h by car</dd>
+          <dt>Get there</dt><dd>Grab, or ask about transfer when booking on the sanctuary's own site</dd>
+          <dt>Cost</dt><dd>Half day with vegetarian lunch 3,000 THB; 90-min walkway 1,900 THB</dd>
+          <dt>Note</dt><dd>Observation only, no riding or bathing</dd>
+        </dl>
+      </article>
+      <article class="alt">
+        <span class="badge s-watch">Needs a dry spell</span>
+        <h3>Big Buddha &amp; Wat Chalong</h3>
+        <dl>
+          <dt>Where</dt><dd>Nakkerd Hill, Chalong; Wat Chalong is 10 min away<br><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket+Big+Buddha&amp;query_place_id=ChIJOSmXz2AvUDARXCxlBBs7y38" target="_blank" rel="noopener" aria-label="Open Phuket Big Buddha in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Big Buddha</a><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Wat+Chalong%2C+Phuket&amp;query_place_id=ChIJYSMtg7svUDARhklKwhnTa48" target="_blank" rel="noopener" aria-label="Open Wat Chalong, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Wat Chalong</a></dd>
+          <dt>Time</dt><dd>≈ 40 min by car</dd>
+          <dt>Get there</dt><dd>Grab or scooter; the road down is steep and curvy</dd>
+          <dt>Cost</dt><dd>Free; donations optional</dd>
+          <dt>Hours</dt><dd>09:00–18:00, last entry 17:30. Cover shoulders and knees; sarongs lent free</dd>
+        </dl>
+      </article>
+      <article class="alt">
+        <span class="badge s-watch">Needs a dry spell</span>
+        <h3>Promthep Cape sunset</h3>
+        <dl>
+          <dt>Where</dt><dd>Southern tip of Phuket, Rawai<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Promthep+Cape%2C+Phuket&amp;query_place_id=ChIJZ3aEXSYmUDARbSkKdsDzYMo" target="_blank" rel="noopener" aria-label="Open Promthep Cape, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></dd>
+          <dt>Time</dt><dd>≈ 45 min by car</dd>
+          <dt>Get there</dt><dd>Smart Bus Route 1 to Rawai (100 THB) or Grab</dd>
+          <dt>Cost</dt><dd>Free</dd>
+          <dt>Sunset</dt><dd>18:04–18:05 all week</dd>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <!-- PLACES -->
+  <section class="ref" id="places" aria-labelledby="places-h">
+    <h2 id="places-h">Places on Google Maps</h2>
+    <p>Every pier, dive site, shop and stop in this plan. Each link opens Google Maps in a new tab, ready for directions or to send to a driver.</p>
+    <div class="cards2">
+      <div class="card">
+        <h3>Piers &amp; marinas</h3>
+        <ul class="placelist">
+          <li><span class="pl">Chalong Pier<small>Racha, Phi Phi and King Cruiser day boats</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Chalong+Pier%2C+Phuket" target="_blank" rel="noopener" aria-label="Open Chalong Pier, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">Thap Lamu Pier<small>Similan speedboats, Khao Lak (Wed–Fri)</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Thap+Lamu+Pier%2C+Khao+Lak&amp;query_place_id=ChIJjRSbrf_xUDARTnHX1dSrFe0" target="_blank" rel="noopener" aria-label="Open Thap Lamu Pier, Khao Lak in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">Nam Khem Pier<small>Thailand Divers on Sat–Tue</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Nam+Khem+Pier%2C+Takua+Pa%2C+Phang+Nga" target="_blank" rel="noopener" aria-label="Open Nam Khem Pier, Takua Pa, Phang Nga in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">Royal Phuket Marina<small>Phang Nga Bay tours</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Royal+Phuket+Marina&amp;query_place_id=ChIJa7CAfAY3UDARAPs_b9cKUJQ" target="_blank" rel="noopener" aria-label="Open Royal Phuket Marina in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">Phuket Boat Lagoon<small>Phang Nga Bay tours</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket+Boat+Lagoon&amp;query_place_id=ChIJG3NPN9U3UDARBRqquV_kZ4g" target="_blank" rel="noopener" aria-label="Open Phuket Boat Lagoon in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">Ao Po<small>Phang Nga Bay tours</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Ao+Po+Pier%2C+Phuket" target="_blank" rel="noopener" aria-label="Open Ao Po Pier, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Dive sites</h3>
+        <ul class="placelist">
+          <li><span class="pl">Ko Racha Yai<small>Wed and Sun</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Ko+Racha+Yai%2C+Phuket&amp;query_place_id=ChIJ62LAnzvRTzARAxEU5ubxfgQ" target="_blank" rel="noopener" aria-label="Open Ko Racha Yai, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">Ko Racha Noi<small>Wed</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Ko+Racha+Noi%2C+Phuket" target="_blank" rel="noopener" aria-label="Open Ko Racha Noi, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">Mu Ko Similan National Park<small>Thu: Stonehenge, West of Eden</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Mu+Ko+Similan+National+Park&amp;query_place_id=ChIJTWOkhaJxWjARBugMilSJtEo" target="_blank" rel="noopener" aria-label="Open Mu Ko Similan National Park in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">King Cruiser wreck<small>Fri</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=King+Cruiser+Wreck%2C+Phuket" target="_blank" rel="noopener" aria-label="Open King Cruiser Wreck, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">Shark Point<small>Fri, maybe Sat</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Shark+Point+Hin+Musang%2C+Phuket" target="_blank" rel="noopener" aria-label="Open Shark Point Hin Musang, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">Ko Doc Mai<small>Fri, maybe Sat</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Ko+Doc+Mai%2C+Phuket" target="_blank" rel="noopener" aria-label="Open Ko Doc Mai, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">Ko Bida Nok<small>Sat</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Ko+Bida+Nok%2C+Krabi&amp;query_place_id=ChIJba5jJ98gTjARFafm_cRaUgk" target="_blank" rel="noopener" aria-label="Open Ko Bida Nok, Krabi in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">Ko Bida Nai<small>Sat</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Ko+Bida+Nai%2C+Krabi" target="_blank" rel="noopener" aria-label="Open Ko Bida Nai, Krabi in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Dive shops</h3>
+        <ul class="placelist">
+          <li><span class="pl">Sea Bees Diving<small>Viset Road, Chalong</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Sea+Bees+Diving+Phuket&amp;query_place_id=ChIJHTe0AxAvUDARSQltCxFCbB8" target="_blank" rel="noopener" aria-label="Open Sea Bees Diving Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">Sunrise Divers<small>Patak Road, Karon</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Sunrise+Divers+Phuket&amp;query_place_id=ChIJ4-1tHnglUDARxnwrbnEt4A8" target="_blank" rel="noopener" aria-label="Open Sunrise Divers Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">Phuket Dive Tours<small>Kata Beach</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket+Dive+Tours+Kata+Beach&amp;query_place_id=ChIJ7_3RO7o6UDARzgz0LjHWhrU" target="_blank" rel="noopener" aria-label="Open Phuket Dive Tours Kata Beach in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Sightseeing &amp; markets</h3>
+        <ul class="placelist">
+          <li><span class="pl">Aquaria Phuket<small>Central Phuket Floresta, B1</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Aquaria+Phuket&amp;query_place_id=ChIJq-hIQyQxUDARCwGLTecNofQ" target="_blank" rel="noopener" aria-label="Open Aquaria Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">Phuket Old Town<small>Thalang Road and Soi Romanee</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket+Old+Town" target="_blank" rel="noopener" aria-label="Open Phuket Old Town in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">Thai Hua Museum<small>Krabi Road, Old Town</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket+Thai+Hua+Museum&amp;query_place_id=ChIJW_ZuovoxUDARO9tP_1sCA30" target="_blank" rel="noopener" aria-label="Open Phuket Thai Hua Museum in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">Lard Yai Sunday market<small>Sun 16:00–22:00</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Lard+Yai+Sunday+Night+Market%2C+Phuket&amp;query_place_id=ChIJQwdCFvoxUDAR4XNViLYibc4" target="_blank" rel="noopener" aria-label="Open Lard Yai Sunday Night Market, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">Naka Weekend Market<small>Sat &amp; Sun 16:00–22:00</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Naka+Weekend+Market%2C+Phuket&amp;query_place_id=ChIJ02EC1NsxUDAR9ou27HphtVM" target="_blank" rel="noopener" aria-label="Open Naka Weekend Market, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">Big Buddha<small>Nakkerd Hill</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket+Big+Buddha&amp;query_place_id=ChIJOSmXz2AvUDARXCxlBBs7y38" target="_blank" rel="noopener" aria-label="Open Phuket Big Buddha in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">Wat Chalong<small>Chalong</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Wat+Chalong%2C+Phuket&amp;query_place_id=ChIJYSMtg7svUDARhklKwhnTa48" target="_blank" rel="noopener" aria-label="Open Wat Chalong, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">Promthep Cape<small>Rawai, sunset point</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Promthep+Cape%2C+Phuket&amp;query_place_id=ChIJZ3aEXSYmUDARbSkKdsDzYMo" target="_blank" rel="noopener" aria-label="Open Promthep Cape, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">Phuket Elephant Sanctuary<small>Pa Klok, Thalang</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket+Elephant+Sanctuary&amp;query_place_id=ChIJe5gBglZIUDARbzpRlCqfeMA" target="_blank" rel="noopener" aria-label="Open Phuket Elephant Sanctuary in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Transport &amp; medical</h3>
+        <ul class="placelist">
+          <li><span class="pl">Phuket International Airport<small>Tue flight home</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket+International+Airport&amp;query_place_id=ChIJCQ93jJhIUDAR0DDUaWtBtOU" target="_blank" rel="noopener" aria-label="Open Phuket International Airport in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">Phuket Bus Terminal 1<small>Smart Bus Route 2 to Patong</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket+Bus+Terminal+1&amp;query_place_id=ChIJjZxhbvgxUDARmf8YQwFKvAg" target="_blank" rel="noopener" aria-label="Open Phuket Bus Terminal 1 in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">Bangkok Hospital Siriroj<small>Hyperbaric chamber, open 24 h</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Bangkok+Hospital+Siriroj%2C+Phuket&amp;query_place_id=ChIJgyMtu7gxUDARZy_FMVI2GJQ" target="_blank" rel="noopener" aria-label="Open Bangkok Hospital Siriroj, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTS -->
+  <section class="ref" id="contacts" aria-labelledby="contacts-h">
+    <h2 id="contacts-h">Contacts</h2>
+    <div class="cards2">
+      <div class="card">
+        <h3>Sea Bees Diving</h3>
+        <p class="op-meta">1/3 Moo 9 Viset Road, Chalong<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Sea+Bees+Diving+Phuket&amp;query_place_id=ChIJHTe0AxAvUDARSQltCxFCbB8" target="_blank" rel="noopener" aria-label="Open Sea Bees Diving Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></p>
+        <div class="contact"><span class="num">+66 76 381 765</span><button class="copy" data-copy="+6676381765">Copy</button></div>
+        <div class="contact"><span class="num">+66 81 270 8817</span><button class="copy" data-copy="+66812708817">Copy</button><span class="op-meta">mobile, from Google listing</span></div>
+        <div class="contact"><span class="num">info@sea-bees.com</span><button class="copy" data-copy="info@sea-bees.com">Copy</button></div>
+      </div>
+      <div class="card">
+        <h3>Sunrise Divers</h3>
+        <p class="op-meta">269/24 Patak Road, Karon Beach<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Sunrise+Divers+Phuket&amp;query_place_id=ChIJ4-1tHnglUDARxnwrbnEt4A8" target="_blank" rel="noopener" aria-label="Open Sunrise Divers Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></p>
+        <div class="contact"><span class="num">+66 84 626 4646</span><button class="copy" data-copy="+66846264646">Copy</button><a href="https://wa.me/66846264646" target="_blank" rel="noopener">WhatsApp</a></div>
+        <div class="contact"><span class="num">+66 76 398 040</span><button class="copy" data-copy="+6676398040">Copy</button><span class="op-meta">shop</span></div>
+      </div>
+      <div class="card">
+        <h3>Phuket Dive Tours</h3>
+        <p class="op-meta">Kata Beach office, 95 Soi Pakbang<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Phuket+Dive+Tours+Kata+Beach&amp;query_place_id=ChIJ7_3RO7o6UDARzgz0LjHWhrU" target="_blank" rel="noopener" aria-label="Open Phuket Dive Tours Kata Beach in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></p>
+        <div class="contact"><span class="num">+66 87 022 5356</span><button class="copy" data-copy="+66870225356">Copy</button><a href="https://wa.me/66870225356" target="_blank" rel="noopener">WhatsApp</a></div>
+        <div class="contact"><span class="num">+66 86 690 8157</span><button class="copy" data-copy="+66866908157">Copy</button><span class="op-meta">Thai</span></div>
+      </div>
+      <div class="card">
+        <h3>Thailand Divers (Similan)</h3>
+        <p class="op-meta">Books by WhatsApp or the contact form</p>
+        <div class="contact"><span class="num">+44 7340 764006</span><button class="copy" data-copy="+447340764006">Copy</button><a href="https://wa.me/447340764006" target="_blank" rel="noopener">WhatsApp</a></div>
+        <a href="https://thailand-divers.com/contact-thailand-divers/" target="_blank" rel="noopener">Contact form</a>
+      </div>
+      <div class="card sos">
+        <h3>Diving emergency</h3>
+        <div class="contact"><span class="num">+66 81 081 9000</span><button class="copy" data-copy="+66810819000">Copy</button><span class="op-meta">Hyperbaric Services Thailand (SSS), 24 h</span></div>
+        <div class="contact"><span class="num">+66 76 361 888</span><button class="copy" data-copy="+6676361888">Copy</button><span class="op-meta">Bangkok Hospital Siriroj, hyperbaric chamber; hotline 1719<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Bangkok+Hospital+Siriroj%2C+Phuket&amp;query_place_id=ChIJgyMtu7gxUDARZy_FMVI2GJQ" target="_blank" rel="noopener" aria-label="Open Bangkok Hospital Siriroj, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></span></div>
+        <p>Ask each shop for its own emergency plan at the briefing.</p>
+      </div>
+      <div class="card sos">
+        <h3>Thailand emergency numbers</h3>
+        <ul>
+          <li><span class="num">1669</span> ambulance</li>
+          <li><span class="num">1155</span> tourist police</li>
+          <li><span class="num">1196</span> marine police</li>
+          <li><span class="num">1182</span> Thai Met Dept weather line</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOURCES -->
+  <section class="ref" id="sources" aria-labelledby="sources-h">
+    <h2 id="sources-h">Sources</h2>
+    <p>Daily temperature and rain chance from the forecast model run on 2 Nov. Wind and sea from the Thai Meteorological Department. Sunrise and sunset calculated for Phuket, accurate to about two minutes. Prices are as published by each operator; confirm when you book. Map links open Google Maps; islands, wrecks and piers without their own listing open a map search.</p>
+    <ul class="sources">
+      <li><a href="https://www.tmd.go.th/en/forecast/sevenday" target="_blank" rel="noopener">TMD 7-day forecast, 1–7 Nov</a></li>
+      <li><a href="https://www.tmd.go.th/en/forecast/shipping" target="_blank" rel="noopener">TMD shipping forecast, 2 Nov</a></li>
+      <li><a href="https://sea-bees.com/shop/phuket-scuba-day-trips/racha-noi/" target="_blank" rel="noopener">Sea Bees: Racha Noi &amp; Racha Yai</a></li>
+      <li><a href="https://sea-bees.com/shop/phuket-scuba-day-trips/racha-yai-phuket/" target="_blank" rel="noopener">Sea Bees: Racha Yai</a></li>
+      <li><a href="https://shop.sunrise-divers.com/dive-trips-courses/scuba-diving-racha-noi-yai-3-dives/" target="_blank" rel="noopener">Sunrise Divers: Racha Noi &amp; Yai</a></li>
+      <li><a href="https://shop.sunrise-divers.com/dive-trips-courses/king-cruiser-wreck-day-dive-trip/" target="_blank" rel="noopener">Sunrise Divers: King Cruiser</a></li>
+      <li><a href="https://thailand-divers.com/similan-islands-day-trip/" target="_blank" rel="noopener">Thailand Divers: Similan day trip</a></li>
+      <li><a href="https://www.phuketdivetours.com/product/phi-phi-scuba-diving-day-trip/" target="_blank" rel="noopener">Phuket Dive Tours: Phi Phi</a></li>
+      <li><a href="https://www.phuketdivetours.com/" target="_blank" rel="noopener">Phuket Dive Tours: all trips</a></li>
+      <li><a href="https://www.tisland.travel/en/blog/similany-otkryvayutsya-15-oktyabrya-2026" target="_blank" rel="noopener">Similan 2026–27 season and diver quota</a></li>
+      <li><a href="https://www.phuket101.net/big-buddha-phuket/" target="_blank" rel="noopener">Phuket 101: Big Buddha</a></li>
+      <li><a href="https://www.phuket101.net/aquaria-central-floresta-phuket/" target="_blank" rel="noopener">Phuket 101: Aquaria</a></li>
+      <li><a href="https://www.klook.com/activity/26631-aquaria-phuket-ticket/" target="_blank" rel="noopener">Klook: Aquaria ticket</a></li>
+      <li><a href="https://phuket101.net/how-to-ride-phuket-bus" target="_blank" rel="noopener">Phuket 101: Smart Bus and Dragon Line</a></li>
+      <li><a href="https://asterofasia.com/de/blog/phuket-taxi-grab-bolt-tuktuk-prices" target="_blank" rel="noopener">Aster of Asia: taxi, Grab and Bolt fares</a></li>
+      <li><a href="https://21sensations.com/phuket-town-night-market/" target="_blank" rel="noopener">Lard Yai Sunday market guide</a></li>
+      <li><a href="https://www.visitthailandtoday.com/guides/phang-nga-bay-guide" target="_blank" rel="noopener">Phang Nga Bay guide</a></li>
+      <li><a href="https://www.visitthailandtoday.com/top-lists/best-elephant-sanctuaries-phuket" target="_blank" rel="noopener">Elephant sanctuaries in Phuket</a></li>
+      <li><a href="https://www.saltwater-dreaming.com/travel/phuket-contacts.htm" target="_blank" rel="noopener">Phuket emergency contacts</a></li>
+      <li><a href="https://www.bangkokhospital.com/en/siriroj/center-clinic/center-group/hyperbaric-chamber-facility-bsi/overview" target="_blank" rel="noopener">Bangkok Hospital Siriroj hyperbaric chamber</a></li>
+    </ul>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p>Plan prepared 2 Nov 2026. Forecasts change daily in early November; the dive shop and boat captain make the final call each morning.</p>
+</footer>
+
+<script>
+(function () {
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var text = btn.getAttribute('data-copy');
+      var done = function () { var old = btn.textContent; btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = old; }, 1400); };
+      var fallback = function () {
+        var num = btn.previousElementSibling;
+        if (!num) return;
+        var range = document.createRange(); range.selectNodeContents(num);
+        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+        btn.textContent = 'Selected';
+        setTimeout(function () { btn.textContent = 'Copy'; }, 1400);
+      };
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done, fallback);
+        } else { fallback(); }
+      } catch (e) { fallback(); }
+    });
+  });
+
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.chip'));
+  var byId = {};
+  chips.forEach(function (c) { byId[c.getAttribute('href').slice(1)] = c; });
+  var setActive = function (id) {
+    chips.forEach(function (c) { c.classList.toggle('active', c === byId[id]); });
+    var chip = byId[id];
+    if (chip && chip.scrollIntoView) {
+      var strip = document.getElementById('chips');
+      var left = chip.offsetLeft - 16;
+      if (left < strip.scrollLeft || chip.offsetLeft + chip.offsetWidth > strip.scrollLeft + strip.clientWidth) {
+        strip.scrollTo({ left: left, behavior: 'auto' });
+      }
+    }
+  };
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) setActive(e.target.id); });
+    }, { rootMargin: '-35% 0px -60% 0px' });
+    Object.keys(byId).forEach(function (id) { var el = document.getElementById(id); if (el) io.observe(el); });
+  }
+})();
+</script>
+</body>
+</html>
