@@ -6,7 +6,7 @@
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#0c2e40" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#061f2c" media="(prefers-color-scheme: dark)">
-<meta name="description" content="Day-by-day Phuket dive plan for 4–10 Nov 2026 with live weather, waves, sunrise and sunset, dive operators, prices, rainy-day options and Google Maps links.">
+<meta name="description" content="Day-by-day Phuket plan for 3–10 Nov 2026: a Phi Phi snorkel tour, then dive days with live weather, waves, sunrise and sunset, dive operators, prices, rainy-day options and Google Maps links.">
 <title>Phuket Dive Week</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -323,6 +323,9 @@ a.btn { display: inline-flex; align-items: center; gap: 6px; text-decoration: no
 .planb { background: var(--surface-2); border-top: 1px dashed var(--line); padding: 14px 16px 16px; display: grid; gap: 8px; }
 .planb ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: .9rem; }
 .planb li::marker { color: var(--muted); }
+.bring { margin: 0; padding-left: 18px; display: grid; gap: 5px; font-size: .9rem; }
+.bring li::marker { color: var(--muted); }
+.bring b { font-weight: 600; }
 
 /* Reference sections */
 .ref { display: grid; gap: 12px; scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 84px); }
@@ -361,10 +364,11 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
 <header class="masthead">
   <div class="bubbles" aria-hidden="true"><span style="--x:6%;--s:7px;--d:13s;--delay:-2s"></span><span style="--x:14%;--s:4px;--d:10s;--delay:-7s"></span><span style="--x:27%;--s:10px;--d:16s;--delay:-5s"></span><span style="--x:41%;--s:5px;--d:11s;--delay:-9s"></span><span style="--x:58%;--s:8px;--d:14s;--delay:-3s"></span><span style="--x:69%;--s:4px;--d:9s;--delay:-6s"></span><span style="--x:78%;--s:12px;--d:18s;--delay:-11s"></span><span style="--x:88%;--s:6px;--d:12s;--delay:-1s"></span><span style="--x:95%;--s:5px;--d:15s;--delay:-8s"></span></div>
   <div class="wrap">
-    <p class="eyebrow">Andaman Sea · 4 – 10 November 2026 · Nitrox</p>
+    <p class="eyebrow">Andaman Sea · 3 – 10 November 2026 · Nitrox</p>
     <h1>Phuket Dive Week</h1>
-    <p class="lede">Five boat days from Wednesday to Sunday, Monday off for off-gassing, and the flight home to India on Tuesday. Weather, waves and sun times update live when you are online; recheck each evening before you go out.</p>
+    <p class="lede">A Phi Phi speedboat and snorkel tour on Tuesday 3 Nov, then five boat days from Wednesday to Sunday, Monday off for off-gassing, and the flight home to India on Tuesday. Weather, waves and sun times update live when you are online; recheck each evening before you go out.</p>
     <dl class="facts">
+      <div><dt>Snorkel day</dt><dd>Tue 3 Nov, booked</dd></div>
       <div><dt>Boat days</dt><dd>5 (Fri on standby)</dd></div>
       <div><dt>Dives</dt><dd>up to 13</dd></div>
       <div><dt>Water</dt><dd>28–29 °C</dd></div>
@@ -378,6 +382,7 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
 <nav class="daybar" aria-label="Days">
   <div class="wrap">
     <div class="chips" id="chips">
+      <a class="chip" href="#tue3"><span class="d">Tue</span><span class="s"><i class="dot t-rest"></i>3 Nov · Phi Phi</span></a>
       <a class="chip" href="#wed"><span class="d">Wed</span><span class="s"><i class="dot t-good"></i>4 Nov · 15%</span></a>
       <a class="chip" href="#thu"><span class="d">Thu</span><span class="s"><i class="dot t-good"></i>5 Nov · 20%</span></a>
       <a class="chip" href="#fri"><span class="d">Fri</span><span class="s"><i class="dot t-poor"></i>6 Nov · 75%</span></a>
@@ -444,6 +449,95 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
       <li><label class="step" for="step-3"><input class="step-check" type="checkbox" id="step-3"><span class="step-body"><b>Saturday Phi Phi and Sunday Racha Yai.</b><span>Send names, cert level, nitrox card, last dive date and hotel on WhatsApp.</span></span></label></li>
       <li><label class="step" for="step-4"><input class="step-check" type="checkbox" id="step-4"><span class="step-body"><b>Friday on standby.</b><span>Ask the shop to hold a place and confirm by Thursday evening. It was the wettest day in the 2 Nov forecast.</span></span></label></li>
     </ol>
+  </section>
+
+  <!-- TUESDAY 3 NOV: PHI PHI SNORKEL TOUR (Klook) -->
+  <section class="day" id="tue3" aria-labelledby="tue3-h">
+    <div class="day-head">
+      <div class="slate s-rest"><span class="dow">Tue</span><span class="dom">3 Nov</span></div>
+      <div class="day-title">
+        <span class="pill s-rest"><i class="dot"></i>Booked · snorkel, no diving</span>
+        <h2 id="tue3-h">Phi Phi, Maya Bay &amp; Khai Nok</h2>
+        <p class="day-sub">Speedboat tour with lunch · 2 adults · from Roong Siam Pier<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Roong+Siam+Pier%2C+Phuket" target="_blank" rel="noopener" aria-label="Open Roong Siam Pier, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></p>
+      </div>
+    </div>
+    <div class="wx">
+      <div class="cell"><span class="k">Air</span><span class="v">—<small>loads live online</small></span></div>
+      <div class="cell"><span class="k">Rain</span><span class="v">—<small>loads live online</small></span></div>
+      <div class="cell"><span class="k">Wind</span><span class="v">SE 15–30 km/h</span></div>
+      <div class="cell"><span class="k">Sea</span><span class="v">≈1 m<small>&gt;2 m in storms</small></span></div>
+      <div class="cell"><span class="k">Sunrise</span><span class="v">06:15</span></div>
+      <div class="cell"><span class="k">Sunset</span><span class="v">18:05</span></div>
+    </div>
+    <p class="wx-note">Wind and sea from the Thai Met Dept 1–7 Nov outlook. The operator makes the weather call; if the boat is cancelled they will contact you, and Klook handles any refund.</p>
+    <div class="body">
+      <div class="block">
+        <h3>Day timeline</h3>
+        <ul class="timeline">
+          <li><span class="tm">07:30</span><span><b>Hotel lobby pickup</b>, 07:30–07:45. Shared minibus, so it can run early or late.</span></li>
+          <li><span class="tm">09:00</span><span><b>Roong Siam Pier</b><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Roong+Siam+Pier%2C+Phuket" target="_blank" rel="noopener" aria-label="Open Roong Siam Pier, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a>: check in, pay the park fee in cash, morning snacks, coffee and tea. Take the seasickness tablet now.</span></li>
+          <li><span class="tm">09:30</span><span>Safety briefing, then the boat leaves (about 1 h to the first stop).</span></li>
+          <li><span class="tm">10:30</span><span><b>Maya Bay</b><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Maya+Bay%2C+Ko+Phi+Phi+Le" target="_blank" rel="noopener" aria-label="Open Maya Bay, Ko Phi Phi Le in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a>, 40 min. Walk in and take photos; no swimming here.</span></li>
+          <li><span class="tm">11:30</span><span><b>Pileh Lagoon</b><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Pileh+Lagoon%2C+Ko+Phi+Phi+Le" target="_blank" rel="noopener" aria-label="Open Pileh Lagoon, Ko Phi Phi Le in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a>, 1 h. Optional longtail ride, 400 THB each.</span></li>
+          <li><span class="tm">12:30</span><span><b>Tonsai Bay</b><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Tonsai+Bay%2C+Ko+Phi+Phi+Don" target="_blank" rel="noopener" aria-label="Open Tonsai Bay, Ko Phi Phi Don in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a>, 30 min snorkel over coral.</span></li>
+          <li><span class="tm">13:15</span><span><b>Phi Phi Don</b>, 1 h. Thai &amp; international buffet at Phi Phi Nice Beach Restaurant<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Phi+Phi+Nice+Beach+Restaurant%2C+Ko+Phi+Phi+Don" target="_blank" rel="noopener" aria-label="Open Phi Phi Nice Beach Restaurant, Ko Phi Phi Don in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a>: halal, vegetarian options, gluten-free on request, no air conditioning.</span></li>
+          <li><span class="tm">14:15</span><span><b>Monkey Beach</b><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Monkey+Beach%2C+Ko+Phi+Phi+Don" target="_blank" rel="noopener" aria-label="Open Monkey Beach, Ko Phi Phi Don in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a>, 15 min. Can be skipped at high tide.</span></li>
+          <li><span class="tm">14:45</span><span><b>Viking Cave</b><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Viking+Cave%2C+Ko+Phi+Phi+Le" target="_blank" rel="noopener" aria-label="Open Viking Cave, Ko Phi Phi Le in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a>, 10 min, seen from outside only.</span></li>
+          <li><span class="tm">15:00</span><span>Run to Koh Khai Nok, about 40 min.</span></li>
+          <li><span class="tm">16:00</span><span><b>Koh Khai Nok</b><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Koh+Khai+Nok%2C+Phuket" target="_blank" rel="noopener" aria-label="Open Koh Khai Nok, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a>, 1 h. Swim, snorkel or SUP; fresh fruit and drinks.</span></li>
+          <li><span class="tm">17:00</span><span>Boat heads back to Roong Siam Pier.</span></li>
+          <li><span class="tm">≈18:30</span><span>Back at the hotel, 18:30–19:00, later in heavy traffic.</span></li>
+        </ul>
+        <p class="note">The operator may reorder stops for weather and traffic.</p>
+        <h3>Booking</h3>
+        <div class="ops">
+          <div class="op pick">
+            <div class="op-top"><span class="op-name">Klook · PNT (Phuket New Generation Travel)<span class="tag">Booked</span></span><span class="price">Prepaid</span></div>
+            <p class="op-meta">Early departure · hotel transfer · Thai &amp; international buffet. 2 adults, English-speaking guide.</p>
+            <p class="op-meta">Open the voucher in the Klook app at check-in. Each adult has a separate QR code, and the names must match your passports.</p>
+            <div class="contact"><span class="num">+66 81 538 7695</span><button class="copy" data-copy="+66815387695">Copy</button><span class="op-meta">if the pickup is late</span></div>
+            <div class="contact"><span class="num">kunmee16@gmail.com</span><button class="copy" data-copy="kunmee16@gmail.com">Copy</button></div>
+          </div>
+        </div>
+      </div>
+      <div class="block">
+        <h3>Cash · the main thing</h3>
+        <ul class="bring">
+          <li><b>800 THB Phi Phi National Park fee</b> (400 THB each). Mandatory, cash only, paid at the pier.</li>
+          <li>Optional: fins 100 THB a pair, Pileh longtail 400 THB each, beach chairs 150 THB, tips.</li>
+          <li>Carry <b>2,500–3,000 THB in small notes</b> to cover everything.</li>
+        </ul>
+        <h3>Wear</h3>
+        <ul class="bring">
+          <li>Swimwear underneath: you swim or snorkel at Tonsai Bay and Khai Nok.</li>
+          <li>Rash guard or long-sleeve quick-dry top, quick-dry shorts.</li>
+          <li>Light, breathable clothes over that; the lunch restaurant has no air conditioning.</li>
+          <li>Water shoes (or flip-flops) for the rocky, coral-bit shallows at Khai Nok.</li>
+          <li>Cap or hat with a strap, sunglasses on a cord. The speedboat is windy.</li>
+        </ul>
+        <h3>In your bag</h3>
+        <ul class="bring">
+          <li>Passport, or at least a photo or photocopy of it.</li>
+          <li>Towel. The tour does not provide one.</li>
+          <li>Change of clothes and a plastic bag for the wet ones.</li>
+          <li>Reef-safe sunscreen.</li>
+          <li>Dry bag and a waterproof phone pouch.</li>
+          <li>Power bank. It is a 12-hour day.</li>
+          <li>Your own dive mask: rental masks often leak. Your own fins save the rental fee.</li>
+        </ul>
+        <p class="note"><b>Already included, no need to pack:</b> motion sickness tablets, life jacket, snorkel mask, SUP, Khai Island entrance fee, morning snacks, lunch, fruit and drinks, operator insurance.</p>
+      </div>
+    </div>
+    <div class="planb">
+      <h3>Tips for the day</h3>
+      <ul>
+        <li>Take the seasickness tablet at the pier around 09:00, before the 09:30 departure. Sit toward the back of the boat; it is less bumpy.</li>
+        <li>At Monkey Beach keep sunglasses, food and plastic bags out of sight. The monkeys grab things.</li>
+        <li>No swimming at Maya Bay. Save the swim for Tonsai Bay and Khai Nok.</li>
+        <li>Pickup running late? Call the operator on +66 81 538 7695.</li>
+        <li>Diving starts early on Wednesday, so lay out dive gear and charge everything tonight after you get back.</li>
+      </ul>
+    </div>
   </section>
 
   <!-- WEDNESDAY -->
@@ -841,6 +935,7 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
         </tfoot>
       </table>
     </div>
+    <p><b>Tue 3 Nov Phi Phi tour</b> is prepaid on Klook. On the day, bring cash: 400 THB park fee per person, plus optional fins, longtail, beach chairs and tips. About 2,500–3,000 THB for two covers it.</p>
   </section>
 
   <!-- PLAN B POOL -->
@@ -929,6 +1024,7 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
         <h3>Piers &amp; marinas</h3>
         <ul class="placelist">
           <li><span class="pl">Chalong Pier<small>Racha, Phi Phi and King Cruiser day boats</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Chalong+Pier%2C+Phuket" target="_blank" rel="noopener" aria-label="Open Chalong Pier, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
+          <li><span class="pl">Roong Siam Pier<small>Phi Phi snorkel tour, Tue 3 Nov</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Roong+Siam+Pier%2C+Phuket" target="_blank" rel="noopener" aria-label="Open Roong Siam Pier, Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
           <li><span class="pl">Thap Lamu Pier<small>Similan speedboats, Khao Lak (Wed–Fri)</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Thap+Lamu+Pier%2C+Khao+Lak&amp;query_place_id=ChIJjRSbrf_xUDARTnHX1dSrFe0" target="_blank" rel="noopener" aria-label="Open Thap Lamu Pier, Khao Lak in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
           <li><span class="pl">Nam Khem Pier<small>Thailand Divers on Sat–Tue</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Nam+Khem+Pier%2C+Takua+Pa%2C+Phang+Nga" target="_blank" rel="noopener" aria-label="Open Nam Khem Pier, Takua Pa, Phang Nga in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
           <li><span class="pl">Royal Phuket Marina<small>Phang Nga Bay tours</small></span><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Royal+Phuket+Marina&amp;query_place_id=ChIJa7CAfAY3UDARAPs_b9cKUJQ" target="_blank" rel="noopener" aria-label="Open Royal Phuket Marina in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></li>
@@ -987,6 +1083,12 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
     <h2 id="contacts-h">Contacts</h2>
     <div class="cards2">
       <div class="card">
+        <h3>PNT · Phi Phi tour (Tue 3 Nov)</h3>
+        <p class="op-meta">Phuket New Generation Travel, the Klook operator</p>
+        <div class="contact"><span class="num">+66 81 538 7695</span><button class="copy" data-copy="+66815387695">Copy</button><span class="op-meta">late pickup, changes</span></div>
+        <div class="contact"><span class="num">kunmee16@gmail.com</span><button class="copy" data-copy="kunmee16@gmail.com">Copy</button></div>
+      </div>
+      <div class="card">
         <h3>Sea Bees Diving</h3>
         <p class="op-meta">1/3 Moo 9 Viset Road, Chalong<a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Sea+Bees+Diving+Phuket&amp;query_place_id=ChIJHTe0AxAvUDARSQltCxFCbB8" target="_blank" rel="noopener" aria-label="Open Sea Bees Diving Phuket in Google Maps"><svg viewBox="0 0 24 24" width="11" height="11" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6a2.6 2.6 0 1 1 0-5.2 2.6 2.6 0 0 1 0 5.2z"/></svg>Map</a></p>
         <div class="contact"><span class="num">+66 76 381 765</span><button class="copy" data-copy="+6676381765">Copy</button></div>
@@ -1035,6 +1137,7 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
     <p>When the page is online, the Right now panel and each day's air, rain, wind, waves, sunrise and sunset load live from Open-Meteo and are cached for 10 minutes. Offline, the page shows the values checked on 2 Nov: daily temperature and rain chance from the forecast model, wind and sea from the Thai Meteorological Department. Sunrise and sunset calculated for Phuket, accurate to about two minutes. Prices are as published by each operator; confirm when you book. Map links open Google Maps; islands, wrecks and piers without their own listing open a map search. Photos load from Wikimedia Commons; tap a photo's credit for its author and licence.</p>
     <ul class="sources">
       <li><a href="https://github.com/muhdashiq/phuket-dive-26" target="_blank" rel="noopener">Source code for this page on GitHub</a></li>
+      <li>Klook voucher: Phi Phi, Maya Bay &amp; Khai Island speedboat tour, 3 Nov (itinerary, inclusions, fees, pickup)</li>
       <li><a href="https://open-meteo.com/" target="_blank" rel="noopener">Live weather and marine data: Open-Meteo.com (CC BY 4.0)</a></li>
       <li><a href="https://www.tmd.go.th/en/forecast/sevenday" target="_blank" rel="noopener">TMD 7-day forecast, 1–7 Nov</a></li>
       <li><a href="https://www.tmd.go.th/en/forecast/shipping" target="_blank" rel="noopener">TMD shipping forecast, 2 Nov</a></li>
@@ -1065,7 +1168,7 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
   <p>Source code: <a href="https://github.com/muhdashiq/phuket-dive-26" target="_blank" rel="noopener">github.com/muhdashiq/phuket-dive-26</a></p>
 </footer>
 
-<a class="fab" id="fab" href="#wed" aria-hidden="true" tabindex="-1"><span id="fab-label">Today</span><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M6 13l6 6 6-6"/></svg></a>
+<a class="fab" id="fab" href="#tue3" aria-hidden="true" tabindex="-1"><span id="fab-label">Today</span><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M6 13l6 6 6-6"/></svg></a>
 
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo" hidden>
   <button class="lb-close" type="button" aria-label="Close photo">×</button>
@@ -1087,6 +1190,7 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
   var PHUKET = { lat: 7.8804, lon: 98.3923 };
   var SEA = { racha: [7.58, 98.36], similan: [8.65, 97.62], south: [7.78, 98.58], phiphi: [7.66, 98.75], west: [7.88, 98.25] };
   var DAYS = [
+    { id: 'tue3', date: '2026-11-03', sea: 'phiphi' },
     { id: 'wed', date: '2026-11-04', sea: 'racha' },
     { id: 'thu', date: '2026-11-05', sea: 'similan' },
     { id: 'fri', date: '2026-11-06', sea: 'south' },
@@ -1336,9 +1440,9 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
     var today = ymdIn(TRIP_TZ);
     if (today < START) {
       var n = Math.round((ymdUTC(START) - ymdUTC(today)) / 864e5);
-      return 'Your dive week starts Wednesday 4 Nov, ' + (n === 1 ? 'tomorrow' : 'in ' + n + ' days') + '. First up: <a href="#wed">' + $('#wed h2').textContent + '</a>.';
+      return 'Your Phuket week starts Tuesday 3 Nov, ' + (n === 1 ? 'tomorrow' : 'in ' + n + ' days') + '. First up: <a href="#' + DAYS[0].id + '">' + $('#' + DAYS[0].id + ' h2').textContent + '</a>.';
     }
-    if (today > END) return 'The dive week is over. Safe travels home.';
+    if (today > END) return 'The trip is over. Safe travels home.';
     for (var i = 0; i < DAYS.length; i++) {
       if (DAYS[i].date === today) {
         var sec = document.getElementById(DAYS[i].id), pill = $('.pill:not(.today-pill)', sec);
@@ -1623,7 +1727,7 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
   var share = $('#share-btn');
   share.addEventListener('click', function () {
     var flash = function (t) { share.textContent = t; setTimeout(function () { share.textContent = 'Share plan'; }, 1600); };
-    var data = { title: document.title, text: 'Phuket dive week, 4–10 Nov 2026', url: location.href };
+    var data = { title: document.title, text: 'Phuket trip, 3–10 Nov 2026', url: location.href };
     if (navigator.share) { navigator.share(data).catch(function () {}); return; }
     try {
       navigator.clipboard.writeText(location.href).then(function () { flash('Link copied'); }, function () { flash('Copy the page address'); });
@@ -1636,7 +1740,7 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
     var t = $('.day.is-today');
     if (t) return { el: t, label: 'Today' };
     var next = $('.chip .when');
-    if (next) return { el: document.getElementById(next.parentNode.getAttribute('href').slice(1)), label: 'First dive day' };
+    if (next) return { el: document.getElementById(next.parentNode.getAttribute('href').slice(1)), label: 'First day' };
     return null;
   }
   function updateFab() {
