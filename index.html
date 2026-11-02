@@ -31,6 +31,15 @@
   --poor: #a23a2a; --poor-bg: #f5e0db;
   --rest: #3f5c77; --rest-bg: #e2e9f0;
   --accent-bg: #e0eef3;
+  --sun: #d0821a;
+  --shadow: rgba(13, 34, 48, .14);
+  --scrim: rgba(4, 20, 28, .82);
+  --scrim-strong: rgba(3, 14, 20, .94);
+  --on-photo: #eef6f8;
+  --on-photo-link: #bfe3ee;
+  --on-photo-line: rgba(238, 246, 248, .45);
+  --bubble: rgba(234, 243, 245, .38);
+  --bubble-hi: rgba(234, 243, 245, .28);
   color-scheme: light;
   --f-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", system-ui, sans-serif;
   --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -45,6 +54,8 @@
     --good: #72d09a; --good-bg: #12301f; --watch: #e8b05a; --watch-bg: #33260f;
     --poor: #f28c77; --poor-bg: #3a1a15; --rest: #a3bdd6; --rest-bg: #182633;
     --accent-bg: #0f2f3b;
+    --sun: #f0b54c;
+    --shadow: rgba(0, 0, 0, .45);
     color-scheme: dark;
   }
 }
@@ -55,6 +66,8 @@
   --good: #72d09a; --good-bg: #12301f; --watch: #e8b05a; --watch-bg: #33260f;
   --poor: #f28c77; --poor-bg: #3a1a15; --rest: #a3bdd6; --rest-bg: #182633;
   --accent-bg: #0f2f3b;
+  --sun: #f0b54c;
+  --shadow: rgba(0, 0, 0, .45);
   color-scheme: dark;
 }
 
@@ -75,7 +88,8 @@ p { margin: 0; }
 .wrap { max-width: 1000px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 
 /* Masthead */
-.masthead { background: var(--mast); color: var(--mast-ink); }
+.masthead { background: var(--mast); color: var(--mast-ink); position: relative; overflow: hidden; }
+.masthead > .wrap { position: relative; z-index: 1; }
 .masthead .wrap { padding-block: 28px 22px; display: grid; gap: 12px; }
 .eyebrow { font-family: var(--f-display); font-weight: 600; text-transform: uppercase; letter-spacing: .12em; font-size: .9rem; color: var(--mast-muted); }
 h1 { font-family: var(--f-display); font-weight: 700; font-size: clamp(2.6rem, 9vw, 4rem); line-height: .92; letter-spacing: .005em; text-transform: uppercase; }
@@ -85,14 +99,15 @@ h1 { font-family: var(--f-display); font-weight: 700; font-size: clamp(2.6rem, 9
 .facts dt { font-size: .72rem; text-transform: uppercase; letter-spacing: .1em; color: var(--mast-muted); }
 .facts dd { margin: 0; font-family: var(--f-data); font-size: 1rem; }
 .tankband { background: var(--nitrox-g); border-block: 6px solid var(--nitrox-y); }
-.tankband .wrap { padding-block: 4px; font-family: var(--f-display); font-weight: 700; letter-spacing: .32em; font-size: .78rem; color: var(--nitrox-y); text-transform: uppercase; white-space: nowrap; overflow: hidden; }
+.tankband .wrap { overflow: hidden; padding-block: 4px; font-family: var(--f-display); font-weight: 700; letter-spacing: .32em; font-size: .78rem; color: var(--nitrox-y); text-transform: uppercase; white-space: nowrap; overflow: hidden; }
 
 /* Sticky day strip */
 .daybar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
 .daybar .wrap { padding-block: 10px; }
 .chips { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; overscroll-behavior-x: contain; }
 .chips::-webkit-scrollbar { display: none; }
-.chip { flex: 0 0 auto; min-width: 86px; display: grid; gap: 1px; padding: 7px 10px 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); text-decoration: none; transition: border-color .15s ease, background-color .15s ease; }
+.chip { flex: 0 0 auto; min-width: 86px; display: grid; gap: 1px; padding: 7px 10px 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); text-decoration: none; transition: border-color .15s ease, background-color .15s ease, transform .12s ease, opacity .2s ease; }
+.chip:active { transform: scale(.97); }
 .chip { scroll-snap-align: start; }
 .chip:hover { border-color: var(--accent); }
 .chip.past { opacity: .55; }
@@ -212,6 +227,98 @@ main.wrap { padding-block: 22px 40px; display: grid; gap: 26px; }
 .cell.sun-soon .v { color: var(--accent); }
 .day.is-today { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
 .pill.today-pill { background: var(--accent); color: var(--surface); }
+/* Ambient motion */
+.bubbles { position: absolute; inset: 0; pointer-events: none; }
+.bubbles span { position: absolute; bottom: -24px; left: var(--x); width: var(--s); height: var(--s); border-radius: 50%; border: 1px solid var(--bubble); background: radial-gradient(circle at 35% 30%, var(--bubble-hi), transparent 62%); animation: rise var(--d) linear var(--delay) infinite; }
+@keyframes rise {
+  0% { transform: translate(0, 0); opacity: 0; }
+  12% { opacity: .9; }
+  50% { transform: translate(7px, -190px); }
+  88% { opacity: .6; }
+  100% { transform: translate(-5px, -380px); opacity: 0; }
+}
+.marquee { display: inline-flex; white-space: nowrap; animation: band 70s linear infinite; }
+.marquee span { padding-right: .32em; }
+@keyframes band { to { transform: translateX(-50%); } }
+.chip.today .dot { animation: ping 2.4s ease-out infinite; }
+@keyframes ping { 0% { box-shadow: 0 0 0 0 currentColor; } 70%, 100% { box-shadow: 0 0 0 6px transparent; } }
+.reveal { opacity: 0; transform: translateY(16px); }
+.reveal.in { opacity: 1; transform: none; transition: opacity .55s ease, transform .7s cubic-bezier(.2, .7, .2, 1); }
+@media (hover: hover) {
+  .alt, .ref .card { transition: transform .2s ease, box-shadow .2s ease; }
+  .alt:hover, .ref .card:hover { transform: translateY(-2px); box-shadow: 0 8px 22px var(--shadow); }
+}
+
+/* Photos */
+.photo { position: relative; margin: 0; aspect-ratio: 16 / 7; max-width: 100%; overflow: hidden; background: linear-gradient(150deg, var(--mast), var(--accent)); }
+@media (max-width: 600px) { .photo { aspect-ratio: 16 / 9; } }
+.photo-btn { display: block; width: 100%; height: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
+.photo-btn:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; border-radius: 0; }
+.photo img { display: block; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.05); transition: opacity .6s ease, transform 1.4s cubic-bezier(.2, .7, .2, 1); }
+.photo.loaded img { opacity: 1; transform: scale(1); }
+@media (hover: hover) { .photo.loaded:hover img { transform: scale(1.03); } }
+.photo figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 26px 12px 8px; display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; font-size: .74rem; color: var(--on-photo); background: linear-gradient(to top, var(--scrim), transparent); pointer-events: none; }
+.photo figcaption a { color: var(--on-photo-link); pointer-events: auto; white-space: nowrap; }
+.day > .photo { border-bottom: 1px solid var(--line); }
+.alt { overflow: hidden; }
+.alt > .photo { margin: -13px -14px 2px; aspect-ratio: 16 / 9; }
+
+/* Photo viewer */
+.lightbox { position: fixed; inset: 0; z-index: 50; display: grid; align-content: center; justify-items: center; gap: 12px; background: var(--scrim-strong);
+  padding: calc(56px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) calc(20px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+  opacity: 0; transition: opacity .2s ease; }
+.lightbox.open { opacity: 1; }
+.lightbox img { max-width: 100%; max-height: 76vh; border-radius: 10px; transform: scale(.96); transition: transform .3s cubic-bezier(.2, .7, .2, 1); }
+.lightbox.open img { transform: none; }
+.lb-cap { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 14px; max-width: 60ch; text-align: center; font-size: .84rem; color: var(--on-photo); }
+.lb-cap a { color: var(--on-photo-link); }
+.lb-close { position: absolute; top: calc(10px + env(safe-area-inset-top, 0px)); right: max(12px, env(safe-area-inset-right, 0px)); width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--on-photo-line); background: transparent; color: var(--on-photo); font-size: 1.5rem; line-height: 1; cursor: pointer; }
+html.lb-lock { overflow: hidden; }
+
+/* Sun arc */
+.sunarc { width: 100%; max-width: 200px; height: auto; overflow: visible; margin-bottom: 2px; }
+.sunarc .horizon { stroke: var(--muted); stroke-width: 1; opacity: .45; }
+.sunarc .arc-base { fill: none; stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 2 3; opacity: .55; }
+.sunarc .arc-done { fill: none; stroke: var(--sun); stroke-width: 2.4; stroke-linecap: round; transition: stroke-dasharray .9s ease; }
+.sunarc .sun-g { transition: transform .9s cubic-bezier(.2, .7, .2, 1); }
+.sunarc .sun-core { fill: var(--sun); }
+.sunarc .sun-halo { fill: var(--sun); opacity: .22; transform-box: fill-box; transform-origin: center; }
+.now-sun.soon .sun-halo { animation: glow 1.6s ease-in-out infinite; }
+@keyframes glow { 50% { transform: scale(1.5); opacity: .08; } }
+.sunarc.night .sun-core { fill: var(--muted); }
+.sunarc.night .sun-halo { opacity: 0; }
+
+/* Loading shimmer */
+.now.loading .skel { color: transparent !important; border-radius: 6px; background: linear-gradient(90deg, var(--line) 0%, var(--surface-2) 50%, var(--line) 100%); background-size: 200% 100%; animation: shimmer 1.2s ease-in-out infinite; }
+@keyframes shimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+
+/* Booking checklist */
+.intro-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; }
+.steps-progress { font-size: .8rem; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+.steps-progress.all { color: var(--good); }
+.step { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: start; cursor: pointer; }
+.step-check { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--accent); cursor: pointer; }
+.step-body { display: grid; gap: 3px; }
+.steps li { transition: opacity .25s ease, border-color .25s ease; }
+.steps li.done { opacity: .62; }
+.steps li.done b { text-decoration: line-through; text-decoration-color: var(--muted); }
+
+/* Share and floating Today button */
+.mast-actions { display: flex; gap: 8px; margin-top: 4px; }
+.btn-mast { color: var(--mast-ink); border-color: var(--mast-muted); }
+.btn-mast:hover { border-color: var(--mast-ink); }
+.fab { position: fixed; z-index: 20; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: inline-flex; align-items: center; gap: 6px; padding: 10px 14px 10px 16px; border-radius: 999px; background: var(--accent); color: var(--surface); text-decoration: none; font-weight: 600; font-size: .85rem; box-shadow: 0 8px 24px var(--shadow);
+  opacity: 0; transform: translateY(14px) scale(.96); visibility: hidden; pointer-events: none; transition: opacity .2s ease, transform .25s cubic-bezier(.2, .7, .2, 1), visibility 0s linear .25s; }
+.fab.show { opacity: 1; transform: none; visibility: visible; pointer-events: auto; transition-delay: 0s; }
+.fab svg { transition: transform .2s ease; }
+.fab.up svg { transform: rotate(180deg); }
+.fab:active { transform: scale(.96); }
+
+@media (prefers-reduced-motion: reduce) {
+  .bubbles { display: none; }
+  .marquee, .chip.today .dot, .now-sun.soon .sun-halo, .now.loading .skel { animation: none; }
+  .photo img, .sunarc .sun-g, .sunarc .arc-done, .lightbox, .lightbox img, .fab { transition: none; }
+}
 .planb { background: var(--surface-2); border-top: 1px dashed var(--line); padding: 14px 16px 16px; display: grid; gap: 8px; }
 .planb ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; font-size: .9rem; }
 .planb li::marker { color: var(--muted); }
@@ -251,6 +358,7 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
 </head>
 <body>
 <header class="masthead">
+  <div class="bubbles" aria-hidden="true"><span style="--x:6%;--s:7px;--d:13s;--delay:-2s"></span><span style="--x:14%;--s:4px;--d:10s;--delay:-7s"></span><span style="--x:27%;--s:10px;--d:16s;--delay:-5s"></span><span style="--x:41%;--s:5px;--d:11s;--delay:-9s"></span><span style="--x:58%;--s:8px;--d:14s;--delay:-3s"></span><span style="--x:69%;--s:4px;--d:9s;--delay:-6s"></span><span style="--x:78%;--s:12px;--d:18s;--delay:-11s"></span><span style="--x:88%;--s:6px;--d:12s;--delay:-1s"></span><span style="--x:95%;--s:5px;--d:15s;--delay:-8s"></span></div>
   <div class="wrap">
     <p class="eyebrow">Andaman Sea · 4 – 10 November 2026 · Nitrox</p>
     <h1>Phuket Dive Week</h1>
@@ -261,8 +369,9 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
       <div><dt>Water</dt><dd>28–29 °C</dd></div>
       <div><dt>Est. cost / diver</dt><dd>24,700–25,900 THB</dd></div>
     </dl>
+    <div class="mast-actions"><button class="btn btn-mast" id="share-btn" type="button">Share plan</button></div>
   </div>
-  <div class="tankband" aria-hidden="true"><div class="wrap">Enriched air nitrox · Analyse every tank · Enriched air nitrox · Analyse every tank</div></div>
+  <div class="tankband" aria-hidden="true"><div class="wrap"><span class="marquee"><span>Enriched air nitrox · Analyse every tank · Check your MOD · Plan your gas · Enriched air nitrox · Analyse every tank · Check your MOD · Plan your gas · </span><span>Enriched air nitrox · Analyse every tank · Check your MOD · Plan your gas · Enriched air nitrox · Analyse every tank · Check your MOD · Plan your gas · </span></span></div></div>
 </header>
 
 <nav class="daybar" aria-label="Days">
@@ -285,26 +394,32 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
 
 <main class="wrap">
 
-  <section class="now" id="now" aria-labelledby="now-h">
+  <section class="now loading" id="now" aria-labelledby="now-h">
     <div class="now-head">
       <h2 id="now-h">Right now</h2>
       <p class="now-meta"><span id="now-place">Phuket</span> · <span id="now-time">—</span><span id="now-device" hidden></span></p>
     </div>
     <div class="now-grid">
       <div class="now-temp">
-        <span class="big" id="now-temp">—</span>
-        <span id="now-cond">Loading weather…</span>
+        <span class="big skel" id="now-temp">—</span>
+        <span class="skel" id="now-cond">Loading weather…</span>
         <span class="now-feels" id="now-feels"></span>
       </div>
       <dl class="now-stats">
-        <div><dt>Wind</dt><dd id="now-wind">—</dd></div>
-        <div><dt>Gusts</dt><dd id="now-gust">—</dd></div>
-        <div><dt>Humidity</dt><dd id="now-hum">—</dd></div>
-        <div><dt>Rain now</dt><dd id="now-rain">—</dd></div>
-        <div><dt>Waves</dt><dd id="now-wave">—</dd></div>
-        <div><dt>Water</dt><dd id="now-sst">—</dd></div>
+        <div><dt>Wind</dt><dd class="skel" id="now-wind">—</dd></div>
+        <div><dt>Gusts</dt><dd class="skel" id="now-gust">—</dd></div>
+        <div><dt>Humidity</dt><dd class="skel" id="now-hum">—</dd></div>
+        <div><dt>Rain now</dt><dd class="skel" id="now-rain">—</dd></div>
+        <div><dt>Waves</dt><dd class="skel" id="now-wave">—</dd></div>
+        <div><dt>Water</dt><dd class="skel" id="now-sst">—</dd></div>
       </dl>
       <div class="now-sun" id="now-sun" aria-live="polite">
+        <svg class="sunarc" id="sunarc" viewBox="0 -6 120 58" aria-hidden="true">
+          <line class="horizon" x1="2" y1="46" x2="118" y2="46"></line>
+          <path class="arc-base" d="M8 46 A52 38 0 0 1 112 46"></path>
+          <path class="arc-done" pathLength="100" d="M8 46 A52 38 0 0 1 112 46" style="stroke-dasharray: 0 100"></path>
+          <g class="sun-g" style="transform: translate(8px, 46px)"><circle class="sun-halo" r="9"></circle><circle class="sun-core" r="4.5"></circle></g>
+        </svg>
         <span class="k">Sun</span>
         <strong id="now-sun-main">—</strong>
         <span class="now-sun-sub" id="now-sun-sub"></span>
@@ -321,17 +436,18 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
   </section>
 
   <section class="intro" aria-labelledby="book-h">
-    <h2 id="book-h">Book in this order</h2>
+    <div class="intro-head"><h2 id="book-h">Book in this order</h2><span class="steps-progress" id="steps-progress" aria-live="polite">0 of 4 done</span></div>
     <ol class="steps">
-      <li><b>Similan for Thursday, today.</b> <span>The park allows 525 divers a day, and the long trip fills first.</span></li>
-      <li><b>Wednesday's Racha trip, today.</b> <span>Pickup is Wednesday morning, so the shop needs your details by tonight.</span></li>
-      <li><b>Saturday Phi Phi and Sunday Racha Yai.</b> <span>Send names, cert level, nitrox card, last dive date and hotel on WhatsApp.</span></li>
-      <li><b>Friday on standby.</b> <span>Ask the shop to hold a place and confirm by Thursday evening. Rain chance is 75%.</span></li>
+      <li><label class="step" for="step-1"><input class="step-check" type="checkbox" id="step-1"><span class="step-body"><b>Similan for Thursday, today.</b><span>The park allows 525 divers a day, and the long trip fills first.</span></span></label></li>
+      <li><label class="step" for="step-2"><input class="step-check" type="checkbox" id="step-2"><span class="step-body"><b>Wednesday's Racha trip, today.</b><span>Pickup is Wednesday morning, so the shop needs your details by tonight.</span></span></label></li>
+      <li><label class="step" for="step-3"><input class="step-check" type="checkbox" id="step-3"><span class="step-body"><b>Saturday Phi Phi and Sunday Racha Yai.</b><span>Send names, cert level, nitrox card, last dive date and hotel on WhatsApp.</span></span></label></li>
+      <li><label class="step" for="step-4"><input class="step-check" type="checkbox" id="step-4"><span class="step-body"><b>Friday on standby.</b><span>Ask the shop to hold a place and confirm by Thursday evening. It was the wettest day in the 2 Nov forecast.</span></span></label></li>
     </ol>
   </section>
 
   <!-- WEDNESDAY -->
   <section class="day" id="wed" aria-labelledby="wed-h">
+    <figure class="photo" data-full="https://commons.wikimedia.org/wiki/Special:FilePath/Night_fishing_at_Racha_island_near_Phuket,_Thailand_(25845507748).jpg?width=1600"><button class="photo-btn" type="button" aria-label="Enlarge photo: Fishing boat lights off Racha island at night"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Night_fishing_at_Racha_island_near_Phuket,_Thailand_(25845507748).jpg?width=960" srcset="https://commons.wikimedia.org/wiki/Special:FilePath/Night_fishing_at_Racha_island_near_Phuket,_Thailand_(25845507748).jpg?width=640 640w, https://commons.wikimedia.org/wiki/Special:FilePath/Night_fishing_at_Racha_island_near_Phuket,_Thailand_(25845507748).jpg?width=960 960w, https://commons.wikimedia.org/wiki/Special:FilePath/Night_fishing_at_Racha_island_near_Phuket,_Thailand_(25845507748).jpg?width=1280 1280w" sizes="(min-width: 1000px) 1000px, 100vw" alt="Fishing boat lights off Racha island at night" loading="lazy" decoding="async" width="1280" height="720"></button><figcaption><span>Racha island, south of Phuket</span><a href="https://commons.wikimedia.org/wiki/File:Night_fishing_at_Racha_island_near_Phuket,_Thailand_(25845507748).jpg" target="_blank" rel="noopener">Photo: Wikimedia Commons</a></figcaption></figure>
     <div class="day-head">
       <div class="slate s-good"><span class="dow">Wed</span><span class="dom">4 Nov</span></div>
       <div class="day-title">
@@ -393,6 +509,7 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
 
   <!-- THURSDAY -->
   <section class="day" id="thu" aria-labelledby="thu-h">
+    <figure class="photo" data-full="https://commons.wikimedia.org/wiki/Special:FilePath/Similan_Island_01_(MK).jpg?width=1600"><button class="photo-btn" type="button" aria-label="Enlarge photo: The Similan Islands in the Andaman Sea"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Similan_Island_01_(MK).jpg?width=960" srcset="https://commons.wikimedia.org/wiki/Special:FilePath/Similan_Island_01_(MK).jpg?width=640 640w, https://commons.wikimedia.org/wiki/Special:FilePath/Similan_Island_01_(MK).jpg?width=960 960w, https://commons.wikimedia.org/wiki/Special:FilePath/Similan_Island_01_(MK).jpg?width=1280 1280w" sizes="(min-width: 1000px) 1000px, 100vw" alt="The Similan Islands in the Andaman Sea" loading="lazy" decoding="async" width="1280" height="720"></button><figcaption><span>Similan Islands, Phang Nga</span><a href="https://commons.wikimedia.org/wiki/File:Similan_Island_01_(MK).jpg" target="_blank" rel="noopener">Photo: Wikimedia Commons</a></figcaption></figure>
     <div class="day-head">
       <div class="slate s-good"><span class="dow">Thu</span><span class="dom">5 Nov</span></div>
       <div class="day-title">
@@ -459,6 +576,7 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
 
   <!-- FRIDAY -->
   <section class="day" id="fri" aria-labelledby="fri-h">
+    <figure class="photo" data-full="https://commons.wikimedia.org/wiki/Special:FilePath/Stegostoma_fasciatum_thailand.jpg?width=1600"><button class="photo-btn" type="button" aria-label="Enlarge photo: A leopard shark on the sea floor in Thailand"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Stegostoma_fasciatum_thailand.jpg?width=960" srcset="https://commons.wikimedia.org/wiki/Special:FilePath/Stegostoma_fasciatum_thailand.jpg?width=640 640w, https://commons.wikimedia.org/wiki/Special:FilePath/Stegostoma_fasciatum_thailand.jpg?width=960 960w, https://commons.wikimedia.org/wiki/Special:FilePath/Stegostoma_fasciatum_thailand.jpg?width=1280 1280w" sizes="(min-width: 1000px) 1000px, 100vw" alt="A leopard shark on the sea floor in Thailand" loading="lazy" decoding="async" width="1280" height="720"></button><figcaption><span>Leopard shark, the namesake of Shark Point</span><a href="https://commons.wikimedia.org/wiki/File:Stegostoma_fasciatum_thailand.jpg" target="_blank" rel="noopener">Photo: Wikimedia Commons</a></figcaption></figure>
     <div class="day-head">
       <div class="slate s-poor"><span class="dow">Fri</span><span class="dom">6 Nov</span></div>
       <div class="day-title">
@@ -515,6 +633,7 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
 
   <!-- SATURDAY -->
   <section class="day" id="sat" aria-labelledby="sat-h">
+    <figure class="photo" data-full="https://commons.wikimedia.org/wiki/Special:FilePath/Koh_Phi_Phi_Islands.JPG?width=1600"><button class="photo-btn" type="button" aria-label="Enlarge photo: The Koh Phi Phi islands"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Koh_Phi_Phi_Islands.JPG?width=960" srcset="https://commons.wikimedia.org/wiki/Special:FilePath/Koh_Phi_Phi_Islands.JPG?width=640 640w, https://commons.wikimedia.org/wiki/Special:FilePath/Koh_Phi_Phi_Islands.JPG?width=960 960w, https://commons.wikimedia.org/wiki/Special:FilePath/Koh_Phi_Phi_Islands.JPG?width=1280 1280w" sizes="(min-width: 1000px) 1000px, 100vw" alt="The Koh Phi Phi islands" loading="lazy" decoding="async" width="1280" height="720"></button><figcaption><span>Koh Phi Phi; Bida Nok and Bida Nai lie just south</span><a href="https://commons.wikimedia.org/wiki/File:Koh_Phi_Phi_Islands.JPG" target="_blank" rel="noopener">Photo: Wikimedia Commons</a></figcaption></figure>
     <div class="day-head">
       <div class="slate s-watch"><span class="dow">Sat</span><span class="dom">7 Nov</span></div>
       <div class="day-title">
@@ -572,6 +691,7 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
 
   <!-- SUNDAY -->
   <section class="day" id="sun" aria-labelledby="sun-h">
+    <figure class="photo" data-full="https://commons.wikimedia.org/wiki/Special:FilePath/Phuket_Town_Thailand-Houses-in-Thalang-Road-05.jpg?width=1600"><button class="photo-btn" type="button" aria-label="Enlarge photo: Shophouses on Thalang Road in Phuket Old Town"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Phuket_Town_Thailand-Houses-in-Thalang-Road-05.jpg?width=960" srcset="https://commons.wikimedia.org/wiki/Special:FilePath/Phuket_Town_Thailand-Houses-in-Thalang-Road-05.jpg?width=640 640w, https://commons.wikimedia.org/wiki/Special:FilePath/Phuket_Town_Thailand-Houses-in-Thalang-Road-05.jpg?width=960 960w, https://commons.wikimedia.org/wiki/Special:FilePath/Phuket_Town_Thailand-Houses-in-Thalang-Road-05.jpg?width=1280 1280w" sizes="(min-width: 1000px) 1000px, 100vw" alt="Shophouses on Thalang Road in Phuket Old Town" loading="lazy" decoding="async" width="1280" height="720"></button><figcaption><span>Thalang Road, home of the Sunday walking street</span><a href="https://commons.wikimedia.org/wiki/File:Phuket_Town_Thailand-Houses-in-Thalang-Road-05.jpg" target="_blank" rel="noopener">Photo: Wikimedia Commons</a></figcaption></figure>
     <div class="day-head">
       <div class="slate s-good"><span class="dow">Sun</span><span class="dom">8 Nov</span></div>
       <div class="day-title">
@@ -627,6 +747,7 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
 
   <!-- MONDAY -->
   <section class="day" id="mon" aria-labelledby="mon-h">
+    <figure class="photo" data-full="https://commons.wikimedia.org/wiki/Special:FilePath/Phuket_Thai_Hua_School.jpg?width=1600"><button class="photo-btn" type="button" aria-label="Enlarge photo: The Phuket Thai Hua Museum building"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Phuket_Thai_Hua_School.jpg?width=960" srcset="https://commons.wikimedia.org/wiki/Special:FilePath/Phuket_Thai_Hua_School.jpg?width=640 640w, https://commons.wikimedia.org/wiki/Special:FilePath/Phuket_Thai_Hua_School.jpg?width=960 960w, https://commons.wikimedia.org/wiki/Special:FilePath/Phuket_Thai_Hua_School.jpg?width=1280 1280w" sizes="(min-width: 1000px) 1000px, 100vw" alt="The Phuket Thai Hua Museum building" loading="lazy" decoding="async" width="1280" height="720"></button><figcaption><span>Thai Hua Museum, Phuket Old Town</span><a href="https://commons.wikimedia.org/wiki/File:Phuket_Thai_Hua_School.jpg" target="_blank" rel="noopener">Photo: Wikimedia Commons</a></figcaption></figure>
     <div class="day-head">
       <div class="slate s-rest"><span class="dow">Mon</span><span class="dom">9 Nov</span></div>
       <div class="day-title">
@@ -738,6 +859,7 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
         </dl>
       </article>
       <article class="alt">
+        <figure class="photo" data-full="https://commons.wikimedia.org/wiki/Special:FilePath/Thalang_Road,_Old_Phuket_Town.jpg?width=1600"><button class="photo-btn" type="button" aria-label="Enlarge photo: Thalang Road in Phuket Old Town"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Thalang_Road,_Old_Phuket_Town.jpg?width=960" srcset="https://commons.wikimedia.org/wiki/Special:FilePath/Thalang_Road,_Old_Phuket_Town.jpg?width=640 640w, https://commons.wikimedia.org/wiki/Special:FilePath/Thalang_Road,_Old_Phuket_Town.jpg?width=960 960w, https://commons.wikimedia.org/wiki/Special:FilePath/Thalang_Road,_Old_Phuket_Town.jpg?width=1280 1280w" sizes="(min-width: 1000px) 1000px, 100vw" alt="Thalang Road in Phuket Old Town" loading="lazy" decoding="async" width="1280" height="720"></button><figcaption><span>Thalang Road, Phuket Old Town</span><a href="https://commons.wikimedia.org/wiki/File:Thalang_Road,_Old_Phuket_Town.jpg" target="_blank" rel="noopener">Photo: Wikimedia Commons</a></figcaption></figure>
         <span class="badge s-watch">Partly covered</span>
         <h3>Phuket Old Town &amp; Thai Hua Museum</h3>
         <dl>
@@ -749,6 +871,7 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
         </dl>
       </article>
       <article class="alt">
+        <figure class="photo" data-full="https://commons.wikimedia.org/wiki/Special:FilePath/Khao_Phing_Kan_and_Koh_Tapu_(James_Bond_Island).jpg?width=1600"><button class="photo-btn" type="button" aria-label="Enlarge photo: Khao Phing Kan and Koh Tapu in Phang Nga Bay"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Khao_Phing_Kan_and_Koh_Tapu_(James_Bond_Island).jpg?width=960" srcset="https://commons.wikimedia.org/wiki/Special:FilePath/Khao_Phing_Kan_and_Koh_Tapu_(James_Bond_Island).jpg?width=640 640w, https://commons.wikimedia.org/wiki/Special:FilePath/Khao_Phing_Kan_and_Koh_Tapu_(James_Bond_Island).jpg?width=960 960w, https://commons.wikimedia.org/wiki/Special:FilePath/Khao_Phing_Kan_and_Koh_Tapu_(James_Bond_Island).jpg?width=1280 1280w" sizes="(min-width: 1000px) 1000px, 100vw" alt="Khao Phing Kan and Koh Tapu in Phang Nga Bay" loading="lazy" decoding="async" width="1280" height="720"></button><figcaption><span>Koh Tapu, James Bond Island</span><a href="https://commons.wikimedia.org/wiki/File:Khao_Phing_Kan_and_Koh_Tapu_(James_Bond_Island).jpg" target="_blank" rel="noopener">Photo: Wikimedia Commons</a></figcaption></figure>
         <span class="badge s-good">Runs in most weather</span>
         <h3>Phang Nga Bay &amp; James Bond Island</h3>
         <dl>
@@ -770,6 +893,7 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
         </dl>
       </article>
       <article class="alt">
+        <figure class="photo" data-full="https://commons.wikimedia.org/wiki/Special:FilePath/The_Big_Buddha,_Phuket.jpg?width=1600"><button class="photo-btn" type="button" aria-label="Enlarge photo: The Big Buddha statue on Nakkerd Hill"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/The_Big_Buddha,_Phuket.jpg?width=960" srcset="https://commons.wikimedia.org/wiki/Special:FilePath/The_Big_Buddha,_Phuket.jpg?width=640 640w, https://commons.wikimedia.org/wiki/Special:FilePath/The_Big_Buddha,_Phuket.jpg?width=960 960w, https://commons.wikimedia.org/wiki/Special:FilePath/The_Big_Buddha,_Phuket.jpg?width=1280 1280w" sizes="(min-width: 1000px) 1000px, 100vw" alt="The Big Buddha statue on Nakkerd Hill" loading="lazy" decoding="async" width="1280" height="720"></button><figcaption><span>Big Buddha, Nakkerd Hill</span><a href="https://commons.wikimedia.org/wiki/File:The_Big_Buddha,_Phuket.jpg" target="_blank" rel="noopener">Photo: Wikimedia Commons</a></figcaption></figure>
         <span class="badge s-watch">Needs a dry spell</span>
         <h3>Big Buddha &amp; Wat Chalong</h3>
         <dl>
@@ -781,6 +905,7 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
         </dl>
       </article>
       <article class="alt">
+        <figure class="photo" data-full="https://commons.wikimedia.org/wiki/Special:FilePath/Phuket_Promthep_Cape.jpg?width=1600"><button class="photo-btn" type="button" aria-label="Enlarge photo: Promthep Cape at the southern tip of Phuket"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Phuket_Promthep_Cape.jpg?width=960" srcset="https://commons.wikimedia.org/wiki/Special:FilePath/Phuket_Promthep_Cape.jpg?width=640 640w, https://commons.wikimedia.org/wiki/Special:FilePath/Phuket_Promthep_Cape.jpg?width=960 960w, https://commons.wikimedia.org/wiki/Special:FilePath/Phuket_Promthep_Cape.jpg?width=1280 1280w" sizes="(min-width: 1000px) 1000px, 100vw" alt="Promthep Cape at the southern tip of Phuket" loading="lazy" decoding="async" width="1280" height="720"></button><figcaption><span>Promthep Cape, Rawai</span><a href="https://commons.wikimedia.org/wiki/File:Phuket_Promthep_Cape.jpg" target="_blank" rel="noopener">Photo: Wikimedia Commons</a></figcaption></figure>
         <span class="badge s-watch">Needs a dry spell</span>
         <h3>Promthep Cape sunset</h3>
         <dl>
@@ -906,7 +1031,7 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
   <!-- SOURCES -->
   <section class="ref" id="sources" aria-labelledby="sources-h">
     <h2 id="sources-h">Sources</h2>
-    <p>When the page is online, the Right now panel and each day's air, rain, wind, waves, sunrise and sunset load live from Open-Meteo and are cached for 10 minutes. Offline, the page shows the values checked on 2 Nov: daily temperature and rain chance from the forecast model, wind and sea from the Thai Meteorological Department. Sunrise and sunset calculated for Phuket, accurate to about two minutes. Prices are as published by each operator; confirm when you book. Map links open Google Maps; islands, wrecks and piers without their own listing open a map search.</p>
+    <p>When the page is online, the Right now panel and each day's air, rain, wind, waves, sunrise and sunset load live from Open-Meteo and are cached for 10 minutes. Offline, the page shows the values checked on 2 Nov: daily temperature and rain chance from the forecast model, wind and sea from the Thai Meteorological Department. Sunrise and sunset calculated for Phuket, accurate to about two minutes. Prices are as published by each operator; confirm when you book. Map links open Google Maps; islands, wrecks and piers without their own listing open a map search. Photos load from Wikimedia Commons; tap a photo's credit for its author and licence.</p>
     <ul class="sources">
       <li><a href="https://open-meteo.com/" target="_blank" rel="noopener">Live weather and marine data: Open-Meteo.com (CC BY 4.0)</a></li>
       <li><a href="https://www.tmd.go.th/en/forecast/sevenday" target="_blank" rel="noopener">TMD 7-day forecast, 1–7 Nov</a></li>
@@ -936,6 +1061,14 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
 <footer class="wrap">
   <p>Plan prepared 2 Nov 2026. Forecasts change daily in early November; the dive shop and boat captain make the final call each morning.</p>
 </footer>
+
+<a class="fab" id="fab" href="#wed" aria-hidden="true" tabindex="-1"><span id="fab-label">Today</span><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M6 13l6 6 6-6"/></svg></a>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo" hidden>
+  <button class="lb-close" type="button" aria-label="Close photo">×</button>
+  <img alt="">
+  <p class="lb-cap"></p>
+</div>
 
 <script>
 (function () {
@@ -1223,6 +1356,42 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
   }
 
   function setText(id, t) { var el = document.getElementById(id); if (el) el.textContent = t; }
+
+  // Count a number up or down to its new value.
+  function animateNumber(el, to, suffix) {
+    var from = parseFloat(el.getAttribute('data-n'));
+    el.setAttribute('data-n', to);
+    if (!isFinite(from)) from = to - 6;
+    if (reduceMotion || from === to || !window.requestAnimationFrame) { el.textContent = to + suffix; return; }
+    var t0 = null, span = 800;
+    function step(ts) {
+      if (t0 === null) t0 = ts;
+      var k = Math.min(1, (ts - t0) / span), e = 1 - Math.pow(1 - k, 3);
+      el.textContent = Math.round(from + (to - from) * e) + suffix;
+      if (k < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  // Move the sun along the daylight arc.
+  function updateArc(ev, now) {
+    var svg = document.getElementById('sunarc');
+    if (!svg) return;
+    var rise = null, set = null;
+    for (var i = 0; i < ev.length; i++) {
+      if (ev[i].k === 'Sunrise' && ev[i].at <= now) {
+        rise = ev[i]; set = null;
+        for (var j = i + 1; j < ev.length; j++) { if (ev[j].k === 'Sunset') { set = ev[j]; break; } }
+      }
+    }
+    var day = !!(rise && set && now < set.at);
+    var t = day ? (now - rise.at) / (set.at - rise.at) : (rise && set ? 1 : 0);
+    t = Math.max(0, Math.min(1, t));
+    var th = Math.PI * (1 - t), x = 60 + 52 * Math.cos(th), y = 46 - 38 * Math.sin(th);
+    svg.querySelector('.sun-g').style.transform = 'translate(' + x.toFixed(1) + 'px, ' + y.toFixed(1) + 'px)';
+    svg.querySelector('.arc-done').style.strokeDasharray = (t * 100).toFixed(1) + ' 100';
+    svg.classList.toggle('night', !day);
+  }
   function renderNow() {
     var L = currentLoc(), now = Date.now(), tz = nowState.tz;
     setText('now-place', L.name);
@@ -1233,7 +1402,7 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
     var cur = nowState.data && nowState.data.current, daily = nowState.data && nowState.data.daily;
     var prob = daily && daily.precipitation_probability_max ? daily.precipitation_probability_max[0] : null;
     if (cur) {
-      setText('now-temp', r0(cur.temperature_2m) + '°');
+      animateNumber(document.getElementById('now-temp'), r0(cur.temperature_2m), '°');
       setText('now-cond', cond(cur.weather_code) + (num(prob) ? ' · ' + prob + '% rain today' : ''));
       setText('now-feels', num(cur.apparent_temperature) ? 'Feels like ' + r0(cur.apparent_temperature) + '°C' : '');
       setText('now-wind', (num(cur.wind_direction_10m) ? compass(cur.wind_direction_10m) + ' ' : '') + r0(cur.wind_speed_10m) + ' km/h');
@@ -1241,7 +1410,7 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
       setText('now-hum', num(cur.relative_humidity_2m) ? cur.relative_humidity_2m + '%' : '—');
       setText('now-rain', num(cur.precipitation) ? cur.precipitation.toFixed(1) + ' mm' : '—');
     } else {
-      setText('now-temp', '—');
+      var tEl = document.getElementById('now-temp'); tEl.removeAttribute('data-n'); tEl.textContent = '—';
       setText('now-cond', nowState.err ? 'Live weather unavailable' : 'Loading weather…');
       setText('now-feels', '');
       ['now-wind', 'now-gust', 'now-hum', 'now-rain'].forEach(function (id) { setText(id, '—'); });
@@ -1258,6 +1427,8 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
       setText('now-sun-sub', 'at ' + fmtTime(next.at, tz) + (after ? ' · ' + after.k.toLowerCase() + ' ' + fmtTime(after.at, tz) : ''));
       box.classList.toggle('soon', next.at - now <= 15 * 6e4);
     } else { setText('now-sun-main', '—'); setText('now-sun-sub', ''); box.classList.remove('soon'); }
+    updateArc(ev, now);
+    document.getElementById('now').classList.toggle('loading', !cur && !nowState.err);
 
     document.getElementById('now-summary').innerHTML = planLine();
     setText('now-advice', advice(cur, prob));
@@ -1381,6 +1552,127 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
   document.addEventListener('visibilitychange', function () {
     if (document.visibilityState === 'visible') { markToday(); renderSunCells(); renderNow(); loadTrip(); loadNow(); }
   });
+})();
+
+(function () {
+  'use strict';
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function $(s, r) { return (r || document).querySelector(s); }
+  function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+  var mem = {};
+  var store = {
+    get: function (k) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : (mem[k] || null); } catch (e) { return mem[k] || null; } },
+    set: function (k, v) { mem[k] = v; try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  };
+
+  /* Photos: fade in once loaded; hide the frame if the image cannot load */
+  $$('.photo img').forEach(function (img) {
+    var fig = img.closest('.photo');
+    var ok = function () { fig.classList.add('loaded'); };
+    var bad = function () { fig.hidden = true; };
+    img.addEventListener('load', ok);
+    img.addEventListener('error', bad);
+    if (img.complete) { if (img.naturalWidth) ok(); else if (img.currentSrc) bad(); }
+  });
+
+  /* Photo viewer */
+  var lb = $('#lightbox'), lbImg = $('img', lb), lbCap = $('.lb-cap', lb), lastFocus = null;
+  function openViewer(fig) {
+    lastFocus = document.activeElement;
+    lbImg.src = fig.getAttribute('data-full');
+    lbImg.alt = $('img', fig).alt;
+    lbCap.innerHTML = $('figcaption', fig).innerHTML;
+    lb.hidden = false;
+    document.documentElement.classList.add('lb-lock');
+    requestAnimationFrame(function () { lb.classList.add('open'); });
+    $('.lb-close', lb).focus();
+  }
+  function closeViewer() {
+    lb.classList.remove('open');
+    document.documentElement.classList.remove('lb-lock');
+    setTimeout(function () { lb.hidden = true; lbImg.removeAttribute('src'); }, reduce ? 0 : 220);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  $$('.photo-btn').forEach(function (b) { b.addEventListener('click', function () { openViewer(b.closest('.photo')); }); });
+  lb.addEventListener('click', function (e) { if (e.target === lb || e.target.closest('.lb-close')) closeViewer(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !lb.hidden) closeViewer(); });
+
+  /* Booking checklist, remembered on this device */
+  var STEPS = 'dw:steps', ticked = store.get(STEPS) || {};
+  var boxes = $$('.step-check');
+  function progress() {
+    var n = boxes.filter(function (c) { return c.checked; }).length;
+    $('#steps-progress').textContent = n === boxes.length ? 'All booked' : n + ' of ' + boxes.length + ' done';
+    $('#steps-progress').classList.toggle('all', n === boxes.length);
+  }
+  boxes.forEach(function (cb) {
+    cb.checked = !!ticked[cb.id];
+    cb.closest('li').classList.toggle('done', cb.checked);
+    cb.addEventListener('change', function () {
+      ticked[cb.id] = cb.checked; store.set(STEPS, ticked);
+      cb.closest('li').classList.toggle('done', cb.checked);
+      progress();
+    });
+  });
+  progress();
+
+  /* Share */
+  var share = $('#share-btn');
+  share.addEventListener('click', function () {
+    var flash = function (t) { share.textContent = t; setTimeout(function () { share.textContent = 'Share plan'; }, 1600); };
+    var data = { title: document.title, text: 'Phuket dive week, 4–10 Nov 2026', url: location.href };
+    if (navigator.share) { navigator.share(data).catch(function () {}); return; }
+    try {
+      navigator.clipboard.writeText(location.href).then(function () { flash('Link copied'); }, function () { flash('Copy the page address'); });
+    } catch (e) { flash('Copy the page address'); }
+  });
+
+  /* Floating "Today" button */
+  var fab = $('#fab'), fabLabel = $('#fab-label'), ticking = false;
+  function fabTarget() {
+    var t = $('.day.is-today');
+    if (t) return { el: t, label: 'Today' };
+    var next = $('.chip .when');
+    if (next) return { el: document.getElementById(next.parentNode.getAttribute('href').slice(1)), label: 'First dive day' };
+    return null;
+  }
+  function updateFab() {
+    ticking = false;
+    var t = fabTarget();
+    if (!t || !t.el) { fab.classList.remove('show'); fab.setAttribute('aria-hidden', 'true'); fab.tabIndex = -1; return; }
+    var r = t.el.getBoundingClientRect(), inView = r.bottom > 80 && r.top < window.innerHeight - 80;
+    var show = !inView && window.scrollY > 320;
+    fab.href = '#' + t.el.id;
+    fabLabel.textContent = t.label;
+    fab.classList.toggle('up', r.bottom <= 80);
+    fab.classList.toggle('show', show);
+    fab.setAttribute('aria-hidden', show ? 'false' : 'true');
+    fab.tabIndex = show ? 0 : -1;
+  }
+  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(updateFab); } }, { passive: true });
+  window.addEventListener('resize', updateFab);
+  setTimeout(updateFab, 300);
+
+  /* Reveal cards as they scroll into view */
+  if (!reduce && 'IntersectionObserver' in window) {
+    var vh = window.innerHeight;
+    var ro = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var el = e.target;
+        el.classList.add('in');
+        ro.unobserve(el);
+        setTimeout(function () { el.style.transitionDelay = ''; el.classList.remove('reveal', 'in'); }, 1000);
+      });
+    }, { rootMargin: '0px 0px -6% 0px' });
+    $$('.day, .ref > h2, .ref > p, .alt, .ref .card, .ref .tablebox').forEach(function (el) {
+      if (el.getBoundingClientRect().top <= vh) return;
+      var sib = el.parentNode ? Array.prototype.indexOf.call(el.parentNode.children, el) : 0;
+      el.style.transitionDelay = (sib % 3) * 70 + 'ms';
+      el.classList.add('reveal');
+      ro.observe(el);
+    });
+  }
 })();
 </script>
 </body>
