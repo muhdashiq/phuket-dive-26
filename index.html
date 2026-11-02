@@ -304,7 +304,8 @@ html.lb-lock { overflow: hidden; }
 .steps li.done b { text-decoration: line-through; text-decoration-color: var(--muted); }
 
 /* Share and floating Today button */
-.mast-actions { display: flex; gap: 8px; margin-top: 4px; }
+.mast-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+a.btn { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
 .btn-mast { color: var(--mast-ink); border-color: var(--mast-muted); }
 .btn-mast:hover { border-color: var(--mast-ink); }
 .fab { position: fixed; z-index: 20; right: max(16px, env(safe-area-inset-right, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: inline-flex; align-items: center; gap: 6px; padding: 10px 14px 10px 16px; border-radius: 999px; background: var(--accent); color: var(--surface); text-decoration: none; font-weight: 600; font-size: .85rem; box-shadow: 0 8px 24px var(--shadow);
@@ -369,7 +370,7 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
       <div><dt>Water</dt><dd>28–29 °C</dd></div>
       <div><dt>Est. cost / diver</dt><dd>24,700–25,900 THB</dd></div>
     </dl>
-    <div class="mast-actions"><button class="btn btn-mast" id="share-btn" type="button">Share plan</button></div>
+    <div class="mast-actions"><button class="btn btn-mast" id="share-btn" type="button">Share plan</button><a class="btn btn-mast" href="https://github.com/muhdashiq/phuket-dive-26" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg>Source on GitHub</a></div>
   </div>
   <div class="tankband" aria-hidden="true"><div class="wrap"><span class="marquee"><span>Enriched air nitrox · Analyse every tank · Check your MOD · Plan your gas · Enriched air nitrox · Analyse every tank · Check your MOD · Plan your gas · </span><span>Enriched air nitrox · Analyse every tank · Check your MOD · Plan your gas · Enriched air nitrox · Analyse every tank · Check your MOD · Plan your gas · </span></span></div></div>
 </header>
@@ -1033,6 +1034,7 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
     <h2 id="sources-h">Sources</h2>
     <p>When the page is online, the Right now panel and each day's air, rain, wind, waves, sunrise and sunset load live from Open-Meteo and are cached for 10 minutes. Offline, the page shows the values checked on 2 Nov: daily temperature and rain chance from the forecast model, wind and sea from the Thai Meteorological Department. Sunrise and sunset calculated for Phuket, accurate to about two minutes. Prices are as published by each operator; confirm when you book. Map links open Google Maps; islands, wrecks and piers without their own listing open a map search. Photos load from Wikimedia Commons; tap a photo's credit for its author and licence.</p>
     <ul class="sources">
+      <li><a href="https://github.com/muhdashiq/phuket-dive-26" target="_blank" rel="noopener">Source code for this page on GitHub</a></li>
       <li><a href="https://open-meteo.com/" target="_blank" rel="noopener">Live weather and marine data: Open-Meteo.com (CC BY 4.0)</a></li>
       <li><a href="https://www.tmd.go.th/en/forecast/sevenday" target="_blank" rel="noopener">TMD 7-day forecast, 1–7 Nov</a></li>
       <li><a href="https://www.tmd.go.th/en/forecast/shipping" target="_blank" rel="noopener">TMD shipping forecast, 2 Nov</a></li>
@@ -1060,6 +1062,7 @@ footer.wrap { padding-block: 0 36px; color: var(--muted); font-size: .8rem; }
 
 <footer class="wrap">
   <p>Plan prepared 2 Nov 2026. Forecasts change daily in early November; the dive shop and boat captain make the final call each morning.</p>
+  <p>Source code: <a href="https://github.com/muhdashiq/phuket-dive-26" target="_blank" rel="noopener">github.com/muhdashiq/phuket-dive-26</a></p>
 </footer>
 
 <a class="fab" id="fab" href="#wed" aria-hidden="true" tabindex="-1"><span id="fab-label">Today</span><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M6 13l6 6 6-6"/></svg></a>
