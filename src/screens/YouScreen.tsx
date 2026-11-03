@@ -1,5 +1,8 @@
 import { useState, type FormEvent } from 'react';
-import { DAY_BY_ID, DAYS } from '../data/days';
+import { useTrip } from '../data/trip';
+import { useApp } from '../components/AppContext';
+import { connectionLabel } from '../lib/llm';
+import { profileHeadline } from '../lib/profile';
 import type { PlaceKey } from '../data/places';
 import { SOURCES } from '../data/reference';
 import type { DayId } from '../data/types';
@@ -33,7 +36,6 @@ type YouScreenProps = {
 
 const THEME_LABELS: Record<Theme, string> = { system: 'Automatic', light: 'Light', dark: 'Dark' };
 const START_LABELS: Record<StartOn, string> = { today: 'Today', last: 'Last screen' };
-const DAY_LABELS = Object.fromEntries(DAYS.map((d) => [d.id, `${d.dow} ${d.dom} · ${d.title}`])) as Record<DayId, string>;
 
 type SheetName = 'name' | 'theme' | 'start' | 'sources' | null;
 
@@ -44,9 +46,11 @@ export const YouScreen = (props: YouScreenProps) => {
   const [confirmClear, setConfirmClear] = useState(false);
   const [draftName, setDraftName] = useState(prefs.name);
 
-  const allItems = DAYS.flatMap((day) => todoItems(day.todos, todos, day.id));
+  const { days, byId } = useTrip();
+  const { profile, connection, openProfile, openAi } = useApp();
+  const allItems = days.flatMap((day) => todoItems(day.todos, todos, day.id));
   const doneItems = allItems.filter((i) => i.done).length;
-  const history = DAYS.filter((d) => notes[d.id])
+  const history = days.filter((d) => notes[d.id])
     .map((d) => ({ day: d, note: notes[d.id] }))
     .sort((a, b) => (b.note?.updatedAt ?? 0) - (a.note?.updatedAt ?? 0));
 
@@ -64,7 +68,7 @@ export const YouScreen = (props: YouScreenProps) => {
       toast({ message: 'No notes to download yet', tone: 'info' });
       return;
     }
-    const blob = new Blob([notesToText(notes, DAY_LABELS)], { type: 'text/plain;charset=utf-8' });
+    const blob = new Blob([notesToText(notes, days.map((d) => ({ id: d.id, label: `${d.dow} ${d.dom} · ${d.title}` })))], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
@@ -84,7 +88,7 @@ export const YouScreen = (props: YouScreenProps) => {
           <span className="cam" aria-hidden="true"><Icon name="camera" size={15} /></span>
         </button>
         <p className="t-title">{prefs.name || 'Add your name'}</p>
-        <p className="t-foot">Phuket Dive Week · 3–10 Nov 2026</p>
+        <p className="t-foot">{profileHeadline(profile)}</p>
         <button
           className="btn btn-tinted btn-small edit"
           type="button"
@@ -122,7 +126,7 @@ export const YouScreen = (props: YouScreenProps) => {
               <button key={day.id} type="button" className="row row-icon note-row" onClick={() => props.onOpenDay(day.id)}>
                 <span className="tile-icon amber"><Icon name="history" size={18} /></span>
                 <span className="row-body">
-                  <span className="row-title">{day.dow} {day.dom} · {DAY_BY_ID[day.id].title}</span>
+                  <span className="row-title">{day.dow} {day.dom} · {byId.get(day.id)?.title}</span>
                   <span className="row-sub">{note?.text}</span>
                   <span className="t-cap">Edited {note ? `${formatDuration(now - note.updatedAt)} ago` : ''}</span>
                 </span>
@@ -131,6 +135,27 @@ export const YouScreen = (props: YouScreenProps) => {
             ))}
           </div>
         )}
+      </Section>
+
+      <Section id="me-h" title="Profile and AI">
+        <div className="group">
+          <button type="button" className="row row-icon" onClick={openProfile}>
+            <span className="tile-icon teal"><Icon name="you" size={18} /></span>
+            <span className="row-body">
+              <span className="row-title">Profile details</span>
+              <span className="row-sub">{profile.interests.length ? `Likes ${profile.interests.slice(0, 3).join(', ').toLowerCase()}` : 'Certification, interests, pace and budget'}</span>
+            </span>
+            <Icon name="chevronRight" className="row-chevron" />
+          </button>
+          <button type="button" className="row row-icon" onClick={openAi}>
+            <span className="tile-icon indigo"><Icon name="sparkles" size={18} /></span>
+            <span className="row-body">
+              <span className="row-title">AI services</span>
+              <span className="row-sub">{connection ? connectionLabel(connection) : 'Sign in to plan days and chat'}</span>
+            </span>
+            <Icon name="chevronRight" className="row-chevron" />
+          </button>
+        </div>
       </Section>
 
       <Section id="settings-h" title="Settings">

@@ -1,4 +1,4 @@
-import { DAYS } from '../data/days';
+import { getDays } from '../data/trip';
 import type { DayId } from '../data/types';
 import { addDaysToYmd, localIsoToMs, TRIP_OFFSET_S } from './dates';
 import type { NoteStore } from './notes';
@@ -36,7 +36,7 @@ type BuildInput = { todos: TodoStore; notes: NoteStore; daily: Record<string, Da
 export const buildReminders = ({ todos, notes, daily }: BuildInput): Reminder[] => {
   const list: Reminder[] = [];
 
-  DAYS.forEach((day) => {
+  getDays().forEach((day) => {
     const label = `${day.dow} ${day.dom}`;
     const eve = addDaysToYmd(day.date, -1);
 

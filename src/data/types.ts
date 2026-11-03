@@ -1,7 +1,10 @@
 import type { ReactNode } from 'react';
 
-export const DAY_IDS = ['tue3', 'wed', 'thu', 'fri', 'sat', 'sun', 'mon', 'tue'] as const;
-export type DayId = (typeof DAY_IDS)[number];
+export const BUILT_IN_DAY_IDS = ['tue3', 'wed', 'thu', 'fri', 'sat', 'sun', 'mon', 'tue'] as const;
+export type BuiltInDayId = (typeof BUILT_IN_DAY_IDS)[number];
+// Built-in days use the ids above; days you add get ids like "x-20261111-k3f9".
+export type DayId = string;
+export const DAY_ID_PATTERN = /^[a-z0-9-]{1,24}$/;
 
 export type Tone = 'good' | 'watch' | 'poor' | 'rest';
 
@@ -62,4 +65,6 @@ export type DayPlan = {
   planB?: { title: string; items: ReactNode[] };
   todos: TodoSeed[];
   reminders?: ReminderSeed[];
+  // Present on days you added from a prompt.
+  custom?: { prompt: string; model: string; createdAt: number };
 };

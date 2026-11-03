@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { DAY_BY_ID } from '../data/days';
+import { getDay } from '../data/trip';
 import type { DayId } from '../data/types';
 import { formatDateTime, formatDuration, TRIP_TZ } from '../lib/dates';
 import { delivered, KIND_LABELS, REMINDER_KINDS, upcoming, type NotifyState, type Reminder, type ReminderKind } from '../lib/reminders';
@@ -22,7 +22,7 @@ type ReminderRowProps = { reminder: Reminder; unread?: boolean; when: string; on
 
 const ReminderRow = ({ reminder, unread = false, when, onOpen }: ReminderRowProps) => {
   const style = KIND_STYLE[reminder.kind];
-  const day = DAY_BY_ID[reminder.day];
+  const day = getDay(reminder.day);
   return (
     <button type="button" className={`row row-icon notif-row${unread ? ' unread' : ''}`} onClick={() => onOpen(reminder.day)}>
       <span className={`tile-icon ${style.tile}`}><Icon name={style.icon} size={18} /></span>
@@ -32,7 +32,7 @@ const ReminderRow = ({ reminder, unread = false, when, onOpen }: ReminderRowProp
           <span className="t-cap">{when}</span>
         </span>
         <span className="row-sub">{reminder.body}</span>
-        <span className="t-cap">{day.dow} {day.dom} · {KIND_LABELS[reminder.kind].label}</span>
+        <span className="t-cap">{day ? `${day.dow} ${day.dom} · ` : ''}{KIND_LABELS[reminder.kind].label}</span>
       </span>
       {unread && <span className="unread-dot" aria-label="Unread" />}
     </button>

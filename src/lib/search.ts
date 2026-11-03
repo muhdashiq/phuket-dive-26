@@ -1,4 +1,4 @@
-import { DAYS } from '../data/days';
+import { getDays } from '../data/trip';
 import { PLACES, type PlaceKey } from '../data/places';
 import { PLACE_GROUPS, RAINY_OPTIONS } from '../data/reference';
 import type { DayId } from '../data/types';
@@ -26,7 +26,7 @@ export const searchTrip = (query: string): SearchResults => {
   const words = normalize(query).split(/\s+/).filter(Boolean);
   if (words.length === 0) return { days: [], places: [], rainy: [] };
 
-  const days = DAYS.filter((day) =>
+  const days = getDays().filter((day) =>
     matches([day.title, day.dow, day.dom, day.pill, typeof day.sub === 'string' ? day.sub : '', ...day.todos.map((t) => t.text)].join(' '), words),
   ).map((day) => day.id);
 

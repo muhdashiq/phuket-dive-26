@@ -1,5 +1,7 @@
-import { useRef, type TouchEvent } from 'react';
-import { DAY_BY_ID, DAYS } from '../data/days';
+import { useRef, useState, type TouchEvent } from 'react';
+import { useTrip } from '../data/trip';
+import { ProfileButton, useApp } from '../components/AppContext';
+import { Alert } from '../components/Sheet';
 import type { DayId, DayPlan } from '../data/types';
 import { DayChecklist } from '../components/DayChecklist';
 import { DayNotes } from '../components/DayNotes';
@@ -7,8 +9,7 @@ import { ForecastTiles } from '../components/ForecastTiles';
 import { Icon } from '../components/Icon';
 import { NowCard } from '../components/NowCard';
 import { Photo } from '../components/Photo';
-import { useToast } from '../components/Toast';
-import { Avatar, ScreenHeader, Section } from '../components/ui';
+import { ScreenHeader, Section } from '../components/ui';
 import { dayTone, WeekStrip } from '../components/WeekStrip';
 import type { NowWeather, TripWeather } from '../hooks/useWeather';
 import { usePullToRefresh } from '../hooks/usePullToRefresh';
@@ -37,9 +38,9 @@ type TodayScreenProps = {
   tripWeather: TripWeather;
   nowWeather: NowWeather;
   location: LatLon | null;
-  name: string;
-  photo: string | null;
   unread: number;
+  onDeleteDay: (id: DayId) => void;
+  onChat: (id: DayId) => void;
   onOpenNotifications: () => void;
   todos: TodoStore;
   onTodos: (update: (store: TodoStore) => TodoStore) => void;
@@ -50,14 +51,15 @@ type TodayScreenProps = {
   showTip: boolean;
   onDismissTip: () => void;
   onSelectDay: (id: DayId) => void;
-  onOpenYou: () => void;
   onRefresh: () => Promise<unknown>;
   onLocationTap: () => void;
 };
 
 export const TodayScreen = (props: TodayScreenProps) => {
   const { day, today, now, tripWeather, nowWeather, onSelectDay } = props;
-  const toast = useToast();
+  const { openShare, openNewDay } = useApp();
+  const { days, byId } = useTrip();
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const touch = useRef<{ x: number; y: number } | null>(null);
   const previousIndex = useRef(dayIndex(day.id));
   const index = dayIndex(day.id);
@@ -70,21 +72,6 @@ export const TodayScreen = (props: TodayScreenProps) => {
   const isToday = day.date === today;
   const live = tripWeather.daily[day.date];
   const tone = dayTone(day.sea, day.tone, live?.rainPct ?? day.weather.rainPct);
-
-  const share = async () => {
-    const url = `${window.location.href.split('#')[0]}#${day.id}`;
-    const text = `${day.dow} ${day.dom}: ${day.title}`;
-    if (navigator.share) {
-      navigator.share({ title: 'Phuket Dive Week', text, url }).catch(() => undefined);
-      return;
-    }
-    try {
-      await navigator.clipboard.writeText(url);
-      toast({ message: 'Link to this day copied', tone: 'success' });
-    } catch {
-      toast({ message: "Couldn't copy the link", tone: 'error' });
-    }
-  };
 
   const onTouchStart = (event: TouchEvent) => {
     const t = event.touches[0];
@@ -114,7 +101,7 @@ export const TodayScreen = (props: TodayScreenProps) => {
       </div>
       <ScreenHeader
         title={relativeTitle(day, today)}
-        eyebrow={`${day.dow} ${day.dom} · Day ${index + 1} of ${DAYS.length}`}
+        eyebrow={`${day.dow} ${day.dom} · Day ${index + 1} of ${days.length}`}
         actions={
           <>
             <button
@@ -126,16 +113,14 @@ export const TodayScreen = (props: TodayScreenProps) => {
               <Icon name="bell" size={20} filled={props.unread > 0} />
               {props.unread > 0 && <span className="bell-badge" aria-hidden="true">{props.unread > 9 ? '9+' : props.unread}</span>}
             </button>
-            <button className="icon-btn" type="button" aria-label="Share this day" onClick={share}>
+            <button className="icon-btn" type="button" aria-label="Share days with friends" onClick={() => openShare([day.id])}>
               <Icon name="share" size={19} />
             </button>
-            <button className="icon-btn plain" type="button" aria-label="Open your profile and settings" onClick={props.onOpenYou} style={{ width: 36, height: 36 }}>
-              <Avatar name={props.name} photo={props.photo} size={36} />
-            </button>
+            <ProfileButton />
           </>
         }
       />
-      <WeekStrip selected={day.id} today={today} daily={tripWeather.daily} onSelect={onSelectDay} />
+      <WeekStrip selected={day.id} today={today} daily={tripWeather.daily} onSelect={onSelectDay} onAdd={openNewDay} />
       {props.showTip && (
         <div className="tip" role="note">
           <p>Tap a date to switch days, or swipe the page left and right.</p>
@@ -149,10 +134,24 @@ export const TodayScreen = (props: TodayScreenProps) => {
           <div className="hero-body">
             <div className="hero-pills">
               {isToday && <span className="pill blue">Today</span>}
+              {day.custom && <span className="pill teal"><Icon name="sparkles" size={13} />Added by you</span>}
               <span className={`pill ${tone}`}><span className="dot" />{day.pill}</span>
             </div>
             <h2 id={`${day.id}-title`} className="t-title">{day.title}</h2>
             <p className="t-sub">{day.sub}</p>
+            <div className="hero-actions">
+              <button className="btn btn-tinted btn-small" type="button" onClick={() => props.onChat(day.id)}>
+                <Icon name="message" size={15} />
+                Ask about this day
+              </button>
+              {day.custom && (
+                <button className="btn btn-danger btn-small" type="button" onClick={() => setConfirmDelete(true)}>
+                  <Icon name="trash" size={15} />
+                  Delete day
+                </button>
+              )}
+            </div>
+            {day.custom && <p className="t-cap">Planned by {day.custom.model} from your prompt.</p>}
           </div>
         </article>
 
@@ -192,17 +191,28 @@ export const TodayScreen = (props: TodayScreenProps) => {
           {prev ? (
             <a href={`#${prev}`} onClick={(e) => { e.preventDefault(); onSelectDay(prev); }}>
               <Icon name="chevronLeft" />
-              <span><span className="t-cap">Previous</span><span className="t-headline">{DAY_BY_ID[prev].dow} {DAY_BY_ID[prev].dom}</span></span>
+              <span><span className="t-cap">Previous</span><span className="t-headline">{byId.get(prev)?.dow} {byId.get(prev)?.dom}</span></span>
             </a>
           ) : <span />}
           {next ? (
             <a className="next" href={`#${next}`} onClick={(e) => { e.preventDefault(); onSelectDay(next); }}>
-              <span><span className="t-cap">Next</span><span className="t-headline">{DAY_BY_ID[next].dow} {DAY_BY_ID[next].dom}</span></span>
+              <span><span className="t-cap">Next</span><span className="t-headline">{byId.get(next)?.dow} {byId.get(next)?.dom}</span></span>
               <Icon name="chevronRight" />
             </a>
           ) : <span />}
         </nav>
       </div>
+      <Alert
+        open={confirmDelete}
+        title={`Delete ${day.dow} ${day.dom}?`}
+        message="This removes the day you added, with its checklist ticks. Your notes for it are kept until you clear them."
+        confirmLabel="Delete"
+        onCancel={() => setConfirmDelete(false)}
+        onConfirm={() => {
+          setConfirmDelete(false);
+          props.onDeleteDay(day.id);
+        }}
+      />
     </div>
   );
 };

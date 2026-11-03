@@ -5,7 +5,7 @@ import type { DayId, DayPlan } from './types';
 
 const TMD_WIND = 'SE 15–30 km/h';
 
-export const DAYS: DayPlan[] = [
+export const BUILT_IN_DAYS: DayPlan[] = [
   {
     id: 'tue3',
     date: '2026-11-03',
@@ -512,6 +512,6 @@ export const DAYS: DayPlan[] = [
   },
 ];
 
-export const DAY_BY_ID = Object.fromEntries(DAYS.map((day) => [day.id, day])) as Record<DayId, DayPlan>;
-export const TRIP_START = DAYS[0]?.date ?? '2026-11-03';
-export const TRIP_END = DAYS[DAYS.length - 1]?.date ?? '2026-11-10';
+export const BUILT_IN_BY_ID = Object.fromEntries(BUILT_IN_DAYS.map((day) => [day.id, day])) as Record<DayId, DayPlan>;
+export const TRIP_START = BUILT_IN_DAYS[0]?.date ?? '2026-11-03';
+export const TRIP_END = BUILT_IN_DAYS[BUILT_IN_DAYS.length - 1]?.date ?? '2026-11-10';

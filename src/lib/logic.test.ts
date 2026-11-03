@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { DAYS } from '../data/days';
+import { BUILT_IN_DAYS as DAYS } from '../data/days';
 import { formatTime, sunTimes, TRIP_TZ } from './dates';
 import { notesToText, sanitizeNoteStore, setNote } from './notes';
 import { DEFAULT_PREFS, initialsOf, sanitizePrefs } from './prefs';
@@ -44,7 +44,7 @@ describe('todos', () => {
   });
 
   it('drops malformed stored data', () => {
-    const store = sanitizeTodoStore({ wed: { done: ['a', 3], custom: [{ id: 'x', text: 'ok' }, { id: 1 }] }, bogus: {} });
+    const store = sanitizeTodoStore({ wed: { done: ['a', 3], custom: [{ id: 'x', text: 'ok' }, { id: 1 }] }, 'Not an id!': {} });
     expect(store).toEqual({ wed: { done: [], custom: [{ id: 'x', text: 'ok' }] } });
   });
 });
@@ -58,7 +58,7 @@ describe('notes', () => {
 
   it('exports notes in trip order', () => {
     const store = sanitizeNoteStore({ wed: { text: 'B', updatedAt: 1 }, tue3: { text: 'A', updatedAt: 1 } });
-    const text = notesToText(store, { tue3: 'Tue 3', wed: 'Wed 4' } as never);
+    const text = notesToText(store, [{ id: 'tue3', label: 'Tue 3' }, { id: 'wed', label: 'Wed 4' }]);
     expect(text.indexOf('Tue 3')).toBeLessThan(text.indexOf('Wed 4'));
   });
 });

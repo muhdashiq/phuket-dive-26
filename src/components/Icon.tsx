@@ -129,6 +129,7 @@ const ICONS = {
   clockStart: <path d="M12 3.5a8.5 8.5 0 1 1 0 17 8.5 8.5 0 0 1 0-17zM12 7.5V12l3 2" />,
   undo: <path d="M8 5L4 9l4 4M4.5 9H14a5.5 5.5 0 0 1 0 11h-3" />,
   code: <path d="M8.5 7L3.5 12l5 5M15.5 7l5 5-5 5" />,
+  send: <path d="M12 19V5.5M6 11l6-6 6 6" strokeWidth={2.2} />,
   bell: <path className="f" d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15zM10 20.5a2.2 2.2 0 0 0 4 0" />,
   camera: (
     <>

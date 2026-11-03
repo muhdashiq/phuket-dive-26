@@ -1,4 +1,4 @@
-import { DAY_IDS, type DayId } from '../data/types';
+import { DAY_ID_PATTERN, type DayId } from '../data/types';
 
 export const THEMES = ['system', 'light', 'dark'] as const;
 export type Theme = (typeof THEMES)[number];
@@ -34,7 +34,8 @@ export const DEFAULT_PREFS: Prefs = {
 
 export const MAX_NAME_LENGTH = 40;
 
-export const isDayId = (value: unknown): value is DayId => typeof value === 'string' && (DAY_IDS as readonly string[]).includes(value);
+// Shape check only; whether the day exists is checked against the trip.
+export const isDayIdLike = (value: unknown): value is DayId => typeof value === 'string' && DAY_ID_PATTERN.test(value);
 
 const isRecord = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null;
 
@@ -61,7 +62,7 @@ export const sanitizePrefs = (raw: unknown): Prefs => {
     theme: oneOf(THEMES, raw.theme, DEFAULT_PREFS.theme),
     startOn: oneOf(START_OPTIONS, raw.startOn, DEFAULT_PREFS.startOn),
     lastHash: lastHash && HASH_PATTERN.test(lastHash) ? lastHash : null,
-    lastDay: isDayId(raw.lastDay) ? raw.lastDay : null,
+    lastDay: isDayIdLike(raw.lastDay) ? raw.lastDay : null,
     location: sanitizeLatLon(raw.location),
     hideDone: raw.hideDone === true,
     name: typeof raw.name === 'string' ? raw.name.trim().slice(0, MAX_NAME_LENGTH) : '',

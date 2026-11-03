@@ -9,6 +9,11 @@ export const STORAGE_KEYS = {
   favorites: 'pdw:favorites',
   photo: 'pdw:photo',
   notify: 'pdw:notify',
+  customDays: 'pdw:custom-days',
+  profile: 'pdw:profile',
+  llm: 'pdw:llm',
+  chats: 'pdw:chats',
+  oauthPending: 'pdw:oauth-pending',
   weatherPrefix: 'pdw:wx:',
 } as const;
 

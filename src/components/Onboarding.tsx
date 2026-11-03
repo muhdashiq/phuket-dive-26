@@ -1,5 +1,6 @@
 import { useRef, useState, type ChangeEvent } from 'react';
 import { PhotoError, toProfilePhoto } from '../lib/photo';
+import { CERT_LEVELS, INTERESTS, type CertLevel, type Profile } from '../lib/profile';
 import { Avatar } from './ui';
 import { useToast } from './Toast';
 import { MAX_NAME_LENGTH, type LatLon } from '../lib/prefs';
@@ -10,12 +11,14 @@ type OnboardingProps = {
   initialName: string;
   photo: string | null;
   onPhoto: (dataUrl: string) => boolean;
+  profile: Profile;
+  onProfile: (update: (profile: Profile) => Profile) => void;
   onFinish: (result: { name: string; location: LatLon | null; locationDenied: boolean }) => void;
 };
 
-const PAGES = 3;
+const PAGES = 4;
 
-export const Onboarding = ({ initialName, photo, onPhoto, onFinish }: OnboardingProps) => {
+export const Onboarding = ({ initialName, photo, onPhoto, profile, onProfile, onFinish }: OnboardingProps) => {
   const toast = useToast();
   const fileInput = useRef<HTMLInputElement>(null);
 
@@ -69,6 +72,34 @@ export const Onboarding = ({ initialName, photo, onPhoto, onFinish }: Onboarding
       )}
 
       {page === 1 && (
+        <div className="onboarding-page" key="p-diving">
+          <span className="onboarding-art teal"><Icon name="waves" /></span>
+          <h1 className="t-title">About your diving</h1>
+          <p className="t-sub">Used to tailor plans and chat answers. You can change it later in You.</p>
+          <label className="field onboarding-field">
+            <span>Certification</span>
+            <select value={profile.certLevel} onChange={(e) => onProfile((p) => ({ ...p, certLevel: e.target.value as CertLevel }))}>
+              {CERT_LEVELS.map((level) => <option key={level}>{level}</option>)}
+            </select>
+          </label>
+          <div className="chips" aria-label="Interests">
+            {INTERESTS.map((interest) => (
+              <label key={interest} className="chip-toggle">
+                <input
+                  type="checkbox"
+                  checked={profile.interests.includes(interest)}
+                  onChange={() =>
+                    onProfile((p) => ({ ...p, interests: p.interests.includes(interest) ? p.interests.filter((i) => i !== interest) : [...p.interests, interest] }))
+                  }
+                />
+                <span>{interest}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {page === 2 && (
         <div className="onboarding-page" key="p1">
           <span className="onboarding-art blue"><Icon name="today" /></span>
           <h1 className="t-title">Everything for the day, in one place</h1>
@@ -80,7 +111,7 @@ export const Onboarding = ({ initialName, photo, onPhoto, onFinish }: Onboarding
         </div>
       )}
 
-      {page === 2 && (
+      {page === 3 && (
         <div className="onboarding-page" key="p2">
           <span className="onboarding-art teal"><Icon name="sun" /></span>
           <h1 className="t-title">Live weather where you are</h1>

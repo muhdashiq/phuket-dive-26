@@ -1,4 +1,4 @@
-import { DAY_IDS, type DayId } from '../data/types';
+import { DAY_ID_PATTERN, type DayId } from '../data/types';
 
 export type DayNote = { text: string; updatedAt: number };
 export type NoteStore = Partial<Record<DayId, DayNote>>;
@@ -16,7 +16,7 @@ export const sanitizeNoteStore = (raw: unknown): NoteStore => {
   if (typeof raw !== 'object' || raw === null) return {};
   const source = raw as Record<string, unknown>;
   const store: NoteStore = {};
-  DAY_IDS.forEach((day) => {
+  Object.keys(source).filter((day) => DAY_ID_PATTERN.test(day)).forEach((day) => {
     const entry = source[day];
     if (typeof entry !== 'object' || entry === null) return;
     const { text, updatedAt } = entry as Record<string, unknown>;
@@ -28,7 +28,8 @@ export const sanitizeNoteStore = (raw: unknown): NoteStore => {
 };
 
 // Plain-text export so notes survive a cleared browser.
-export const notesToText = (store: NoteStore, labels: Record<DayId, string>): string =>
-  DAY_IDS.filter((day) => store[day])
-    .map((day) => `${labels[day]}\n${'-'.repeat(labels[day].length)}\n${store[day]?.text.trim() ?? ''}\n`)
+export const notesToText = (store: NoteStore, days: { id: DayId; label: string }[]): string =>
+  days
+    .filter((day) => store[day.id])
+    .map((day) => `${day.label}\n${'-'.repeat(day.label.length)}\n${store[day.id]?.text.trim() ?? ''}\n`)
     .join('\n');

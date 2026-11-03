@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
-import { DAYS, TRIP_END, TRIP_START } from '../data/days';
+import { useTrip } from '../data/trip';
 import type { SeaArea } from '../data/types';
-import { TRIP_OFFSET_S, TRIP_TZ } from '../lib/dates';
+import { addDaysToYmd, TRIP_OFFSET_S, TRIP_TZ, ymdIn } from '../lib/dates';
 import type { LatLon } from '../lib/prefs';
 import {
   CACHE_TTL_MS,
@@ -46,19 +46,29 @@ export type TripWeather = {
   stale: boolean;
 };
 
-const SEA_AREAS = [...new Set(DAYS.map((day) => day.sea).filter((sea): sea is SeaArea => sea !== null))];
+// Open-Meteo forecasts about 16 days ahead; asking past that fails the whole
+// request, so far-off added days simply show their saved values.
+const FORECAST_DAYS_AHEAD = 15;
 
 export const useTripWeather = () => {
   const [state, setState] = useState<TripWeather>({ daily: {}, waves: {}, fetchedAt: null, stale: false });
 
+  const { days } = useTrip();
+  const start = days[0]?.date ?? '';
+  const lastDate = days[days.length - 1]?.date ?? start;
+  const horizon = addDaysToYmd(ymdIn(TRIP_TZ), FORECAST_DAYS_AHEAD);
+  const end = lastDate < horizon ? lastDate : horizon;
+  const areas = [...new Set(days.map((day) => day.sea).filter((sea): sea is SeaArea => sea !== null))].sort().join(',');
+
   // Resolves true when the forecast is live (not a saved offline copy).
   const load = useCallback(async (maxAge: number = CACHE_TTL_MS): Promise<boolean> => {
-    const marine = SEA_AREAS.map((area) =>
-      fetchCached(tripMarineUrl(area, TRIP_START, TRIP_END), maxAge)
+    if (!start || end < start) return false;
+    const marine = (areas ? (areas.split(',') as SeaArea[]) : []).map((area) =>
+      fetchCached(tripMarineUrl(area, start, end), maxAge)
         .then((res) => setState((s) => ({ ...s, waves: { ...s.waves, [area]: parseWaves(res.data) } })))
         .catch(() => undefined),
     );
-    const forecast = fetchCached(tripForecastUrl(TRIP_START, TRIP_END), maxAge)
+    const forecast = fetchCached(tripForecastUrl(start, end), maxAge)
       .then((res) => {
         setState((s) => ({ ...s, daily: parseDaily(res.data, TRIP_OFFSET_S), fetchedAt: res.fetchedAt, stale: res.stale }));
         return !res.stale;
@@ -66,7 +76,7 @@ export const useTripWeather = () => {
       .catch(() => false);
     const [ok] = await Promise.all([forecast, ...marine]);
     return ok;
-  }, []);
+  }, [start, end, areas]);
 
   usePolling(load);
   return [state, load] as const;
