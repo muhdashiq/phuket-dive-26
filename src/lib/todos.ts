@@ -1,4 +1,4 @@
-import { DAY_IDS, type DayId, type TodoSeed } from '../data/types';
+import { DAY_ID_PATTERN, type DayId, type TodoSeed } from '../data/types';
 
 export type CustomTodo = { id: string; text: string };
 export type DayTodoState = { done: string[]; custom: CustomTodo[] };
@@ -56,7 +56,7 @@ export const sanitizeTodoStore = (raw: unknown): TodoStore => {
   if (typeof raw !== 'object' || raw === null) return {};
   const source = raw as Record<string, unknown>;
   const store: TodoStore = {};
-  DAY_IDS.forEach((day) => {
+  Object.keys(source).filter((day) => DAY_ID_PATTERN.test(day)).forEach((day) => {
     const entry = source[day];
     if (typeof entry !== 'object' || entry === null) return;
     const { done, custom } = entry as Record<string, unknown>;

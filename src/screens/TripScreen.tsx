@@ -1,4 +1,5 @@
-import { DAYS } from '../data/days';
+import { useTrip } from '../data/trip';
+import { ProfileButton, useApp } from '../components/AppContext';
 import { BOOKING_STEPS, COST_ROWS } from '../data/reference';
 import type { DayId } from '../data/types';
 import { Icon } from '../components/Icon';
@@ -27,21 +28,44 @@ const TOTALS: { label: string; value: string; strong?: boolean }[] = [
 ];
 
 export const TripScreen = ({ today, weather, todos, notes, doneSteps, onToggleStep, onOpenDay }: TripScreenProps) => {
+  const { days } = useTrip();
+  const { openShare, openNewDay } = useApp();
+  const added = days.filter((d) => d.custom).length;
   const booked = BOOKING_STEPS.filter((step) => doneSteps.includes(step.id)).length;
 
   return (
     <div className="screen">
-      <ScreenHeader title="Trip" eyebrow="Phuket · 3–10 Nov 2026" />
+      <ScreenHeader
+        title="Trip"
+        eyebrow="Phuket · 3–10 Nov 2026"
+        actions={
+          <>
+            <button className="icon-btn" type="button" aria-label="Share days with friends" onClick={() => openShare()}>
+              <Icon name="share" size={19} />
+            </button>
+            <ProfileButton />
+          </>
+        }
+      />
 
       <div className="stats">
-        <div className="stat"><b>8</b><span>days</span></div>
+        <div className="stat"><b>{days.length}</b><span>{added ? `days, ${added} added` : 'days'}</span></div>
         <div className="stat"><b>13</b><span>dives, nitrox</span></div>
         <div className="stat"><b>≈25k</b><span>THB per diver</span></div>
       </div>
 
-      <Section id="itinerary-h" title="Itinerary">
+      <Section
+        id="itinerary-h"
+        title="Itinerary"
+        trailing={
+          <button className="btn btn-plain btn-small" type="button" onClick={openNewDay}>
+            <Icon name="plus" size={15} />
+            Add a day
+          </button>
+        }
+      >
         <div className="group">
-          {DAYS.map((day) => {
+          {days.map((day) => {
             const items = todoItems(day.todos, todos, day.id);
             const done = items.filter((i) => i.done).length;
             const tone = dayTone(day.sea, day.tone, weather.daily[day.date]?.rainPct ?? day.weather.rainPct);
@@ -54,7 +78,7 @@ export const TripScreen = ({ today, weather, todos, notes, doneSteps, onToggleSt
                 </span>
                 <span className="row-body">
                   <span className="row-title">{day.title}</span>
-                  <span className="row-sub">{isToday ? `Today · ${day.pill}` : day.pill}</span>
+                  <span className="row-sub">{isToday ? `Today · ${day.pill}` : day.pill}{day.custom ? ' · added by you' : ''}</span>
                 </span>
                 <span className="row-meta">
                   {notes[day.id] && <Icon name="note" label="Has notes" />}
@@ -64,6 +88,14 @@ export const TripScreen = ({ today, weather, todos, notes, doneSteps, onToggleSt
               </button>
             );
           })}
+          <button type="button" className="row row-icon" onClick={openNewDay}>
+            <span className="tile-icon teal"><Icon name="sparkles" size={18} /></span>
+            <span className="row-body">
+              <span className="row-title">Plan a new day</span>
+              <span className="row-sub">Describe what you want; AI drafts it from your profile</span>
+            </span>
+            <Icon name="chevronRight" className="row-chevron" />
+          </button>
         </div>
       </Section>
 

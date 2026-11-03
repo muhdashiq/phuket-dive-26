@@ -55,3 +55,5 @@ export const mapsUrl = (target: Place): string => {
   if (target.placeId) params.set('query_place_id', target.placeId);
   return `https://www.google.com/maps/search/?${params.toString()}`;
 };
+
+export const mapsSearchUrl = (query: string): string => `https://www.google.com/maps/search/?${new URLSearchParams({ api: '1', query }).toString()}`;

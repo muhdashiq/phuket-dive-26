@@ -1,6 +1,7 @@
 import { mapsUrl, PLACES } from '../data/places';
 import { EMERGENCY, OPERATORS } from '../data/reference';
 import { useCopy } from '../components/Contact';
+import { ProfileButton } from '../components/AppContext';
 import { Icon } from '../components/Icon';
 import { Avatar, ScreenHeader, Section } from '../components/ui';
 
@@ -9,7 +10,7 @@ export const ContactsScreen = () => {
 
   return (
     <div className="screen">
-      <ScreenHeader title="Contacts" eyebrow="Help and operators" />
+      <ScreenHeader title="Contacts" eyebrow="Help and operators" actions={<ProfileButton />} />
 
       <Section id="sos-h" title="Emergency" footer="Ask each shop for its own emergency plan at the dive briefing.">
         <div className="sos-card">

@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { DAY_BY_ID } from '../data/days';
+import { useTrip } from '../data/trip';
 import { mapsUrl, PLACES, type PlaceKey } from '../data/places';
 import { PLACE_GROUPS, RAINY_OPTIONS, type RainyOption } from '../data/reference';
 import type { DayId } from '../data/types';
+import { ProfileButton } from '../components/AppContext';
 import { Icon } from '../components/Icon';
 import { Photo } from '../components/Photo';
 import { useToast } from '../components/Toast';
@@ -69,6 +70,7 @@ const firstNote = (key: PlaceKey) => PLACE_GROUPS.flatMap((g) => g.items).find((
 
 export const ExploreScreen = ({ segment, onSegment, favorites, onToggleFavorite, onOpenDay }: ExploreScreenProps) => {
   const [query, setQuery] = useState('');
+  const { byId } = useTrip();
   const toast = useToast();
   const results = searchTrip(query);
   const searching = query.trim().length > 0;
@@ -81,7 +83,7 @@ export const ExploreScreen = ({ segment, onSegment, favorites, onToggleFavorite,
 
   return (
     <div className="screen">
-      <ScreenHeader title="Explore" eyebrow="Places, ideas and maps" />
+      <ScreenHeader title="Explore" eyebrow="Places, ideas and maps" actions={<ProfileButton />} />
       <div className="explore-tools">
         <div className="search" role="search">
           <Icon name="search" size={18} />
@@ -115,8 +117,8 @@ export const ExploreScreen = ({ segment, onSegment, favorites, onToggleFavorite,
                   {results.days.map((id) => (
                     <button key={id} type="button" className="row" onClick={() => onOpenDay(id)}>
                       <span className="row-body">
-                        <span className="row-title">{DAY_BY_ID[id].title}</span>
-                        <span className="row-sub">{DAY_BY_ID[id].dow} {DAY_BY_ID[id].dom}</span>
+                        <span className="row-title">{byId.get(id)?.title}</span>
+                        <span className="row-sub">{byId.get(id)?.dow} {byId.get(id)?.dom}</span>
                       </span>
                       <Icon name="chevronRight" className="row-chevron" />
                     </button>
